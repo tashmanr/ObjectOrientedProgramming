@@ -194,7 +194,6 @@ public class Ball {
      * @param y2 maximum y coordinate
      */
     public void moveOneStep(double x1, double y1, double x2, double y2) {
-       // Point destination = new Point(0, 0);
         Point destination = this.v.applyToPoint(this.center);
         if ((this.center.getX() - this.r >= x1 && destination.getX() - this.r < x1)
                 || (this.center.getX() + this.r <= x2 && destination.getX() + this.r > x2)) {
