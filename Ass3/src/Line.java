@@ -3,6 +3,8 @@
  * Rebecca Tashman
  */
 
+import java.util.*;
+
 /**
  * This class generates a new line, and has functions to access the fields.
  */
@@ -142,21 +144,26 @@ public class Line {
         return (this.start == other.start && this.end == other.end);
     }
 
-    // If this line does not intersect with the rectangle, return null.
-    // Otherwise, return the closest intersection point to the
-    // start of the line.
+    /**
+     *If this line does not intersect with the rectangle, return null.
+     * Otherwise, return the closest intersection point to the
+     * start of the line.
+     *
+     * @param rectangle to compare this line to
+     * @return see above description
+     */
     public Point closestIntersectionToStartOfLine(Rectangle rect){
-        java.util.List<Point> intersectionPoints = rect.intersectionPoints(this);
+        List<Point> intersectionPoints = rect.intersectionPoints(this);
         Point tmpPoint = null;
-        double tmpDistance;
-        for (int i = 0; i < intersectionPoints.length(); i++){
+        double tmpDistance = 0;
+        for (int i = 0; i < intersectionPoints.size(); i++){
             if (tmpPoint == null) {
-                tmpPoint = intersectionPoints[i];
+                tmpPoint = intersectionPoints.get(i);
                 tmpDistance = this.start.distance(tmpPoint);
                 continue;
             } else{
-                if (this.start.distance(intersectionPoints[i]) < tmpDistance){
-                    tmpPoint = intersectionPoints[i];
+                if (this.start.distance(intersectionPoints.get(i)) < tmpDistance){
+                    tmpPoint = intersectionPoints.get(i);
                     tmpDistance = this.start.distance(tmpPoint);
                 }
             }
