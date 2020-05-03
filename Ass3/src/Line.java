@@ -141,4 +141,26 @@ public class Line {
     public boolean equals(Line other) {
         return (this.start == other.start && this.end == other.end);
     }
+
+    // If this line does not intersect with the rectangle, return null.
+    // Otherwise, return the closest intersection point to the
+    // start of the line.
+    public Point closestIntersectionToStartOfLine(Rectangle rect){
+        java.util.List<Point> intersectionPoints = rect.intersectionPoints(this);
+        Point tmpPoint = null;
+        double tmpDistance;
+        for (int i = 0; i < intersectionPoints.length(); i++){
+            if (tmpPoint == null) {
+                tmpPoint = intersectionPoints[i];
+                tmpDistance = this.start.distance(tmpPoint);
+                continue;
+            } else{
+                if (this.start.distance(intersectionPoints[i]) < tmpDistance){
+                    tmpPoint = intersectionPoints[i];
+                    tmpDistance = this.start.distance(tmpPoint);
+                }
+            }
+        }
+        return tmpPoint;
+    }
 }
