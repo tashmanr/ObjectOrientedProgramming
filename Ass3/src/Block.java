@@ -10,8 +10,8 @@ public class Block extends Rectangle implements Collidable {
     private Rectangle rectangle;
     private static double epsilon = 0.00000000000000001;
 
-    public Block(Point upperLeft, double width, double height) {
-        this.rectangle = super(upperLeft, width, height);
+    public Block(Rectangle rectangle1) {
+        this.rectangle = rectangle1;
     }
 
     public Rectangle getCollsionRectangle(){
