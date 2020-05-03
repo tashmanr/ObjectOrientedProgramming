@@ -4,7 +4,6 @@
  */
 
 import biuoop.DrawSurface;
-
 import java.awt.Color;
 import java.util.Random;
 
@@ -16,7 +15,7 @@ public class Ball {
     private int r; //radius
     private java.awt.Color color;
     private Velocity v;
-    private GameEnvironment g;
+    public GameEnvironment g;
 
     // constructors
 
@@ -26,13 +25,12 @@ public class Ball {
      * @param center of ball
      * @param r      - radius
      * @param color  of ball
-     * @param g      gameEnvironment
      */
-    public Ball(Point center, int r, java.awt.Color color, GameEnvironment g) {
+    public Ball(Point center, int r, java.awt.Color color) {
         this.center = center;
         this.r = r;
         this.color = color;
-        this.g = g;
+        this.g = null;
         this.v = new Velocity(0, 0); // all balls are initialized with velocity = 0
     }
 
@@ -43,13 +41,12 @@ public class Ball {
      * @param y     value of center of ball
      * @param r     - radius
      * @param color of ball
-     * @param g     gameEnvironment
      */
-    public Ball(double x, double y, int r, java.awt.Color color, GameEnvironment g) {
+    public Ball(double x, double y, int r, java.awt.Color color) {
         this.center = new Point(x, y);
         this.r = r;
         this.color = color;
-        this.g = g;
+        this.g = null;
         this.v = new Velocity(0, 0); // all balls are initialized with velocity = 0
     }
 
@@ -58,13 +55,12 @@ public class Ball {
      *
      * @param center of ball
      * @param r      - radius
-     * @param g      gameEnvironment
      */
-    public Ball(Point center, int r, GameEnvironment g) {
+    public Ball(Point center, int r) {
         this.center = center;
         this.r = r;
         this.color = randomColorGenerator();
-        this.g = g;
+        this.g = null;
         this.v = new Velocity(0, 0); // all balls are initialized with velocity = 0
     }
 
@@ -74,18 +70,16 @@ public class Ball {
      * @param x value of center of ball
      * @param y value of center of ball
      * @param r - radius
-     * @param g gameEnvironment
      */
-    public Ball(double x, double y, int r, GameEnvironment g) {
+    public Ball(double x, double y, int r) {
         this.center = new Point(x, y);
         this.r = r;
         this.color = randomColorGenerator();
-        this.g = g;
+        this.g = null;
         this.v = new Velocity(0, 0); // all balls are initialized with velocity = 0
     }
 
     // accessors
-
     /**
      * Function to access x value of center of ball.
      *
@@ -181,6 +175,15 @@ public class Ball {
      */
     public void setVelocity(double dx, double dy) {
         this.v = new Velocity(dx, dy);
+    }
+
+    /**
+     * Function to set the ball's game environment.
+     *
+     * @param g1 game environment to set
+     */
+    public void setGameEnvironment(GameEnvironment g1) {
+        this.g = g1;
     }
 
     /**
