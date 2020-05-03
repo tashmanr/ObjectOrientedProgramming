@@ -6,15 +6,17 @@
 /**
  * This class generates a new block, and has functions for the collidable interface.
  */
-public class Block extends Rectangle implements Collidable {
+public class Block implements Collidable {
     private Rectangle rectangle;
+    private java.awt.Color color;
     private static double epsilon = 0.00000000000000001;
 
-    public Block(Rectangle rectangle1) {
+    public Block(Rectangle rectangle1, java.awt.Color color) {
         this.rectangle = rectangle1;
+        this.color = color;
     }
 
-    public Rectangle getCollsionRectangle(){
+    public Rectangle getCollisionRectangle(){
         return this.rectangle;
     }
 

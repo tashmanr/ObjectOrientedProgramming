@@ -3,6 +3,8 @@
  * Rebecca Tashman
  */
 
+import java.util.*;
+
 /**
  * This class generates a new game environment.
  */
@@ -23,7 +25,7 @@ public class GameEnvironment {
         double distance = 0;
         Collidable c2 = null;
         for (Collidable c : collidables) {
-            r = c.getCollisionRectangle();
+            Rectangle r = c.getCollisionRectangle();
             Point tmp = trajectory.closestIntersectionToStartOfLine(r);
             if (closest == null) {
                 closest = tmp;
@@ -41,6 +43,4 @@ public class GameEnvironment {
             return new CollisionInfo(closest, c2);
         }
     }
-}
-
 }

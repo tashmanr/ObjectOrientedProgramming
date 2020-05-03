@@ -4,6 +4,7 @@
  */
 
 import biuoop.DrawSurface;
+
 import java.awt.Color;
 import java.util.Random;
 
@@ -15,62 +16,76 @@ public class Ball {
     private int r; //radius
     private java.awt.Color color;
     private Velocity v;
+    private GameEnvironment g;
 
     // constructors
+
     /**
      * Constructor 1.
      *
      * @param center of ball
-     * @param r - radius
-     * @param color of ball
+     * @param r      - radius
+     * @param color  of ball
+     * @param g      gameEnvironment
      */
-    public Ball(Point center, int r, java.awt.Color color) {
+    public Ball(Point center, int r, java.awt.Color color, GameEnvironment g) {
         this.center = center;
         this.r = r;
         this.color = color;
+        this.g = g;
         this.v = new Velocity(0, 0); // all balls are initialized with velocity = 0
     }
+
     /**
      * Constructor 2.
      *
-     * @param x value of center of ball
-     * @param y value of center of ball
-     * @param r - radius
+     * @param x     value of center of ball
+     * @param y     value of center of ball
+     * @param r     - radius
      * @param color of ball
+     * @param g     gameEnvironment
      */
-    public Ball(double x, double y, int r, java.awt.Color color) {
+    public Ball(double x, double y, int r, java.awt.Color color, GameEnvironment g) {
         this.center = new Point(x, y);
         this.r = r;
         this.color = color;
+        this.g = g;
         this.v = new Velocity(0, 0); // all balls are initialized with velocity = 0
     }
+
     /**
      * Constructor 3 - doesn't receive color of ball in arguments, calls to randomColorGenerator.
      *
      * @param center of ball
-     * @param r - radius
+     * @param r      - radius
+     * @param g      gameEnvironment
      */
-    public Ball(Point center, int r) {
+    public Ball(Point center, int r, GameEnvironment g) {
         this.center = center;
         this.r = r;
         this.color = randomColorGenerator();
+        this.g = g;
         this.v = new Velocity(0, 0); // all balls are initialized with velocity = 0
     }
+
     /**
      * Constructor 4 - doesn't receive color of ball in arguments, calls to randomColorGenerator.
      *
      * @param x value of center of ball
      * @param y value of center of ball
      * @param r - radius
+     * @param g gameEnvironment
      */
-    public Ball(double x, double y, int r) {
+    public Ball(double x, double y, int r, GameEnvironment g) {
         this.center = new Point(x, y);
         this.r = r;
         this.color = randomColorGenerator();
+        this.g = g;
         this.v = new Velocity(0, 0); // all balls are initialized with velocity = 0
     }
 
     // accessors
+
     /**
      * Function to access x value of center of ball.
      *
@@ -79,6 +94,7 @@ public class Ball {
     public int getX() {
         return (int) this.center.getX();
     }
+
     /**
      * Function to access y value of center of ball.
      *
@@ -87,6 +103,7 @@ public class Ball {
     public int getY() {
         return (int) this.center.getY();
     }
+
     /**
      * Function to access radius of ball.
      *
@@ -95,6 +112,7 @@ public class Ball {
     public int getSize() {
         return this.r;
     }
+
     /**
      * Function to access velocity of ball.
      *
@@ -103,6 +121,7 @@ public class Ball {
     public Velocity getV() {
         return this.v;
     }
+
     /**
      * Function to access color of ball.
      *
@@ -110,6 +129,15 @@ public class Ball {
      */
     public java.awt.Color getColor() {
         return this.color;
+    }
+
+    /**
+     * Function to access game environment.
+     *
+     * @return gameEnvironment
+     */
+    public GameEnvironment getGameEnvironment() {
+        return this.g;
     }
 
     /**
@@ -144,6 +172,7 @@ public class Ball {
     public void setVelocity(Velocity v1) {
         this.v = v1;
     }
+
     /**
      * Function to set the ball's velocity.
      *
@@ -158,7 +187,26 @@ public class Ball {
      * Function to move the ball once using applyToPoint function.
      */
     public void moveOneStep() {
-        this.center = this.v.applyToPoint(this.center);
+        Line trajectory = new Line(center, v.applyToPoint(center));
+        CollisionInfo tmp = g.getClosestCollision(trajectory);
+        if (tmp == null) {
+            center = v.applyToPoint(center);
+        } else {
+            double tmpX = tmp.collisionPoint().getX();
+            double tmpY = tmp.collisionPoint().getY();
+            if (v.getDx() > 0) {
+                tmpX = tmp.collisionPoint().getX() - 1;
+            } else if (v.getDx() < 0) {
+                tmpX = tmp.collisionPoint().getX() + 1;
+            }
+            if (v.getDy() > 0) {
+                tmpY = tmp.collisionPoint().getY() - 1;
+            } else if (v.getDy() < 0) {
+                tmpY = tmp.collisionPoint().getY() + 1;
+            }
+            center = new Point(tmpX, tmpY);
+            v = tmp.collisionObject().hit(center, v);
+        }
     }
 
     /**
@@ -166,7 +214,7 @@ public class Ball {
      * The ball is limited by a certain width and height, so if it gets to the limit
      * it will need to "bounce off" in the other direction.
      *
-     * @param width limit
+     * @param width  limit
      * @param height limit
      */
     public void moveOneStep(double width, double height) {
