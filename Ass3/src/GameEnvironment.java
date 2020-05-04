@@ -26,6 +26,9 @@ public class GameEnvironment {
         Collidable c2 = null;
         for (Collidable c : collidables) {
             Rectangle r = c.getCollisionRectangle();
+            if (r.intersectionPoints(trajectory).size() == 0){
+                continue;
+            }
             Point tmp = trajectory.closestIntersectionToStartOfLine(r);
             if (closest == null) {
                 closest = tmp;
