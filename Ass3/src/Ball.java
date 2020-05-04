@@ -16,6 +16,7 @@ public class Ball {
     private java.awt.Color color;
     private Velocity v;
     public GameEnvironment g;
+    private static double epsilon = 0.00000000000000001;
 
     // constructors
 
@@ -187,28 +188,28 @@ public class Ball {
     }
 
     /**
-     * Function to move the ball once using applyToPoint function.
+     * Function to move the ball once using the gameEnvironment.
      */
     public void moveOneStep() {
         Line trajectory = new Line(center, v.applyToPoint(center));
-        CollisionInfo tmp = g.getClosestCollision(trajectory);
-        if (tmp == null) {
+        CollisionInfo tmpCollisionInfo = g.getClosestCollision(trajectory);
+        if (tmpCollisionInfo == null) {
             center = v.applyToPoint(center);
         } else {
-            double tmpX = tmp.collisionPoint().getX();
-            double tmpY = tmp.collisionPoint().getY();
-            if (v.getDx() > 0) {
-                tmpX = tmp.collisionPoint().getX() - 1;
-            } else if (v.getDx() < 0) {
-                tmpX = tmp.collisionPoint().getX() + 1;
-            }
-            if (v.getDy() > 0) {
-                tmpY = tmp.collisionPoint().getY() - 1;
-            } else if (v.getDy() < 0) {
-                tmpY = tmp.collisionPoint().getY() + 1;
+            Rectangle tmpRectangle = tmpCollisionInfo.collisionObject().getCollisionRectangle();
+            double tmpX = tmpCollisionInfo.collisionPoint().getX();
+            double tmpY = tmpCollisionInfo.collisionPoint().getY();
+            if (tmpY - (tmpRectangle.getUpperLeft().getY() + tmpRectangle.getHeight()) < epsilon) { //hits the block's bottom
+                tmpY = tmpCollisionInfo.collisionPoint().getY() + 1;
+            } else if (tmpY - tmpRectangle.getUpperLeft().getY() < epsilon) { //hits the block's top
+                tmpY = tmpCollisionInfo.collisionPoint().getY() - 1;
+            } else if (tmpX - (tmpRectangle.getUpperLeft().getX() + tmpRectangle.getWidth()) < epsilon) { //hits the block's right side
+                tmpX = tmpCollisionInfo.collisionPoint().getX() + 1;
+            } else if (tmpX - tmpRectangle.getUpperLeft().getX() < epsilon) { //hits the block's left side
+                tmpX = tmpCollisionInfo.collisionPoint().getX() - 1;
             }
             center = new Point(tmpX, tmpY);
-            v = tmp.collisionObject().hit(center, v);
+            v = tmpCollisionInfo.collisionObject().hit(center, v);
         }
     }
 
