@@ -126,11 +126,79 @@ public class Line {
          */
         double otherSlope = (other.end().getY() - other.start().getY()) / (other.end().getX() - other.start().getX());
         double thisSlope = (this.end.getY() - this.start.getY()) / (this.end.getX() - this.start.getX());
+        if (other.end().getX() == other.start().getX()) {
+            double thisIntercept = this.start.getY() - (thisSlope * this.start.getX());
+            double x = other.end().getX();
+            double y = (thisSlope * x) + thisIntercept;
+            Point intersectionPoint = new Point(x, y);
+            /**
+             * Checking that intersection point touches both lines (since the length is not infinite).
+             */
+            if ((this.start.getX() < x)
+                    && (this.end.getX() > x)
+                    && (other.start().getY() <= y)
+                    && (other.end().getY() >= y)) {
+                return intersectionPoint;
+            } else {
+                return null;
+            }
+        }
+        if (this.end().getX() == this.start().getX()) {
+            double otherIntercept = other.start.getY() - (otherSlope * other.start.getX());
+            double x = this.end().getX();
+            double y = (otherSlope * x) + otherIntercept;
+            Point intersectionPoint = new Point(x, y);
+            /**
+             * Checking that intersection point touches both lines (since the length is not infinite).
+             */
+            if ((other.start.getX() < x)
+                    && (other.end.getX() > x)
+                    && (this.start().getY() <= y)
+                    && (this.end().getY() >= y)) {
+                return intersectionPoint;
+            } else {
+                return null;
+            }
+        }
         if (otherSlope == thisSlope) {
             return null;
         }
+        if (other.end().getY() == other.start().getY()) {
+            double thisIntercept = this.start.getY() - (thisSlope * this.start.getX());
+            double y = other.end().getY();
+            double x = (y - thisIntercept) / thisSlope;
+            Point intersectionPoint = new Point(x, y);
+            /**
+             * Checking that intersection point touches both lines (since the length is not infinite).
+             */
+            if ((this.start.getX() <= x)
+                    && (this.end.getX() >= x)
+                    && (other.start().getX() <= x)
+                    && (other.end().getX() >= x)) {
+                return intersectionPoint;
+            } else {
+                return null;
+            }
+        }
+        if (this.end().getY() == this.start().getY()) {
+            double otherIntercept = other.start.getY() - (otherSlope * other.start.getX());
+            double y = this.end().getY();
+            double x = (y - otherIntercept) / otherSlope;
+            Point intersectionPoint = new Point(x, y);
+            /**
+             * Checking that intersection point touches both lines (since the length is not infinite).
+             */
+            if ((this.start.getX() <= x)
+                    && (this.end.getX() >= x)
+                    && (other.start().getX() <= x)
+                    && (other.end().getX() >= x)) {
+                return intersectionPoint;
+            } else {
+                return null;
+            }
+        }
         /**
-         * Calculating the axis intercept point for both lines, and then solving for the interseciton point.
+         * Calculating the axis intercept point for both lines, and then solving for the intersection point.
          */
         double otherIntercept = other.start().getY() - (otherSlope * other.start().getX());
         double thisIntercept = this.start.getY() - (thisSlope * this.start.getX());
@@ -140,10 +208,10 @@ public class Line {
         /**
          * Checking that intersection point touches both lines (since the length is not infinite).
          */
-        if ((this.start.getX() < x)
-                && (this.end.getX() > x)
-                && (other.start().getX() < x)
-                && (other.end().getX() > x)) {
+        if ((this.start.getX() <= x)
+                && (this.end.getX() >= x)
+                && (other.start().getX() <= x)
+                && (other.end().getX() >= x)) {
             return intersectionPoint;
         } else {
             return null;

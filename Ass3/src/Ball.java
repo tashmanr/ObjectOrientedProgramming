@@ -4,6 +4,7 @@
  */
 
 import biuoop.DrawSurface;
+
 import java.awt.Color;
 import java.util.Random;
 
@@ -81,6 +82,7 @@ public class Ball {
     }
 
     // accessors
+
     /**
      * Function to access x value of center of ball.
      *
@@ -199,17 +201,18 @@ public class Ball {
             Rectangle tmpRectangle = tmpCollisionInfo.collisionObject().getCollisionRectangle();
             double tmpX = tmpCollisionInfo.collisionPoint().getX();
             double tmpY = tmpCollisionInfo.collisionPoint().getY();
-            if (tmpY - (tmpRectangle.getUpperLeft().getY() + tmpRectangle.getHeight()) < epsilon) { //hits the block's bottom
+            if (Math.abs(tmpY - (tmpRectangle.getUpperLeft().getY() + tmpRectangle.getHeight())) < epsilon) { //hits the block's bottom
                 tmpY = tmpCollisionInfo.collisionPoint().getY() + 1;
-            } else if (tmpY - tmpRectangle.getUpperLeft().getY() < epsilon) { //hits the block's top
+            } else if (Math.abs(tmpY - tmpRectangle.getUpperLeft().getY()) < epsilon) { //hits the block's top
                 tmpY = tmpCollisionInfo.collisionPoint().getY() - 1;
-            } else if (tmpX - (tmpRectangle.getUpperLeft().getX() + tmpRectangle.getWidth()) < epsilon) { //hits the block's right side
+            } else if (Math.abs(tmpX - (tmpRectangle.getUpperLeft().getX() + tmpRectangle.getWidth())) < epsilon) { //hits the block's right side
                 tmpX = tmpCollisionInfo.collisionPoint().getX() + 1;
-            } else if (tmpX - tmpRectangle.getUpperLeft().getX() < epsilon) { //hits the block's left side
+            } else if (Math.abs(tmpX - tmpRectangle.getUpperLeft().getX()) < epsilon) { //hits the block's left side
                 tmpX = tmpCollisionInfo.collisionPoint().getX() - 1;
             }
             center = new Point(tmpX, tmpY);
-            v = tmpCollisionInfo.collisionObject().hit(center, v);
+            this.setVelocity(tmpCollisionInfo.collisionObject().hit(center, v));
+            center = v.applyToPoint(center);
         }
     }
 

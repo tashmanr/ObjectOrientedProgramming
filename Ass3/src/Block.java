@@ -24,32 +24,15 @@ public class Block implements Collidable {
 
     public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
         Velocity v = currentVelocity;
-        if (collisionPoint.getX() == this.rectangle.getUpperLeft().getX()
-                || collisionPoint.getX() == this.rectangle.getUpperLeft().getX() + this.rectangle.getWidth()) {
+        if (Math.abs(collisionPoint.getX() - this.rectangle.getUpperLeft().getX()) < epsilon
+                || Math.abs(collisionPoint.getX() - (this.rectangle.getUpperLeft().getX() + this.rectangle.getWidth())) < epsilon) {
             v = new Velocity(-v.getDx(), v.getDy());
         }
-        if (v != currentVelocity) {
-            System.out.println(v + " " + currentVelocity);
-        }
-        if (collisionPoint.getY() == this.rectangle.getUpperLeft().getY()
-                || collisionPoint.getY() == this.rectangle.getUpperLeft().getY() + this.rectangle.getHeight()) {
+        if (Math.abs(collisionPoint.getY() - this.rectangle.getUpperLeft().getY()) < epsilon
+                || Math.abs(collisionPoint.getY() - (this.rectangle.getUpperLeft().getY() + this.rectangle.getHeight())) < epsilon) {
             v = new Velocity(v.getDx(), -v.getDy());
         }
-        if (v != currentVelocity) {
-            System.out.println(v + " " + currentVelocity);
-        }
         return v;
-
-        /*Point destination = this.v.applyToPoint(this.center);
-        if ((this.center.getX() - this.r >= x1 && destination.getX() - this.r < x1)
-                || (this.center.getX() + this.r <= x2 && destination.getX() + this.r > x2)) {
-            this.v = new Velocity(-this.v.getDx(), this.v.getDy());
-        }
-        if ((this.center.getY() - this.r >= y1 && destination.getY() - this.r < y1)
-                || (this.center.getY() + this.r <= y2 && destination.getY() + this.r > y2)) {
-            this.v = new Velocity(this.v.getDx(), -this.v.getDy());
-        }
-        this.center = this.v.applyToPoint(this.center);*/
     }
 
     /**

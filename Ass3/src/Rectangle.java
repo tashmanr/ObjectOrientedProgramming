@@ -39,11 +39,6 @@ public class Rectangle {
             if (!points.contains(tmp)) {
                 points.add(tmp);
             }
-        } else if (upperLeft.getX() == 500 && upperLeft.getY() == 0 && line.start().getX() > 480 && line.start().getX() < 520) {
-            System.out.println("no intersect on left " + upperLeft.getX() + " " + upperLeft.getY());
-            System.out.println(left.start().getX() + " " + left.start().getY() + " " + left.end().getX() + " " + left.end().getY());
-            System.out.println(line.start().getX() + " " + line.start().getY() + " " + line.end().getX() + " " + line.end().getY());
-
         }
         Line right = new Line(upperLeft.getX() + width, upperLeft.getY(), upperLeft.getX() + width, upperLeft.getY() + height);
         if (right.isIntersecting(line)) {
