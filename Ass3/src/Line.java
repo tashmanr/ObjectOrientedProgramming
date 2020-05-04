@@ -14,15 +14,22 @@ public class Line {
     private Point end;
 
     // constructors
+
     /**
      * Constructor 1 - receives two points and makes the start value = the point with the smallest x.
      * Other value will be end point.
      *
      * @param start point on line
-     * @param end point on line
+     * @param end   point on line
      */
     public Line(Point start, Point end) {
         if (start.getX() < end.getX()) {
+            this.start = start;
+            this.end = end;
+        } else if (start.getX() > end.getX()) {
+            this.end = start;
+            this.start = end;
+        } else if (start.getY() < end.getY()) {
             this.start = start;
             this.end = end;
         } else {
@@ -30,6 +37,7 @@ public class Line {
             this.start = end;
         }
     }
+
     /**
      * Constructor 2 - receives two points and makes the start value = the point with the smallest x.
      * Other value will be end point.
@@ -41,6 +49,12 @@ public class Line {
      */
     public Line(double x1, double y1, double x2, double y2) {
         if (x1 < x2) {
+            this.start = new Point(x1, y1);
+            this.end = new Point(x2, y2);
+        } else if (x1 > x2) {
+            this.start = new Point(x2, y2);
+            this.end = new Point(x1, y1);
+        } else if (y1 < y2) {
             this.start = new Point(x1, y1);
             this.end = new Point(x2, y2);
         } else {
@@ -71,6 +85,7 @@ public class Line {
     }
 
     //accessors
+
     /**
      * Function that returns the start point in the line.
      *
@@ -79,6 +94,7 @@ public class Line {
     public Point start() {
         return this.start;
     }
+
     /**
      * Function that returns the end point in the line.
      *
@@ -145,25 +161,24 @@ public class Line {
     }
 
     /**
-     *If this line does not intersect with the rectangle, return null.
+     * If this line does not intersect with the rectangle, return null.
      * Otherwise, return the closest intersection point to the
      * start of the line.
      *
      * @param rectangle to compare this line to
      * @return see above description
      */
-    public Point closestIntersectionToStartOfLine(Rectangle rect){
+    public Point closestIntersectionToStartOfLine(Rectangle rect) {
         List<Point> intersectionPoints = rect.intersectionPoints(this);
         Point tmpPoint = null;
         double tmpDistance = 0;
-        for (int i = 0; i < intersectionPoints.size(); i++){
+        for (Point p : intersectionPoints) {
             if (tmpPoint == null) {
-                tmpPoint = intersectionPoints.get(i);
+                tmpPoint = p;
                 tmpDistance = this.start.distance(tmpPoint);
-                continue;
-            } else{
-                if (this.start.distance(intersectionPoints.get(i)) < tmpDistance){
-                    tmpPoint = intersectionPoints.get(i);
+            } else {
+                if (this.start.distance(p) < tmpDistance) {
+                    tmpPoint = p;
                     tmpDistance = this.start.distance(tmpPoint);
                 }
             }
