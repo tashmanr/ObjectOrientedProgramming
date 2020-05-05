@@ -233,7 +233,7 @@ public class Line {
      * Otherwise, return the closest intersection point to the
      * start of the line.
      *
-     * @param rectangle to compare this line to
+     * @param rect to compare this line to
      * @return see above description
      */
     public Point closestIntersectionToStartOfLine(Rectangle rect) {

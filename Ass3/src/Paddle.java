@@ -30,7 +30,7 @@ public class Paddle implements Sprite, Collidable {
     }
 
     public void moveLeft() {
-        if (this.paddle.getUpperLeft().getX() <= 10) {
+        if (this.paddle.getUpperLeft().getX() <= 10 + startX) {
             this.paddle = new Rectangle(new Point(startX, y), paddleWidth, paddleHeight);
         } else {
             this.paddle = new Rectangle(new Point(this.paddle.getUpperLeft().getX() - 10, y), paddleWidth, paddleHeight);
