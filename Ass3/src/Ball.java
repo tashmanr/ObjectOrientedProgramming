@@ -210,8 +210,7 @@ public class Ball {
             } else if (Math.abs(tmpX - tmpRectangle.getUpperLeft().getX()) < epsilon) { //hits the block's left side
                 tmpX = tmpCollisionInfo.collisionPoint().getX() - 1;
             }
-            center = new Point(tmpX, tmpY);
-            this.setVelocity(tmpCollisionInfo.collisionObject().hit(center, v));
+            this.setVelocity(tmpCollisionInfo.collisionObject().hit(tmpCollisionInfo.collisionPoint(), v));
             center = v.applyToPoint(center);
         }
     }
