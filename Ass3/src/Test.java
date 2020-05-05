@@ -11,7 +11,7 @@ public class Test {
         //Test.hitTest();
         //Test.collidableTest();;
         //Test.collisionInfoTest();
-        //Test.paddleTest();
+        Test.paddleTest();
         //Test.GameTest();
     }
     public static void lineTest(){

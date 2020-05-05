@@ -18,11 +18,19 @@ public class Paddle implements Sprite, Collidable {
     }
 
     public void moveLeft() {
-        this.paddle = new Rectangle(new Point(this.paddle.getUpperLeft().getX() - 10, 590), 100, 10);
+        if (this.paddle.getUpperLeft().getX() <= 10) {
+            this.paddle = new Rectangle(new Point(0, 590), 100, 10);
+        } else {
+            this.paddle = new Rectangle(new Point(this.paddle.getUpperLeft().getX() - 10, 590), 100, 10);
+        }
     }
 
     public void moveRight() {
-        this.paddle = new Rectangle(new Point(this.paddle.getUpperLeft().getX() + 10, 590), 100, 10);
+        if (this.paddle.getUpperLeft().getX() >= 700) {
+            this.paddle = new Rectangle(new Point(700, 590), 100, 10);
+        } else {
+            this.paddle = new Rectangle(new Point(this.paddle.getUpperLeft().getX() + 10, 590), 100, 10);
+        }
     }
 
     // Sprite
