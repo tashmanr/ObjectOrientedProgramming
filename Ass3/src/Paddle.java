@@ -75,9 +75,9 @@ public class Paddle implements Sprite, Collidable {
         double fifthOfPaddle = paddle.getWidth() / 5;
         if (locationOnPaddle >= 3 * fifthOfPaddle && locationOnPaddle < 4 * fifthOfPaddle) {
             v = new Velocity(v.getDx(), -v.getDy()); // middle section
-        } else if (Math.abs(collisionPoint.getY() - this.paddle.getUpperLeft().getY()) < epsilon
-                || Math.abs(collisionPoint.getY() - (this.paddle.getUpperLeft().getY() + this.paddleHeight)) < epsilon) {
-            v = new Velocity(v.getDx(), -v.getDy());
+        } else if (Math.abs(collisionPoint.getX() - this.paddle.getUpperLeft().getX()) < epsilon
+                || Math.abs(collisionPoint.getX() - (this.paddle.getUpperLeft().getX() + this.paddleWidth)) < epsilon) {
+            v = new Velocity(-v.getDx(), v.getDy());
         } else {
             double angle;
             if (locationOnPaddle < 2 * fifthOfPaddle) {
