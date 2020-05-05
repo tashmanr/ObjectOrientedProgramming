@@ -11,25 +11,37 @@ public class Paddle implements Sprite, Collidable {
     private biuoop.KeyboardSensor keyboard;
     private Rectangle paddle;
     private static double epsilon = 0.00000000000000001;
+    private static int gameBorderWidth = 25;
+    private static double guiHeight;
+    private static double guiWidth;
+    private double startX;
+    private static double y;
+    private static int paddleHeight = 20;
+    private static int paddleWidth = 70;
+
 
     public Paddle(GUI gui) {
-        this.paddle = new Rectangle(new Point(0, 590), 100, 10);
+        guiHeight = gui.getDrawSurface().getHeight();
+        guiWidth = gui.getDrawSurface().getWidth();
+        y = guiHeight - gameBorderWidth - paddleHeight;
+        startX = gameBorderWidth;
+        this.paddle = new Rectangle(new Point(startX, y), paddleWidth, paddleHeight);
         this.keyboard = gui.getKeyboardSensor();
     }
 
     public void moveLeft() {
         if (this.paddle.getUpperLeft().getX() <= 10) {
-            this.paddle = new Rectangle(new Point(0, 590), 100, 10);
+            this.paddle = new Rectangle(new Point(startX, y), paddleWidth, paddleHeight);
         } else {
-            this.paddle = new Rectangle(new Point(this.paddle.getUpperLeft().getX() - 10, 590), 100, 10);
+            this.paddle = new Rectangle(new Point(this.paddle.getUpperLeft().getX() - 10, y), paddleWidth, paddleHeight);
         }
     }
 
     public void moveRight() {
-        if (this.paddle.getUpperLeft().getX() >= 700) {
-            this.paddle = new Rectangle(new Point(700, 590), 100, 10);
+        if (this.paddle.getUpperLeft().getX() >= (guiWidth - gameBorderWidth) - paddleWidth) {
+            this.paddle = new Rectangle(new Point((guiWidth - gameBorderWidth) - paddleWidth, y), paddleWidth, paddleHeight);
         } else {
-            this.paddle = new Rectangle(new Point(this.paddle.getUpperLeft().getX() + 10, 590), 100, 10);
+            this.paddle = new Rectangle(new Point(this.paddle.getUpperLeft().getX() + 10, y), paddleWidth, paddleHeight);
         }
     }
 
@@ -44,8 +56,11 @@ public class Paddle implements Sprite, Collidable {
     }
 
     public void drawOn(DrawSurface d) {
-        d.setColor(Color.gray);
+        d.setColor(Color.yellow);
         d.fillRectangle((int) this.paddle.getUpperLeft().getX(), (int) this.paddle.getUpperLeft().getY(),
+                (int) this.paddle.getWidth(), (int) this.paddle.getHeight());
+        d.setColor(Color.black);
+        d.drawRectangle((int) this.paddle.getUpperLeft().getX(), (int) this.paddle.getUpperLeft().getY(),
                 (int) this.paddle.getWidth(), (int) this.paddle.getHeight());
     }
 
@@ -56,13 +71,25 @@ public class Paddle implements Sprite, Collidable {
 
     public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
         Velocity v = currentVelocity;
-        if (Math.abs(collisionPoint.getX() - this.paddle.getUpperLeft().getX()) < epsilon
-                || Math.abs(collisionPoint.getX() - (this.paddle.getUpperLeft().getX() + this.paddle.getWidth())) < epsilon) {
-            v = new Velocity(-v.getDx(), v.getDy());
-        }
-        if (Math.abs(collisionPoint.getY() - this.paddle.getUpperLeft().getY()) < epsilon
-                || Math.abs(collisionPoint.getY() - (this.paddle.getUpperLeft().getY() + this.paddle.getHeight())) < epsilon) {
+        double locationOnPaddle = collisionPoint.getX() - paddle.getUpperLeft().getX();
+        double fifthOfPaddle = paddle.getWidth() / 5;
+        if (locationOnPaddle >= 3 * fifthOfPaddle && locationOnPaddle < 4 * fifthOfPaddle) {
+            v = new Velocity(v.getDx(), -v.getDy()); // middle section
+        } else if (Math.abs(collisionPoint.getY() - this.paddle.getUpperLeft().getY()) < epsilon
+                || Math.abs(collisionPoint.getY() - (this.paddle.getUpperLeft().getY() + this.paddleHeight)) < epsilon) {
             v = new Velocity(v.getDx(), -v.getDy());
+        } else {
+            double angle;
+            if (locationOnPaddle < 2 * fifthOfPaddle) {
+                angle = 300; // first section
+            } else if (locationOnPaddle >= 2 * fifthOfPaddle && locationOnPaddle < 3 * fifthOfPaddle) {
+                angle = 330; // second section
+            } else if (locationOnPaddle >= 4 * fifthOfPaddle && locationOnPaddle < 5 * fifthOfPaddle) {
+                angle = 30; // fourth section
+            } else {
+                angle = 60; // fifth section
+            }
+            v = Velocity.fromAngleAndSpeed(angle, currentVelocity.getDx() / Math.sin(Math.toRadians(angle)));
         }
         return v;
     }
