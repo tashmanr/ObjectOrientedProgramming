@@ -5,6 +5,9 @@
 
 import biuoop.DrawSurface;
 
+import java.awt.*;
+import java.util.Random;
+
 /**
  * This class generates a new block, and has functions for the collidable interface.
  */
@@ -16,6 +19,25 @@ public class Block implements Collidable, Sprite {
     public Block(Rectangle rectangle1, java.awt.Color color) {
         this.rectangle = rectangle1;
         this.color = color;
+    }
+
+    public Block(Rectangle rectangle1) {
+        this.rectangle = rectangle1;
+        this.color = randomColorGenerator();
+    }
+
+    /**
+     * Function to generate a random color for the brick.
+     *
+     * @return color
+     */
+    public static java.awt.Color randomColorGenerator() {
+        Random rand = new Random();
+        float color1 = rand.nextFloat();
+        float color2 = rand.nextFloat();
+        float color3 = rand.nextFloat();
+        Color color = new Color(color1, color2, color3);
+        return color;
     }
 
     public Rectangle getCollisionRectangle() {
@@ -48,5 +70,10 @@ public class Block implements Collidable, Sprite {
 
     public void timePassed() {
         return;
+    }
+
+    public void addToGame(Game g){
+        g.addCollidable(this);
+        g.addSprite(this);
     }
 }
