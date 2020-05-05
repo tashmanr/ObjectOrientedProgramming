@@ -11,7 +11,7 @@ import java.util.Random;
 /**
  * This class generates a new ball, and has functions to access data within as well as draw it on a surface.
  */
-public class Ball {
+public class Ball implements Sprite {
     private Point center;
     private int r; //radius
     private java.awt.Color color;
@@ -258,5 +258,9 @@ public class Ball {
             this.v = new Velocity(this.v.getDx(), -this.v.getDy());
         }
         this.center = this.v.applyToPoint(this.center);
+    }
+
+    public void timePassed(){
+        this.moveOneStep();
     }
 }
