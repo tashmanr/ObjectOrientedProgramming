@@ -11,6 +11,10 @@ import biuoop.DrawSurface;
 public class SpriteCollection {
     private List<Sprite> sprites = new ArrayList<Sprite>();
 
+    public SpriteCollection(){
+        this.sprites = new ArrayList<>();
+    }
+
     public void addSprite(Sprite s) {
         sprites.add(s);
     }
