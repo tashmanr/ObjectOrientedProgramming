@@ -41,8 +41,8 @@ public class Game {
         for (int i = 0; i < 2; i++) { // loop to create two balls
             int x = random.nextInt(800);
             int y = random.nextInt(600);
-            Ball b = new Ball(x, y, 3, Color.black);
-            double speed = 8;
+            Ball b = new Ball(x, y, 5, Color.black);
+            double speed = 6;
             double angle = random.nextInt(360);
             Velocity v = Velocity.fromAngleAndSpeed(angle, speed);
             b.setVelocity(v);
@@ -91,6 +91,8 @@ public class Game {
         while (true) {
             long startTime = System.currentTimeMillis(); // timing
             DrawSurface d = gui.getDrawSurface();
+            d.setColor(Color.lightGray);
+            d.fillRectangle(0,0, gui.getDrawSurface().getWidth(), gui.getDrawSurface().getHeight());
             this.sprites.drawAllOn(d);
             gui.show(d);
             this.sprites.notifyAllTimePassed();
