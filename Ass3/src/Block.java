@@ -44,6 +44,10 @@ public class Block implements Collidable, Sprite {
         return this.rectangle;
     }
 
+    public Color getColor(){
+        return color;
+    }
+
     public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
         Velocity v = currentVelocity;
         if (Math.abs(collisionPoint.getX() - this.rectangle.getUpperLeft().getX()) < epsilon
@@ -65,6 +69,9 @@ public class Block implements Collidable, Sprite {
     public void drawOn(DrawSurface surface) {
         surface.setColor(this.color);
         surface.fillRectangle((int) this.rectangle.getUpperLeft().getX(), (int) this.rectangle.getUpperLeft().getY(),
+                (int) this.rectangle.getWidth(), (int) this.rectangle.getHeight());
+        surface.setColor(Color.black);
+        surface.drawRectangle((int) this.rectangle.getUpperLeft().getX(), (int) this.rectangle.getUpperLeft().getY(),
                 (int) this.rectangle.getWidth(), (int) this.rectangle.getHeight());
     }
 
