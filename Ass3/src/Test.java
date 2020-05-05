@@ -172,7 +172,7 @@ public class Test {
         Point p3 = coll3.collisionPoint();
         System.out.println(p3);
     }
-    /*public static void paddleTest(){
+    public static void paddleTest(){
         GUI gui = new GUI("Test", 800, 600);
         Paddle pd = new Paddle(gui);
         //checking borders
@@ -199,7 +199,7 @@ public class Test {
                 sleeper.sleepFor(milliSecondLeftToSleep);
             }
         }
-    }*/
+    }
     public static void GameTest(){
         Game game = new Game();
         game.initialize();
