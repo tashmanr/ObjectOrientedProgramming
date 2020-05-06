@@ -195,9 +195,7 @@ public class Ball implements Sprite {
     public void moveOneStep() {
         Line trajectory = new Line(center, v.applyToPoint(center));
         CollisionInfo tmpCollisionInfo = g.getClosestCollision(trajectory);
-        if (tmpCollisionInfo == null) {
-            center = v.applyToPoint(center);
-        } else {
+        if (tmpCollisionInfo != null) {
             Rectangle tmpRectangle = tmpCollisionInfo.collisionObject().getCollisionRectangle();
             double tmpX = tmpCollisionInfo.collisionPoint().getX();
             double tmpY = tmpCollisionInfo.collisionPoint().getY();
@@ -211,8 +209,8 @@ public class Ball implements Sprite {
                 tmpX = tmpCollisionInfo.collisionPoint().getX() - 1;
             }
             this.setVelocity(tmpCollisionInfo.collisionObject().hit(tmpCollisionInfo.collisionPoint(), v));
-            center = v.applyToPoint(center);
         }
+        center = v.applyToPoint(center);
     }
 
     /**
@@ -260,11 +258,11 @@ public class Ball implements Sprite {
         this.center = this.v.applyToPoint(this.center);
     }
 
-    public void timePassed(){
+    public void timePassed() {
         this.moveOneStep();
     }
 
-    public void addToGame(Game g){
+    public void addToGame(Game g) {
         g.addSprite(this);
     }
 }
