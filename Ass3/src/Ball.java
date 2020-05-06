@@ -16,8 +16,8 @@ public class Ball implements Sprite {
     private int r; //radius
     private java.awt.Color color;
     private Velocity v;
-    public GameEnvironment g;
-    private static double epsilon = Math.pow(10,-15);
+    private GameEnvironment gameEnvironment;
+    private static double epsilon = Math.pow(10, -15);
 
     // constructors
 
@@ -32,7 +32,7 @@ public class Ball implements Sprite {
         this.center = center;
         this.r = r;
         this.color = color;
-        this.g = null;
+        this.gameEnvironment = null;
         this.v = new Velocity(0, 0); // all balls are initialized with velocity = 0
     }
 
@@ -48,7 +48,7 @@ public class Ball implements Sprite {
         this.center = new Point(x, y);
         this.r = r;
         this.color = color;
-        this.g = null;
+        this.gameEnvironment = null;
         this.v = new Velocity(0, 0); // all balls are initialized with velocity = 0
     }
 
@@ -62,7 +62,7 @@ public class Ball implements Sprite {
         this.center = center;
         this.r = r;
         this.color = randomColorGenerator();
-        this.g = null;
+        this.gameEnvironment = null;
         this.v = new Velocity(0, 0); // all balls are initialized with velocity = 0
     }
 
@@ -77,7 +77,7 @@ public class Ball implements Sprite {
         this.center = new Point(x, y);
         this.r = r;
         this.color = randomColorGenerator();
-        this.g = null;
+        this.gameEnvironment = null;
         this.v = new Velocity(0, 0); // all balls are initialized with velocity = 0
     }
 
@@ -120,6 +120,15 @@ public class Ball implements Sprite {
     }
 
     /**
+     * Function to access game environment.
+     *
+     * @return gameEnvironment value
+     */
+    public GameEnvironment getGameEnvironment() {
+        return gameEnvironment;
+    }
+
+    /**
      * Function to access color of ball.
      *
      * @return color
@@ -129,19 +138,11 @@ public class Ball implements Sprite {
     }
 
     /**
-     * Function to access game environment.
-     *
-     * @return gameEnvironment
-     */
-    public GameEnvironment getGameEnvironment() {
-        return this.g;
-    }
-
-    /**
      * Function to draw the ball on the given DrawSurface.
      *
      * @param surface to be drawn on
      */
+    @Override
     public void drawOn(DrawSurface surface) {
         surface.setColor(this.color);
         surface.fillCircle(this.getX(), this.getY(), this.r);
@@ -186,7 +187,7 @@ public class Ball implements Sprite {
      * @param g1 game environment to set
      */
     public void setGameEnvironment(GameEnvironment g1) {
-        this.g = g1;
+        this.gameEnvironment = g1;
     }
 
     /**
@@ -194,21 +195,25 @@ public class Ball implements Sprite {
      */
     public void moveOneStep() {
         Line trajectory = new Line(center, v.applyToPoint(center));
-        CollisionInfo tmpCollisionInfo = g.getClosestCollision(trajectory);
+        CollisionInfo tmpCollisionInfo = gameEnvironment.getClosestCollision(trajectory);
         double tmpX;
         double tmpY;
         if (tmpCollisionInfo != null) {
             Rectangle tmpRectangle = tmpCollisionInfo.collisionObject().getCollisionRectangle();
             tmpX = tmpCollisionInfo.collisionPoint().getX();
             tmpY = tmpCollisionInfo.collisionPoint().getY();
-            if (tmpY - (tmpRectangle.getUpperLeft().getY() + tmpRectangle.getHeight()) < epsilon && v.getDy() > 0) { //hits the block's bottom
+            if (tmpY - (tmpRectangle.getUpperLeft().getY() + tmpRectangle.getHeight()) < epsilon
+                    && v.getDy() < 0) { //hits the block's bottom from below
                 tmpY++;
-            } else if (tmpRectangle.getUpperLeft().getY() - tmpY < epsilon && v.getDy() < 0) { //hits the block's top
+            } else if (tmpRectangle.getUpperLeft().getY() - tmpY < epsilon
+                    && v.getDy() > 0) { //hits the block's top from above
                 tmpY--;
             }
-            if (tmpX - (tmpRectangle.getUpperLeft().getX() + tmpRectangle.getWidth()) < epsilon && v.getDx() < 0) { //hits the block's right side
+            if (tmpX - (tmpRectangle.getUpperLeft().getX() + tmpRectangle.getWidth()) < epsilon
+                    && v.getDx() < 0) { //hits the block's right side from the right
                 tmpX++;
-            } else if (tmpRectangle.getUpperLeft().getX() - tmpX < epsilon && v.getDx() > 0) { //hits the block's left side
+            } else if (tmpRectangle.getUpperLeft().getX() - tmpX < epsilon
+                    && v.getDx() > 0) { //hits the block's left side from the left
                 tmpX--;
             }
             this.setVelocity(tmpCollisionInfo.collisionObject().hit(tmpCollisionInfo.collisionPoint(), v));
@@ -262,10 +267,18 @@ public class Ball implements Sprite {
         this.center = this.v.applyToPoint(this.center);
     }
 
+    /**
+     * Function for animation - calls on moveOneStep() function.
+     */
+    @Override
     public void timePassed() {
         this.moveOneStep();
     }
 
+    /**
+     * Function to add the ball to an existing game.
+     * @param g game to add it to
+     */
     public void addToGame(Game g) {
         g.addSprite(this);
     }
