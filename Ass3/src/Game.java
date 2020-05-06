@@ -91,7 +91,7 @@ public class Game {
         while (true) {
             long startTime = System.currentTimeMillis(); // timing
             DrawSurface d = gui.getDrawSurface();
-            d.setColor(Color.lightGray);
+            d.setColor(Color.blue); // filling the background
             d.fillRectangle(0,0, gui.getDrawSurface().getWidth(), gui.getDrawSurface().getHeight());
             this.sprites.drawAllOn(d);
             gui.show(d);
