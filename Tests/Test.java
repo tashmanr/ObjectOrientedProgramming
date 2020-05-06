@@ -6,7 +6,7 @@ import biuoop.*;
 
 public class Test {
     public static void main(String[] args) {
-        //Test.lineTest();
+        Test.lineTest();
         //Test.rectangleTest();
         //Test.hitTest();
         //Test.collidableTest();;
@@ -77,39 +77,39 @@ public class Test {
         block1.hit(collisionPoint, v);
     }
     public static void collidableTest () {
-        biuoop.GUI gui = new biuoop.GUI("test", 600, 600);
+        GUI gui = new GUI("test", 600, 600);
         Random random = new Random();
-        biuoop.Sleeper sleeper = new biuoop.Sleeper();
-        biuoop.KeyboardSensor keyboardSensor = gui.getKeyboardSensor();
+        Sleeper sleeper = new Sleeper();
+        KeyboardSensor keyboardSensor = gui.getKeyboardSensor();
         int x = random.nextInt(200) + 120;
         int y = random.nextInt(200) + 120;
-        Ball ball = new Ball(x, y, 10, java.awt.Color.BLUE);
+        Ball ball = new Ball(x, y, 10, Color.BLUE);
         //double speed = random.nextInt(50);
         //double angle = random.nextDouble();
         //Velocity v = Velocity.fromAngleAndSpeed(angle, speed);
         ball.setVelocity(15, 20);
         GameEnvironment gameEnvironment = new GameEnvironment();
-        ball.setGameEnviroment(gameEnvironment);
+        ball.setGameEnvironment(gameEnvironment);
         //Blocks
 
         Rectangle rectangle = new Rectangle((new Point(20, 30)), 10, 400);
-        Block block1 = new Block(rectangle, java.awt.Color.GREEN);
+        Block block1 = new Block(rectangle, Color.GREEN);
         Rectangle rectangle2 = new Rectangle(new Point(102, 98), 50, 10);
         Block block2 = new Block(rectangle2, Color.GREEN);
         Rectangle rectangle3 = new Rectangle(new Point(300, 150), 10, 400);
-        Block block3 = new Block(rectangle3, java.awt.Color.GREEN);
+        Block block3 = new Block(rectangle3, Color.GREEN);
         Rectangle rectangle4 = new Rectangle(new Point(550, 500), 50, 10);
-        Block block4 = new Block(rectangle4, java.awt.Color.GREEN);
-        ball.setGameEnviroment(gameEnvironment);
+        Block block4 = new Block(rectangle4, Color.GREEN);
+        ball.setGameEnvironment(gameEnvironment);
         //Borders
         Rectangle rectangle5 = new Rectangle((new Point(0, 0)), 600, 5);
         Block block5 = new Block(rectangle5, Color.BLACK);
         Rectangle rectangle6 = new Rectangle(new Point(0, 0), 5, 600);
         Block block6 = new Block(rectangle6, Color.BLACK);
         Rectangle rectangle7 = new Rectangle(new Point(595, 0), 5, 600);
-        Block block7 = new Block(rectangle7, java.awt.Color.BLACK);
+        Block block7 = new Block(rectangle7, Color.BLACK);
         Rectangle rectangle8 = new Rectangle(new Point(0, 595), 600, 5);
-        Block block8 = new Block(rectangle8, java.awt.Color.BLACK);
+        Block block8 = new Block(rectangle8, Color.BLACK);
         Block[] blocks = new Block[]{block1, block2, block3, block4, block5, block6, block7, block8};
         for (Block block : blocks) {
             ball.getGameEnvironment().addCollidable(block);
@@ -118,7 +118,7 @@ public class Test {
             if (keyboardSensor.isPressed(keyboardSensor.SPACE_KEY)) {
                 gui.close();
             }
-            biuoop.DrawSurface drawSurface = gui.getDrawSurface();
+            DrawSurface drawSurface = gui.getDrawSurface();
             for (Block block : blocks) {
                 block.drawOn(drawSurface);
             }

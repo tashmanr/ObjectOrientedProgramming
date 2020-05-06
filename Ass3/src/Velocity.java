@@ -35,6 +35,7 @@ public class Velocity {
     }
 
     // accessors
+
     /**
      * Function to access dx.
      *
@@ -43,6 +44,7 @@ public class Velocity {
     public double getDx() {
         return this.dx;
     }
+
     /**
      * Function to access dy.
      *
@@ -50,6 +52,15 @@ public class Velocity {
      */
     public double getDy() {
         return this.dy;
+    }
+
+    /**
+     * Function to access the speed.
+     *
+     * @return double speed
+     */
+    public double getSpeed() {
+        return Math.sqrt((dx * dx) + (dy * dy));
     }
 
     /**

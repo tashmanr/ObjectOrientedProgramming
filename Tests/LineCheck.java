@@ -6,7 +6,7 @@ public class LineCheck {
         Line l3 = new Line(1.1, 0, 1.1, 1.1);
         Line l4 = new Line(0, 1.75, 2, 1.75);
         Line l5 = new Line(2.5, 2.5, 2.5, 2.5);
-        if (l1.intersectionWith(l2)!=(new Point(2, 2))) {
+        if (!(l1.intersectionWith(l2).equals(new Point(2, 2)))) {
             problem = true;
             System.out.println("ERROR, intersectionWith problematic");
         }
@@ -18,11 +18,11 @@ public class LineCheck {
             problem = true;
             System.out.println("ERROR, intersectionWith problematic");
         }
-        if (!l1.middle().equals(new Point(1.5, 1.5)) || l2.middle() != (new Point(2.5, 2.5))) {
+        if (!l1.middle().equals(new Point(1.5, 1.5)) || !l2.middle().equals(new Point(2.5, 2.5))) {
             problem = true;
             System.out.println("ERROR, middle problematic");
         }
-        if (l5.intersectionWith(l2) != (l5.start())) {
+        if (!l5.intersectionWith(l2).equals(l5.start())) {
             System.out.println("ERROR, intersectionWith problematic");
         }
         if (!problem) {

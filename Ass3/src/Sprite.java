@@ -5,9 +5,18 @@
 
 import biuoop.DrawSurface;
 
+/**
+ * Interface for Sprite.
+ */
 public interface Sprite {
-    // draw the sprite to the screen
+    /**
+     * Function that draws the sprite on the drawSurface.
+     * @param d drawSurface
+     */
     void drawOn(DrawSurface d);
-    // notify the sprite that time has passed
+
+    /**
+     * Function that notifies the sprite that time has passed.
+     */
     void timePassed();
 }

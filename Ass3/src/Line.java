@@ -3,8 +3,7 @@
  * Rebecca Tashman
  */
 
-import java.util.*;
-
+import java.util.List;
 /**
  * This class generates a new line, and has functions to access the fields.
  */
@@ -122,7 +121,7 @@ public class Line {
      */
     public Point intersectionWith(Line other) {
         /**
-         * Calculating the slope for both lines, if they have the same slope they do not intersect.
+         * Calculating the slope for both lines
          */
         double otherSlope = (other.end().getY() - other.start().getY()) / (other.end().getX() - other.start().getX());
         double thisSlope = (this.end.getY() - this.start.getY()) / (this.end.getX() - this.start.getX());
@@ -139,8 +138,14 @@ public class Line {
                     && (other.start().getY() <= y)
                     && (other.end().getY() >= y)) {
                 return intersectionPoint;
-            } else {
-                return null;
+            } else { // checking if the lines have a shared end point
+                if (this.start.equals(other.end())) {
+                    return this.start;
+                } else if (this.end.equals(other.start())) {
+                    return this.end;
+                } else {
+                    return null;
+                }
             }
         }
         if (this.end().getX() == this.start().getX()) {
@@ -160,8 +165,23 @@ public class Line {
                 return null;
             }
         }
-        if (otherSlope == thisSlope) {
-            return null;
+        if (otherSlope == thisSlope) // if they have the same slope and no overlapping start/end they do not intersect.
+        {
+            if (this.start.equals(other.end())) {
+                return this.start;
+            } else if (this.end.equals(other.start())) {
+                return this.end;
+            } else {
+                return null;
+            }
+        }
+        /**
+         * checking if the two lines share an end point but are not overlapping
+         */
+        if (this.start.equals(other.start()) || this.start.equals(other.end())) {
+            return this.start;
+        } else if (this.end.equals(other.start()) || this.end.equals(other.end())) {
+            return this.end;
         }
         if (other.end().getY() == other.start().getY()) {
             double thisIntercept = this.start.getY() - (thisSlope * this.start.getX());
