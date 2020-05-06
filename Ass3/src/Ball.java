@@ -17,7 +17,7 @@ public class Ball implements Sprite {
     private java.awt.Color color;
     private Velocity v;
     public GameEnvironment g;
-    private static double epsilon = 0.00000000000000001;
+    private static double epsilon = Math.pow(10,-15);
 
     // constructors
 
@@ -195,20 +195,24 @@ public class Ball implements Sprite {
     public void moveOneStep() {
         Line trajectory = new Line(center, v.applyToPoint(center));
         CollisionInfo tmpCollisionInfo = g.getClosestCollision(trajectory);
+        double tmpX;
+        double tmpY;
         if (tmpCollisionInfo != null) {
             Rectangle tmpRectangle = tmpCollisionInfo.collisionObject().getCollisionRectangle();
-            double tmpX = tmpCollisionInfo.collisionPoint().getX();
-            double tmpY = tmpCollisionInfo.collisionPoint().getY();
-            if (Math.abs(tmpY - (tmpRectangle.getUpperLeft().getY() + tmpRectangle.getHeight())) < epsilon) { //hits the block's bottom
-                tmpY = tmpCollisionInfo.collisionPoint().getY() + 1;
-            } else if (Math.abs(tmpY - tmpRectangle.getUpperLeft().getY()) < epsilon) { //hits the block's top
-                tmpY = tmpCollisionInfo.collisionPoint().getY() - 1;
-            } else if (Math.abs(tmpX - (tmpRectangle.getUpperLeft().getX() + tmpRectangle.getWidth())) < epsilon) { //hits the block's right side
-                tmpX = tmpCollisionInfo.collisionPoint().getX() + 1;
-            } else if (Math.abs(tmpX - tmpRectangle.getUpperLeft().getX()) < epsilon) { //hits the block's left side
-                tmpX = tmpCollisionInfo.collisionPoint().getX() - 1;
+            tmpX = tmpCollisionInfo.collisionPoint().getX();
+            tmpY = tmpCollisionInfo.collisionPoint().getY();
+            if (tmpY - (tmpRectangle.getUpperLeft().getY() + tmpRectangle.getHeight()) < epsilon && v.getDy() > 0) { //hits the block's bottom
+                tmpY++;
+            } else if (tmpRectangle.getUpperLeft().getY() - tmpY < epsilon && v.getDy() < 0) { //hits the block's top
+                tmpY--;
+            }
+            if (tmpX - (tmpRectangle.getUpperLeft().getX() + tmpRectangle.getWidth()) < epsilon && v.getDx() < 0) { //hits the block's right side
+                tmpX++;
+            } else if (tmpRectangle.getUpperLeft().getX() - tmpX < epsilon && v.getDx() > 0) { //hits the block's left side
+                tmpX--;
             }
             this.setVelocity(tmpCollisionInfo.collisionObject().hit(tmpCollisionInfo.collisionPoint(), v));
+            center = new Point(tmpX, tmpY);
         }
         center = v.applyToPoint(center);
     }

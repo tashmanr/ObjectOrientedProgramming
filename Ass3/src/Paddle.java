@@ -10,7 +10,7 @@ import java.awt.*;
 public class Paddle implements Sprite, Collidable {
     private biuoop.KeyboardSensor keyboard;
     private Rectangle paddle;
-    private static double epsilon = 0.00000000000000001;
+    private static double epsilon = Math.pow(10,-15);
     private static int gameBorderWidth = 25;
     private static double guiHeight;
     private static double guiWidth;
@@ -73,7 +73,7 @@ public class Paddle implements Sprite, Collidable {
         Velocity v = currentVelocity;
         double locationOnPaddle = collisionPoint.getX() - paddle.getUpperLeft().getX();
         double fifthOfPaddle = paddle.getWidth() / 5;
-        if (collisionPoint.getY() != y) {
+        if (Math.abs(collisionPoint.getY() - y) > epsilon) {
             if (Math.abs(collisionPoint.getX() - paddle.getUpperLeft().getX()) < epsilon
                     || Math.abs(collisionPoint.getX() - (paddle.getUpperLeft().getX() + paddleWidth)) < epsilon) {
                 v = new Velocity(-v.getDx(), v.getDy());

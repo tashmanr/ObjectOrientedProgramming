@@ -14,7 +14,7 @@ import java.util.Random;
 public class Block implements Collidable, Sprite {
     private Rectangle rectangle;
     private java.awt.Color color;
-    private static double epsilon = 0.00000000000000001;
+    private static double epsilon = Math.pow(10,-15);
 
     public Block(Rectangle rectangle1, java.awt.Color color) {
         this.rectangle = rectangle1;
