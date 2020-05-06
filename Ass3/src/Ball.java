@@ -216,7 +216,7 @@ public class Ball implements Sprite {
                     && v.getDx() > 0) { //hits the block's left side from the left
                 tmpX--;
             }
-            this.setVelocity(tmpCollisionInfo.collisionObject().hit(tmpCollisionInfo.collisionPoint(), v));
+            v = (tmpCollisionInfo.collisionObject().hit(tmpCollisionInfo.collisionPoint(), v));
             center = new Point(tmpX, tmpY);
         }
         center = v.applyToPoint(center);

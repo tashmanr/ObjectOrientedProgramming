@@ -109,16 +109,15 @@ public class Paddle implements Sprite, Collidable {
      */
     @Override
     public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
-        Velocity v = currentVelocity;
         double locationOnPaddle = collisionPoint.getX() - paddle.getUpperLeft().getX();
         double fifthOfPaddle = paddle.getWidth() / 5; //divide the paddle to five sections
         if (Math.abs(collisionPoint.getY() - y) > epsilon) { //if the ball hits the side of the paddle, treat like block
             if (Math.abs(collisionPoint.getX() - paddle.getUpperLeft().getX()) < epsilon
                     || Math.abs(collisionPoint.getX() - (paddle.getUpperLeft().getX() + paddleWidth)) < epsilon) {
-                v = new Velocity(-v.getDx(), v.getDy());
+                currentVelocity = new Velocity(-currentVelocity.getDx(), currentVelocity.getDy());
             }
         } else if (locationOnPaddle >= (2 * fifthOfPaddle) && locationOnPaddle < (3 * fifthOfPaddle)) {
-            v = new Velocity(v.getDx(), -v.getDy()); // middle section
+            currentVelocity = new Velocity(currentVelocity.getDx(), -currentVelocity.getDy()); // middle section
         } else {
             double angle;
             if (locationOnPaddle < fifthOfPaddle) {
@@ -130,9 +129,9 @@ public class Paddle implements Sprite, Collidable {
             } else {
                 angle = 60; // fifth section
             }
-            v = Velocity.fromAngleAndSpeed(angle, currentVelocity.getSpeed());
+            currentVelocity = Velocity.fromAngleAndSpeed(angle, currentVelocity.getSpeed());
         }
-        return v;
+        return currentVelocity;
     }
 
     /**
