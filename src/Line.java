@@ -100,20 +100,14 @@ public class Line {
             return null;
         }
         if (this.start.equals(this.end)) { //if this line is actually one point
-            if (((this.start.getX() <= other.start().getX() && this.start.getX() >= other.end().getX())
-                    || (this.start.getX() >= other.start().getX() && this.start.getX() <= other.end().getX()))
-                    && ((this.start.getY() <= other.start().getY() && this.start.getY() >= other.end().getY())
-                    || (this.start.getY() >= other.start().getY() && this.start.getY() <= other.end().getY()))) {
+            if (this.start.pointOnLine(other)) {
                 return this.start;
             } else {
                 return null;
             }
         }
         if (other.start().equals(other.end())) { //if other line is actually one point
-            if (((other.start().getX() <= this.start.getX() && other.start().getX() >= this.end.getX())
-                    || (other.start().getX() >= this.start.getX() && other.start().getX() <= this.end.getX()))
-                    && ((other.start().getY() <= this.start.getY() && other.start().getY() >= this.end.getY())
-                    || (other.start().getY() >= this.start.getY() && other.start().getY() <= this.end.getY()))) {
+            if (other.start().pointOnLine(this)) {
                 return other.start();
             } else {
                 return null;
@@ -161,9 +155,7 @@ public class Line {
             /**
              * Checking that intersection point touches both lines (since the length is not infinite).
              */
-            if (((this.start.getX() <= x && this.end.getX() >= x) || (this.end.getX() <= x && this.start.getX() >= x))
-                    && ((other.start().getY() <= y && other.end().getY() >= y)
-                    || (other.end().getY() <= y && other.start().getY() >= y))) {
+            if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {
                 return intersectionPoint;
             } else { // checking if the lines have a shared end point
                 if (this.start.equals(other.end()) || this.start.equals(other.start())) {
@@ -180,10 +172,7 @@ public class Line {
             double x = this.end.getX();
             double y = (otherSlope * x) + otherIntercept;
             Point intersectionPoint = new Point(x, y);
-            if (((this.start.getY() <= y && (this.end.getY() >= y)) // check that point is on both lines
-                    || (this.end.getY() <= y && (this.start.getY() >= y)))
-                    && ((other.start().getX() <= x && (other.end().getX() >= x))
-                    || (other.end().getX() <= x && (other.start().getX() >= x)))) {
+            if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {
                 return intersectionPoint;
             } else {
                 return null;
@@ -202,10 +191,7 @@ public class Line {
             double y = other.end().getY();
             double x = (y - thisIntercept) / thisSlope;
             Point intersectionPoint = new Point(x, y);
-            if (((this.start.getX() <= x && (this.end.getX() >= x)) // check that point is on both lines
-                    || (this.end.getX() <= x && (this.start.getX() >= x)))
-                    && ((other.start().getX() <= x && (other.end().getX() >= x))
-                    || (other.end().getX() <= x && (other.start().getX() >= x)))) {
+            if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {
                 return intersectionPoint;
             } else {
                 return null;
@@ -216,10 +202,7 @@ public class Line {
             double y = this.end.getY();
             double x = (y - otherIntercept) / otherSlope;
             Point intersectionPoint = new Point(x, y);
-            if (((this.start.getX() <= x && (this.end.getX() >= x)) // check that point is on both lines
-                    || (this.end.getX() <= x && (this.start.getX() >= x)))
-                    && ((other.start().getX() <= x && (other.end().getX() >= x))
-                    || (other.end().getX() <= x && (other.start().getX() >= x)))) {
+            if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {
                 return intersectionPoint;
             } else {
                 return null;
@@ -236,9 +219,7 @@ public class Line {
         /**
          * Checking that intersection point touches both lines (since the length is not infinite).
          */
-        if (((this.start.getX() <= x && (this.end.getX() >= x)) || (this.end.getX() <= x && (this.start.getX() >= x)))
-                && ((other.start().getX() <= x && (other.end().getX() >= x))
-                || (other.end().getX() <= x && (other.start().getX() >= x)))) {
+        if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {
             return intersectionPoint;
         } else {
             return null;

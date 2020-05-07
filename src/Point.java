@@ -48,6 +48,7 @@ public class Point {
     }
 
     // accessors
+
     /**
      * Access x value of this point.
      *
@@ -56,6 +57,7 @@ public class Point {
     public double getX() {
         return this.x;
     }
+
     /**
      * Access y value of this point.
      *
@@ -63,5 +65,18 @@ public class Point {
      */
     public double getY() {
         return this.y;
+    }
+
+    /**
+     * Function to check if this point is on given line.
+     *
+     * @param line to check on
+     * @return boolean true or false
+     */
+    public boolean pointOnLine(Line line) {
+        return (((this.x <= line.start().getX() && this.x >= line.end().getX())
+                || (this.x) >= line.start().getX() && this.x <= line.end().getX())
+                && ((this.y <= line.start().getY() && this.y >= line.end().getY())
+                || (this.y >= line.start().getY() && this.y <= line.end().getY())));
     }
 }
