@@ -119,9 +119,6 @@ public class Line {
                 return null;
             }
         }
-        /**
-         * Calculating the slope for both lines
-         */
         double otherSlope = (other.end().getY() - other.start().getY()) / (other.end().getX() - other.start().getX());
         double thisSlope = (this.end.getY() - this.start.getY()) / (this.end.getX() - this.start.getX());
         if (otherSlope == thisSlope) // if they have the same slope and no overlapping start/end they do not intersect
@@ -155,14 +152,6 @@ public class Line {
                     return null;
                 }
             }
-
-            /*if (this.start.equals(other.end()) || this.start.equals(other.start())) {
-                return this.start;
-            } else if (this.end.equals(other.start()) || this.end.equals(other.end())) {
-                return this.end;
-            } else {
-                return null;
-            } */
         }
         if (other.end().getX() == other.start().getX()) {
             double thisIntercept = this.start.getY() - (thisSlope * this.start.getX());
@@ -191,10 +180,8 @@ public class Line {
             double x = this.end.getX();
             double y = (otherSlope * x) + otherIntercept;
             Point intersectionPoint = new Point(x, y);
-            /**
-             * Checking that intersection point touches both lines (since the length is not infinite).
-             */
-            if (((this.start.getY() <= y && (this.end.getY() >= y)) || (this.end.getY() <= y && (this.start.getY() >= y)))
+            if (((this.start.getY() <= y && (this.end.getY() >= y)) // check that point is on both lines
+                    || (this.end.getY() <= y && (this.start.getY() >= y)))
                     && ((other.start().getX() <= x && (other.end().getX() >= x))
                     || (other.end().getX() <= x && (other.start().getX() >= x)))) {
                 return intersectionPoint;
@@ -215,10 +202,8 @@ public class Line {
             double y = other.end().getY();
             double x = (y - thisIntercept) / thisSlope;
             Point intersectionPoint = new Point(x, y);
-            /**
-             * Checking that intersection point touches both lines (since the length is not infinite).
-             */
-            if (((this.start.getX() <= x && (this.end.getX() >= x)) || (this.end.getX() <= x && (this.start.getX() >= x)))
+            if (((this.start.getX() <= x && (this.end.getX() >= x)) // check that point is on both lines
+                    || (this.end.getX() <= x && (this.start.getX() >= x)))
                     && ((other.start().getX() <= x && (other.end().getX() >= x))
                     || (other.end().getX() <= x && (other.start().getX() >= x)))) {
                 return intersectionPoint;
@@ -231,10 +216,8 @@ public class Line {
             double y = this.end.getY();
             double x = (y - otherIntercept) / otherSlope;
             Point intersectionPoint = new Point(x, y);
-            /**
-             * Checking that intersection point touches both lines (since the length is not infinite).
-             */
-            if (((this.start.getX() <= x && (this.end.getX() >= x)) || (this.end.getX() <= x && (this.start.getX() >= x)))
+            if (((this.start.getX() <= x && (this.end.getX() >= x)) // check that point is on both lines
+                    || (this.end.getX() <= x && (this.start.getX() >= x)))
                     && ((other.start().getX() <= x && (other.end().getX() >= x))
                     || (other.end().getX() <= x && (other.start().getX() >= x)))) {
                 return intersectionPoint;
