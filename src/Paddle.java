@@ -6,6 +6,7 @@
 import biuoop.GUI;
 import biuoop.DrawSurface;
 import biuoop.KeyboardSensor;
+
 import java.awt.Color;
 
 /**
@@ -13,18 +14,21 @@ import java.awt.Color;
  */
 public class Paddle implements Sprite, Collidable {
     private KeyboardSensor keyboard;
-    private Rectangle paddle;
+    private Rectangle paddleVisual;
+    private Rectangle paddleForHit;
     private static double epsilon = Math.pow(10, -15);
     private static int gameBorderWidth = 25;
     private static double guiWidth;
     private double startX;
     private static double y;
-    private static int paddleHeight = 20;
+    private static int paddleHeight = 10;
     private static int paddleWidth = 70;
     private static int paddleMovement = 10;
 
     /**
      * Constructor to create a new paddle.
+     * We have two rectangles, one for the drawsurface (is thicker) and one that has height of 0, for hits.
+     *
      * @param gui from the game
      */
     public Paddle(GUI gui) {
@@ -32,7 +36,8 @@ public class Paddle implements Sprite, Collidable {
         guiWidth = gui.getDrawSurface().getWidth();
         y = guiHeight - gameBorderWidth - paddleHeight;
         startX = gameBorderWidth;
-        this.paddle = new Rectangle(new Point(startX, y), paddleWidth, paddleHeight);
+        this.paddleVisual = new Rectangle(new Point(startX, y), paddleWidth, paddleHeight);
+        this.paddleForHit = new Rectangle(new Point(startX, y), paddleWidth, 0);
         this.keyboard = gui.getKeyboardSensor();
     }
 
@@ -42,10 +47,14 @@ public class Paddle implements Sprite, Collidable {
      * possible before the border.
      */
     public void moveLeft() {
-        if (this.paddle.getUpperLeft().getX() <= paddleMovement + startX) {
-            this.paddle = new Rectangle(new Point(startX, y), paddleWidth, paddleHeight);
+        if (this.paddleForHit.getUpperLeft().getX() <= paddleMovement + startX) {
+            this.paddleForHit = new Rectangle(new Point(startX, y), paddleWidth, 0);
+            this.paddleVisual = new Rectangle(new Point(startX, y), paddleWidth, paddleHeight);
+
         } else {
-            this.paddle = new Rectangle(new Point(this.paddle.getUpperLeft().getX() - paddleMovement, y),
+            this.paddleForHit = new Rectangle(new Point(this.paddleForHit.getUpperLeft().getX() - paddleMovement, y),
+                    paddleWidth, 0);
+            this.paddleVisual = new Rectangle(new Point(this.paddleVisual.getUpperLeft().getX() - paddleMovement, y),
                     paddleWidth, paddleHeight);
         }
     }
@@ -56,11 +65,15 @@ public class Paddle implements Sprite, Collidable {
      * possible before the border.
      */
     public void moveRight() {
-        if (this.paddle.getUpperLeft().getX() >= (guiWidth - gameBorderWidth) - paddleWidth) {
-            this.paddle = new Rectangle(new Point((guiWidth - gameBorderWidth) - paddleWidth, y),
+        if (this.paddleForHit.getUpperLeft().getX() >= (guiWidth - gameBorderWidth) - paddleWidth) {
+            this.paddleForHit = new Rectangle(new Point((guiWidth - gameBorderWidth) - paddleWidth, y),
+                    paddleWidth, 0);
+            this.paddleVisual = new Rectangle(new Point((guiWidth - gameBorderWidth) - paddleWidth, y),
                     paddleWidth, paddleHeight);
         } else {
-            this.paddle = new Rectangle(new Point(this.paddle.getUpperLeft().getX() + paddleMovement, y),
+            this.paddleForHit = new Rectangle(new Point(this.paddleForHit.getUpperLeft().getX() + paddleMovement, y),
+                    paddleWidth, 0);
+            this.paddleVisual = new Rectangle(new Point(this.paddleVisual.getUpperLeft().getX() + paddleMovement, y),
                     paddleWidth, paddleHeight);
         }
     }
@@ -80,42 +93,42 @@ public class Paddle implements Sprite, Collidable {
 
     /**
      * Function to draw the paddle onto the DrawSurface.
+     *
      * @param d DrawSurface
      */
     @Override
     public void drawOn(DrawSurface d) {
         d.setColor(Color.yellow);
-        d.fillRectangle((int) this.paddle.getUpperLeft().getX(), (int) this.paddle.getUpperLeft().getY(),
-                (int) this.paddle.getWidth(), (int) this.paddle.getHeight());
+        d.fillRectangle((int) this.paddleVisual.getUpperLeft().getX(), (int) this.paddleVisual.getUpperLeft().getY(),
+                (int) this.paddleVisual.getWidth(), (int) this.paddleVisual.getHeight());
         d.setColor(Color.black);
-        d.drawRectangle((int) this.paddle.getUpperLeft().getX(), (int) this.paddle.getUpperLeft().getY(),
-                (int) this.paddle.getWidth(), (int) this.paddle.getHeight());
+        d.drawRectangle((int) this.paddleVisual.getUpperLeft().getX(), (int) this.paddleVisual.getUpperLeft().getY(),
+                (int) this.paddleVisual.getWidth(), (int) this.paddleVisual.getHeight());
     }
 
     /**
      * Function from collidable interface, to return the collision rectangle.
+     *
      * @return rectangle
      */
     @Override
     public Rectangle getCollisionRectangle() {
-        return this.paddle;
+        return this.paddleForHit;
     }
 
     /**
      * Function from Collidable interface to return the new velocity after collision.
-     * @param collisionPoint location of collision
+     *
+     * @param collisionPoint  location of collision
      * @param currentVelocity velocity of the object hitting the collidable
      * @return velocity
      */
     @Override
     public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
-        double locationOnPaddle = collisionPoint.getX() - paddle.getUpperLeft().getX();
-        double fifthOfPaddle = paddle.getWidth() / 5; //divide the paddle to five sections
-        if (Math.abs(collisionPoint.getY() - y) > epsilon) { //if the ball hits the side of the paddle, treat like block
-            if (Math.abs(collisionPoint.getX() - paddle.getUpperLeft().getX()) < epsilon
-                    || Math.abs(collisionPoint.getX() - (paddle.getUpperLeft().getX() + paddleWidth)) < epsilon) {
-                currentVelocity = new Velocity(-currentVelocity.getDx(), currentVelocity.getDy());
-            }
+        double locationOnPaddle = collisionPoint.getX() - paddleForHit.getUpperLeft().getX();
+        double fifthOfPaddle = paddleForHit.getWidth() / 5; //divide the paddle to five sections
+        if (currentVelocity.getDy() <= 0) {
+            return new Velocity(currentVelocity.getDx(), -currentVelocity.getDy());
         } else if (locationOnPaddle >= (2 * fifthOfPaddle) && locationOnPaddle < (3 * fifthOfPaddle)) {
             currentVelocity = new Velocity(currentVelocity.getDx(), -currentVelocity.getDy()); // middle section
         } else {
@@ -136,6 +149,7 @@ public class Paddle implements Sprite, Collidable {
 
     /**
      * Function to add the paddle to the game.
+     *
      * @param g game
      */
     public void addToGame(Game g) {

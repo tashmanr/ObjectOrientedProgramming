@@ -198,7 +198,7 @@ public class Ball implements Sprite {
         CollisionInfo tmpCollisionInfo = gameEnvironment.getClosestCollision(trajectory);
         double tmpX;
         double tmpY;
-        if (tmpCollisionInfo != null) {
+        while (tmpCollisionInfo != null) {
             Rectangle tmpRectangle = tmpCollisionInfo.collisionObject().getCollisionRectangle();
             tmpX = tmpCollisionInfo.collisionPoint().getX();
             tmpY = tmpCollisionInfo.collisionPoint().getY();
@@ -218,6 +218,8 @@ public class Ball implements Sprite {
             }
             v = (tmpCollisionInfo.collisionObject().hit(tmpCollisionInfo.collisionPoint(), v));
             center = new Point(tmpX, tmpY);
+            trajectory = new Line(center, v.applyToPoint(center));
+            tmpCollisionInfo = gameEnvironment.getClosestCollision(trajectory);
         }
         center = v.applyToPoint(center);
     }

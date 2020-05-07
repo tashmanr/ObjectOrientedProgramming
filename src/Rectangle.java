@@ -15,9 +15,10 @@ public class Rectangle {
 
     /**
      * Constructor.
+     *
      * @param upperLeft location of upper left corner
-     * @param width width of rectangle
-     * @param height height of rectangle
+     * @param width     width of rectangle
+     * @param height    height of rectangle
      */
     public Rectangle(Point upperLeft, double width, double height) {
         this.upperLeft = upperLeft;
@@ -27,6 +28,7 @@ public class Rectangle {
 
     /**
      * Function to return a (possibly empty) List of intersection points with the specified line.
+     *
      * @param line to compare with
      * @return list of points of intersection
      */
@@ -62,6 +64,7 @@ public class Rectangle {
 
     /**
      * Function to access the width of the rectangle.
+     *
      * @return double width
      */
     public double getWidth() {
@@ -70,6 +73,7 @@ public class Rectangle {
 
     /**
      * Function to access the height of the rectangle.
+     *
      * @return double height
      */
     public double getHeight() {
@@ -78,9 +82,21 @@ public class Rectangle {
 
     /**
      * Function to access the upper left corner of the rectangle.
+     *
      * @return point
      */
     public Point getUpperLeft() {
         return this.upperLeft;
+    }
+
+    /**
+     * Function to check if a certain point is inside of the rectangle.
+     *
+     * @param point to check
+     * @return boolean true or false
+     */
+    public boolean pointInRectangle(Point point) {
+        return (point.getX() >= upperLeft.getX() && point.getX() <= upperLeft.getX() + width
+                && point.getY() >= upperLeft.getY() && point.getY() <= upperLeft.getY() + height);
     }
 }
