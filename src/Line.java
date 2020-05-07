@@ -152,10 +152,7 @@ public class Line {
             double x = other.end().getX();
             double y = (thisSlope * x) + thisIntercept;
             Point intersectionPoint = new Point(x, y);
-            /**
-             * Checking that intersection point touches both lines (since the length is not infinite).
-             */
-            if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {
+            if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {//is point on both lines
                 return intersectionPoint;
             } else { // checking if the lines have a shared end point
                 if (this.start.equals(other.end()) || this.start.equals(other.start())) {
@@ -172,7 +169,7 @@ public class Line {
             double x = this.end.getX();
             double y = (otherSlope * x) + otherIntercept;
             Point intersectionPoint = new Point(x, y);
-            if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {
+            if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {//is point on both lines
                 return intersectionPoint;
             } else {
                 return null;
@@ -191,7 +188,7 @@ public class Line {
             double y = other.end().getY();
             double x = (y - thisIntercept) / thisSlope;
             Point intersectionPoint = new Point(x, y);
-            if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {
+            if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {//is point on both lines
                 return intersectionPoint;
             } else {
                 return null;
@@ -202,7 +199,7 @@ public class Line {
             double y = this.end.getY();
             double x = (y - otherIntercept) / otherSlope;
             Point intersectionPoint = new Point(x, y);
-            if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {
+            if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {//is point on both lines
                 return intersectionPoint;
             } else {
                 return null;
@@ -216,10 +213,7 @@ public class Line {
         double x = (thisIntercept - otherIntercept) / (otherSlope - thisSlope);
         double y = (thisSlope * x) + thisIntercept;
         Point intersectionPoint = new Point(x, y);
-        /**
-         * Checking that intersection point touches both lines (since the length is not infinite).
-         */
-        if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) {
+        if (intersectionPoint.pointOnLine(this) && intersectionPoint.pointOnLine(other)) { // is point on both lines
             return intersectionPoint;
         } else {
             return null;
