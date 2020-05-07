@@ -129,7 +129,7 @@ public class Test {
         }
 
     }
-    public static void collisionInfoTest(){
+    /*public static void collisionInfoTest(){
         //first test - one point of intersection
         List<Collidable> colli1 = new ArrayList<>();
         Line ballLine1 = new Line(30, 10, 40, 25);
@@ -171,7 +171,7 @@ public class Test {
         CollisionInfo coll3 = new CollisionInfo(ballLine3, colli3);
         Point p3 = coll3.collisionPoint();
         System.out.println(p3);
-    }
+    }*/
     public static void paddleTest(){
         GUI gui = new GUI("Test", 800, 600);
         Paddle pd = new Paddle(gui);
