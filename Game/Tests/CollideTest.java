@@ -1,6 +1,4 @@
 import java.util.*;
-import biuoop.DrawSurface;
-import biuoop.GUI;
 
 public class CollideTest {
 
