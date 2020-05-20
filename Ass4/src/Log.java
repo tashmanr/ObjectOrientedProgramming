@@ -12,6 +12,8 @@ public class Log extends BinaryExpression {
 
     public Log(Expression e1, Expression e2) {
         super(e1, e2);
+        expression1 = e1;
+        expression2 = e2;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class Log extends BinaryExpression {
 
     @Override
     public String toString() {
-        return "(" + this.expression1.toString() + "^" + this.expression2.toString() + ")";
+        return "log(" + this.expression1.toString() + ", " + this.expression2.toString() + ")";
     }
 
     @Override

@@ -12,6 +12,7 @@ public class Sin extends UnaryExpression {
 
     public Sin(Expression e) {
         super(e);
+        expression = e;
     }
 
     @Override
@@ -36,6 +37,6 @@ public class Sin extends UnaryExpression {
 
     @Override
     public Expression assign(String var, Expression expression) {
-        return new Sin(expression.assign(var, expression));
+        return new Sin(this.expression.assign(var, expression));
     }
 }

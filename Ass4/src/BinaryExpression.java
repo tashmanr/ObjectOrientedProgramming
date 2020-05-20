@@ -3,6 +3,8 @@
  * 336423124
  */
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public abstract class BinaryExpression extends BaseExpression {
@@ -18,8 +20,8 @@ public abstract class BinaryExpression extends BaseExpression {
 
     @Override
     public List<String> getVariables() {
-        List<String> s = this.expression1.getVariables();
+        HashSet s = new HashSet(this.expression1.getVariables());
         s.addAll(this.expression2.getVariables());
-        return s;
+        return new ArrayList<>(s);
     }
 }

@@ -10,6 +10,7 @@ public class Neg extends UnaryExpression {
 
     public Neg(Expression e) {
         super(e);
+        expression = e;
     }
 
     @Override
@@ -34,6 +35,6 @@ public class Neg extends UnaryExpression {
 
     @Override
     public Expression assign(String var, Expression expression) {
-        return new Neg(expression.assign(var, expression));
+        return new Neg(this.expression.assign(var, expression));
     }
 }

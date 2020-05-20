@@ -12,6 +12,7 @@ public class Cos extends UnaryExpression {
 
     public Cos(Expression e) {
         super(e);
+        expression = e;
     }
 
     @Override
@@ -36,6 +37,6 @@ public class Cos extends UnaryExpression {
 
     @Override
     public Expression assign(String var, Expression expression) {
-        return new Cos(expression.assign(var, expression));
+        return new Cos(this.expression.assign(var, expression));
     }
 }
