@@ -1,9 +1,9 @@
-import java.util.List;
-
 /**
  * Rebecca Tashman.
  * 336423124
  */
+
+import java.util.List;
 
 public abstract class BinaryExpression extends BaseExpression {
     private Expression expression1;

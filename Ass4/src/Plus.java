@@ -1,10 +1,9 @@
-import java.util.List;
-import java.util.Map;
-
 /**
  * 336423124
  * Rebecca Tashman
  */
+
+import java.util.Map;
 
 public class Plus extends BinaryExpression {
     private Expression expression1;
