@@ -44,4 +44,22 @@ public class Plus extends BinaryExpression {
     public Expression differentiate(String var) {
         return new Plus(this.expression1.differentiate(var), this.expression2.differentiate(var));
     }
+
+    @Override
+    public Expression simplify() {
+        if (this.expression2.simplify().toString().equals(new Num(0).simplify().toString())) {
+            return this.expression1.simplify();
+        } else if (this.expression1.simplify().toString().equals(new Num(0).simplify().toString())) {
+            return this.expression2.simplify();
+        } else {
+            if (this.getVariables().isEmpty()) {
+                try {
+                    return new Num(this.evaluate());
+                } catch (Exception IllegalArgumentException) {
+                    throw new IllegalArgumentException();
+                }
+            }
+            return new Plus(this.expression1.simplify(), this.expression2.simplify());
+        }
+    }
 }

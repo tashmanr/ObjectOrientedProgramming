@@ -58,4 +58,9 @@ public class Var implements Expression {
             return new Num(0);
         }
     }
+
+    @Override
+    public Expression simplify() {
+        return this;
+    }
 }

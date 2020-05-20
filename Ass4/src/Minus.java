@@ -37,11 +37,31 @@ public class Minus extends BinaryExpression {
 
     @Override
     public Expression assign(String var, Expression expression) {
-        return new Minus(expression1.assign(var, expression), expression2.assign(var,expression));
+        return new Minus(expression1.assign(var, expression), expression2.assign(var, expression));
     }
 
     @Override
     public Expression differentiate(String var) {
         return new Minus(this.expression1.differentiate(var), this.expression2.differentiate(var));
+    }
+
+    @Override
+    public Expression simplify() {
+        if (this.expression1.simplify().toString().equals(this.expression2.simplify().toString())) {
+            return new Num(0);
+        } else if (this.expression2.simplify().toString().equals(new Num(0).simplify().toString())) {
+            return this.expression1.simplify();
+        } else if (this.expression1.simplify().toString().equals(new Num(0).simplify().toString())) {
+            return new Neg(this.expression2.simplify());
+        } else {
+            if (this.getVariables().isEmpty()) {
+                try {
+                    return new Num(this.evaluate());
+                } catch (Exception IllegalArgumentException) {
+                    throw new IllegalArgumentException();
+                }
+            }
+            return new Minus(this.expression1.simplify(), this.expression2.simplify());
+        }
     }
 }

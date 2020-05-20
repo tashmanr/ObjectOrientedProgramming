@@ -121,7 +121,7 @@ public class FullTest {
             System.out.println("#30:Error in" + ex);
         // simplify checking
         // x*1 or 1*x
-        /*ex = new Mult(new Var("x"), new Num(1));
+        ex = new Mult(new Var("x"), new Num(1));
         if (!ex.simplify().toString().equals("x"))
             System.out.println("#31 :Error in simplify of:" + ex + " get :" + ex.simplify());
         ex = new Mult(new Mult(new Var("x"), new Num(8)), new Num(1));
@@ -410,7 +410,7 @@ public class FullTest {
             System.out.println("#109 Error in:" + ex.simplify());
         }
 
-         */
+
 
         System.out.println("...End of checking!");
     }

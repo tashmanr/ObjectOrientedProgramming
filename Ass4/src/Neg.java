@@ -37,4 +37,16 @@ public class Neg extends UnaryExpression {
     public Expression differentiate(String var) {
         return new Neg(this.expression.differentiate(var));
     }
+
+    @Override
+    public Expression simplify() {
+        if (this.getVariables().isEmpty()) {
+            try {
+                return new Num(this.evaluate());
+            } catch (Exception IllegalArgumentException) {
+                throw new IllegalArgumentException();
+            }
+        }
+        return new Neg(this.expression.simplify());
+    }
 }

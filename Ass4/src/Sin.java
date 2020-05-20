@@ -39,4 +39,16 @@ public class Sin extends UnaryExpression {
     public Expression differentiate(String var) {
         return new Mult(new Cos(this.expression), this.expression.differentiate(var));
     }
+
+    @Override
+    public Expression simplify() {
+        if (this.getVariables().isEmpty()) {
+            try {
+                return new Num(this.evaluate());
+            } catch (Exception IllegalArgumentException) {
+                throw new IllegalArgumentException();
+            }
+        }
+        return new Sin(this.expression.simplify());
+    }
 }

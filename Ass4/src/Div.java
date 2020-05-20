@@ -49,4 +49,22 @@ public class Div extends BinaryExpression {
                 this.expression2), new Mult(this.expression2.differentiate(var),
                 this.expression1)), new Pow(this.expression2, new Num(2)));
     }
+
+    @Override
+    public Expression simplify() {
+        if (this.expression1.simplify().toString().equals(this.expression2.simplify().toString())) {
+            return new Num(1);
+        } else if (this.expression2.simplify().toString().equals(new Num(1).simplify().toString())) {
+            return this.expression1.simplify();
+        } else {
+            if (this.getVariables().isEmpty()) {
+                try {
+                    return new Num(this.evaluate());
+                } catch (Exception IllegalArgumentException) {
+                    throw new IllegalArgumentException();
+                }
+            }
+            return new Div(this.expression1.simplify(), this.expression2.simplify());
+        }
+    }
 }

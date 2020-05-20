@@ -4,6 +4,7 @@
  */
 
 import java.util.Map;
+
 import static java.lang.Math.pow;
 
 public class Pow extends BinaryExpression {
@@ -38,11 +39,29 @@ public class Pow extends BinaryExpression {
 
     @Override
     public Expression assign(String var, Expression expression) {
-        return new Pow(expression1.assign(var, expression), expression2.assign(var,expression));
+        return new Pow(expression1.assign(var, expression), expression2.assign(var, expression));
     }
 
     @Override
     public Expression differentiate(String var) {
         return new Mult(this.expression2, new Pow(this.expression1, new Minus(this.expression2, new Num(1))));
+    }
+
+    @Override
+    public Expression simplify() {
+        if (this.expression2.simplify().toString().equals(new Num(1).simplify().toString())) {
+            return this.expression1;
+        } else if (this.expression2.simplify().toString().equals(new Num(0).simplify().toString())) {
+            return new Num(1);
+        } else {
+            if (this.getVariables().isEmpty()) {
+                try {
+                    return new Num(this.evaluate());
+                } catch (Exception IllegalArgumentException) {
+                    throw new IllegalArgumentException();
+                }
+            }
+            return new Pow(this.expression1.simplify(), this.expression2.simplify());
+        }
     }
 }

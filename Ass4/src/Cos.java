@@ -4,6 +4,7 @@
  */
 
 import java.util.Map;
+
 import static java.lang.Math.cos;
 import static java.lang.Math.toRadians;
 
@@ -38,5 +39,17 @@ public class Cos extends UnaryExpression {
     @Override
     public Expression differentiate(String var) {
         return new Mult(new Neg(new Sin(this.expression)), this.expression.differentiate(var));
+    }
+
+    @Override
+    public Expression simplify() {
+        if (this.getVariables().isEmpty()) {
+            try {
+                return new Num(this.evaluate());
+            } catch (Exception IllegalArgumentException) {
+                throw new IllegalArgumentException();
+            }
+        }
+        return new Cos(this.expression.simplify());
     }
 }

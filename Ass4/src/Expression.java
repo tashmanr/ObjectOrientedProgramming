@@ -31,4 +31,7 @@ public interface Expression {
     // Returns the expression tree resulting from differentiating
     // the current expression relative to variable `var`.
     Expression differentiate(String var);
+
+    // Returned a simplified version of the current expression.
+    Expression simplify();
 }

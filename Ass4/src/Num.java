@@ -44,4 +44,9 @@ public class Num implements Expression {
     public Expression differentiate(String var) {
         return new Num(0);
     }
+
+    @Override
+    public Expression simplify() {
+        return this;
+    }
 }
