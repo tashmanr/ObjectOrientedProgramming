@@ -40,4 +40,8 @@ public class Minus extends BinaryExpression {
         return new Minus(expression1.assign(var, expression), expression2.assign(var,expression));
     }
 
+    @Override
+    public Expression differentiate(String var) {
+        return new Minus(this.expression1.differentiate(var), this.expression2.differentiate(var));
+    }
 }

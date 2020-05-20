@@ -40,4 +40,9 @@ public class Mult extends BinaryExpression {
         return new Mult(expression1.assign(var, expression), expression2.assign(var,expression));
     }
 
+    @Override
+    public Expression differentiate(String var) {
+        return new Plus(new Mult(this.expression1.differentiate(var), this.expression2), new Mult(this.expression1,
+                this.expression2.differentiate(var)));
+    }
 }

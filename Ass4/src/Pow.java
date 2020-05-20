@@ -41,4 +41,8 @@ public class Pow extends BinaryExpression {
         return new Pow(expression1.assign(var, expression), expression2.assign(var,expression));
     }
 
+    @Override
+    public Expression differentiate(String var) {
+        return new Mult(this.expression2, new Pow(this.expression1, new Minus(this.expression2, new Num(1))));
+    }
 }

@@ -49,4 +49,13 @@ public class Var implements Expression {
             return this;
         }
     }
+
+    @Override
+    public Expression differentiate(String var) {
+        if (this.variable.equals(var)) {
+            return new Num(1);
+        } else {
+            return new Num(0);
+        }
+    }
 }

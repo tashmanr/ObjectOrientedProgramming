@@ -40,4 +40,8 @@ public class Plus extends BinaryExpression {
         return new Plus(expression1.assign(var, expression), expression2.assign(var,expression));
     }
 
+    @Override
+    public Expression differentiate(String var) {
+        return new Plus(this.expression1.differentiate(var), this.expression2.differentiate(var));
+    }
 }

@@ -4,6 +4,7 @@
  */
 
 import java.util.Map;
+
 import static java.lang.Math.log;
 
 public class Log extends BinaryExpression {
@@ -38,7 +39,11 @@ public class Log extends BinaryExpression {
 
     @Override
     public Expression assign(String var, Expression expression) {
-        return new Log(expression1.assign(var, expression), expression2.assign(var,expression));
+        return new Log(expression1.assign(var, expression), expression2.assign(var, expression));
     }
 
+    @Override
+    public Expression differentiate(String var) {
+        return new Div(new Num(1), new Mult(this.expression2, new Log(new Num(Math.E), this.expression1)));
+    }
 }

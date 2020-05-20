@@ -34,4 +34,9 @@ public class Sin extends UnaryExpression {
     public Expression assign(String var, Expression expression) {
         return new Sin(this.expression.assign(var, expression));
     }
+
+    @Override
+    public Expression differentiate(String var) {
+        return new Mult(new Cos(this.expression), this.expression.differentiate(var));
+    }
 }

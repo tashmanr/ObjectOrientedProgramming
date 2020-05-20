@@ -25,11 +25,6 @@ public class Cos extends UnaryExpression {
         return cos(toRadians(this.expression.evaluate(assignment)));
     }
 
-    /*@Override
-    public double evaluate() throws Exception {
-        return cos(toRadians(this.expression.evaluate()));
-    }*/
-
     @Override
     public String toString() {
         return "cos(" + this.expression.toString() + ")";
@@ -38,5 +33,10 @@ public class Cos extends UnaryExpression {
     @Override
     public Expression assign(String var, Expression expression) {
         return new Cos(this.expression.assign(var, expression));
+    }
+
+    @Override
+    public Expression differentiate(String var) {
+        return new Mult(new Neg(new Sin(this.expression)), this.expression.differentiate(var));
     }
 }

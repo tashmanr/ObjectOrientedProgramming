@@ -32,4 +32,9 @@ public class Neg extends UnaryExpression {
     public Expression assign(String var, Expression expression) {
         return new Neg(this.expression.assign(var, expression));
     }
+
+    @Override
+    public Expression differentiate(String var) {
+        return new Neg(this.expression.differentiate(var));
+    }
 }
