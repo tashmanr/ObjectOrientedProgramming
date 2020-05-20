@@ -26,11 +26,6 @@ public class Sin extends UnaryExpression {
     }
 
     @Override
-    public double evaluate() throws Exception {
-        return sin(toRadians(this.expression.evaluate()));
-    }
-
-    @Override
     public String toString() {
         return "sin(" + this.expression.toString() + ")";
     }

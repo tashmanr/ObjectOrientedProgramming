@@ -24,11 +24,6 @@ public class Neg extends UnaryExpression {
     }
 
     @Override
-    public double evaluate() throws Exception {
-        return (-1) * this.expression.evaluate();
-    }
-
-    @Override
     public String toString() {
         return "(-" + this.expression.toString() + ")";
     }

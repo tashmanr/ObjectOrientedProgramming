@@ -3,6 +3,7 @@
  * Rebecca Tashman
  */
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,9 @@ public abstract class BaseExpression implements Expression {
 
     public abstract double evaluate(Map<String, Double> assignment) throws Exception;
 
-    public abstract double evaluate() throws Exception;
+    public double evaluate() throws Exception {
+        return evaluate(new HashMap<String, Double>());
+    }
 
     public abstract List<String> getVariables();
 

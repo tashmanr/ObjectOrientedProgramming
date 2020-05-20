@@ -32,11 +32,6 @@ public class Log extends BinaryExpression {
     }
 
     @Override
-    public double evaluate() throws Exception {
-        return log(this.expression2.evaluate()) / log(this.expression1.evaluate());
-    }
-
-    @Override
     public String toString() {
         return "log(" + this.expression1.toString() + ", " + this.expression2.toString() + ")";
     }

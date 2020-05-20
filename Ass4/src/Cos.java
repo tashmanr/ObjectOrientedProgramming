@@ -25,10 +25,10 @@ public class Cos extends UnaryExpression {
         return cos(toRadians(this.expression.evaluate(assignment)));
     }
 
-    @Override
+    /*@Override
     public double evaluate() throws Exception {
         return cos(toRadians(this.expression.evaluate()));
-    }
+    }*/
 
     @Override
     public String toString() {

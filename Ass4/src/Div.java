@@ -30,10 +30,10 @@ public class Div extends BinaryExpression {
         return this.expression1.evaluate(assignment) / this.expression2.evaluate(assignment);
     }
 
-    @Override
+    /*@Override
     public double evaluate() throws Exception {
         return this.expression1.evaluate() / this.expression2.evaluate();
-    }
+    }*/
 
     @Override
     public String toString() {

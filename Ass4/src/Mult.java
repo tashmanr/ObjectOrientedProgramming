@@ -31,11 +31,6 @@ public class Mult extends BinaryExpression {
     }
 
     @Override
-    public double evaluate() throws Exception {
-        return this.expression1.evaluate() * this.expression2.evaluate();
-    }
-
-    @Override
     public String toString() {
         return "(" + this.expression1.toString() + " * " + this.expression2.toString() + ")";
     }
