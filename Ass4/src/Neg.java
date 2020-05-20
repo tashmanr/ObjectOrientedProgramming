@@ -3,8 +3,6 @@
  * Rebecca Tashman
  */
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class Neg extends UnaryExpression {
@@ -27,11 +25,6 @@ public class Neg extends UnaryExpression {
     @Override
     public double evaluate() throws Exception {
         return (-1) * this.expression.evaluate();
-    }
-
-    @Override
-    public List<String> getVariables() {
-        return this.expression.getVariables();
     }
 
     @Override

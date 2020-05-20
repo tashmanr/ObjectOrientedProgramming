@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * Rebecca Tashman.
  * 336423124
@@ -12,5 +14,12 @@ public abstract class BinaryExpression extends BaseExpression {
         this.expression2 = e2;
     }
 
-    public abstract Expression getExpression();
+    //public abstract Expression getExpression();
+
+    @Override
+    public List<String> getVariables() {
+        List<String> s = this.expression1.getVariables();
+        s.addAll(this.expression2.getVariables());
+        return s;
+    }
 }
