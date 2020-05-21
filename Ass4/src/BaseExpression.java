@@ -10,6 +10,14 @@ import java.util.Map;
 public abstract class BaseExpression implements Expression {
     protected static Var e = new Var("e");
 
+    public Expression noVariablesSimplify() {
+        try {
+            return new Num(this.evaluate());
+        } catch (Exception IllegalArgumentException) {
+            throw new IllegalArgumentException();
+        }
+    }
+
     public abstract double evaluate(Map<String, Double> assignment) throws Exception;
 
     public double evaluate() throws Exception {

@@ -50,24 +50,22 @@ public class Log extends BinaryExpression {
 
     @Override
     public Expression differentiate(String var) {
-        //first function
-        return new Div(new Minus(new Div(new Mult(new Log(new Num(Math.E), this.expression1), this.expression2.differentiate(var)),
-                this.expression2), new Div(new Mult(this.expression1.differentiate(var), new Log(new Num(Math.E),
-                this.expression2)), this.expression1)), new Pow(new Log(new Num(Math.E), this.expression1), new Num(2)));
+        return new Div(new Minus(new Div(new Mult(new Log(e, this.expression1), this.expression2.differentiate(var)),
+                this.expression2), new Div(new Mult(this.expression1.differentiate(var), new Log(e,
+                this.expression2)), this.expression1)), new Pow(new Log(e, this.expression1), new Num(2)));
     }
 
     @Override
     public Expression simplify() {
         if (this.expression2.simplify().toString().equals(this.expression1.simplify().toString())) {
             return new Num(1);
-        } else if (this.getVariables().isEmpty()) {
-            try {
-                return new Num(this.evaluate());
-            } catch (Exception IllegalArgumentException) {
-                throw new IllegalArgumentException();
-            }
         } else {
-            return new Log(this.expression1.simplify(), this.expression2.simplify());
+            BinaryExpression b = new Log(this.expression1.simplify(), this.expression2.simplify());
+            if (b.getVariables().isEmpty()) {
+                return b.noVariablesSimplify();
+            } else {
+                return b;
+            }
         }
     }
 }

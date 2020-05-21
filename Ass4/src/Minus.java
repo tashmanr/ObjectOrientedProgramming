@@ -49,19 +49,17 @@ public class Minus extends BinaryExpression {
     public Expression simplify() {
         if (this.expression1.simplify().toString().equals(this.expression2.simplify().toString())) {
             return new Num(0);
-        } else if (this.expression2.simplify().toString().equals(new Num(0).simplify().toString())) {
+        } else if (this.expression2.simplify().toString().equals(new Num(0).toString())) {
             return this.expression1.simplify();
-        } else if (this.expression1.simplify().toString().equals(new Num(0).simplify().toString())) {
+        } else if (this.expression1.simplify().toString().equals(new Num(0).toString())) {
             return new Neg(this.expression2.simplify());
         } else {
-            if (this.getVariables().isEmpty()) {
-                try {
-                    return new Num(this.evaluate());
-                } catch (Exception IllegalArgumentException) {
-                    throw new IllegalArgumentException();
-                }
+            BinaryExpression b = new Minus(this.expression1.simplify(), this.expression2.simplify());
+            if (b.getVariables().isEmpty()) {
+                return b.noVariablesSimplify();
+            } else {
+                return b;
             }
-            return new Minus(this.expression1.simplify(), this.expression2.simplify());
         }
     }
 }

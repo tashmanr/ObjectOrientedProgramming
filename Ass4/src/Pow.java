@@ -44,24 +44,24 @@ public class Pow extends BinaryExpression {
 
     @Override
     public Expression differentiate(String var) {
-        return new Mult(this.expression2, new Pow(this.expression1, new Minus(this.expression2, new Num(1))));
+        return new Mult(this, new Plus(new Mult(this.expression1.differentiate(var),
+                new Div(this.expression2, this.expression1)), new Mult(this.expression2.differentiate(var),
+                new Log(e, this.expression1))));
     }
 
     @Override
     public Expression simplify() {
-        if (this.expression2.simplify().toString().equals(new Num(1).simplify().toString())) {
+        if (this.expression2.simplify().toString().equals(new Num(1).toString())) {
             return this.expression1;
-        } else if (this.expression2.simplify().toString().equals(new Num(0).simplify().toString())) {
+        } else if (this.expression2.simplify().toString().equals(new Num(0).toString())) {
             return new Num(1);
         } else {
-            if (this.getVariables().isEmpty()) {
-                try {
-                    return new Num(this.evaluate());
-                } catch (Exception IllegalArgumentException) {
-                    throw new IllegalArgumentException();
-                }
+            BinaryExpression b = new Pow(this.expression1.simplify(), this.expression2.simplify());
+            if (b.getVariables().isEmpty()) {
+                return b.noVariablesSimplify();
+            } else {
+                return b;
             }
-            return new Pow(this.expression1.simplify(), this.expression2.simplify());
         }
     }
 }

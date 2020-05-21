@@ -37,7 +37,7 @@ public class Mult extends BinaryExpression {
 
     @Override
     public Expression assign(String var, Expression expression) {
-        return new Mult(expression1.assign(var, expression), expression2.assign(var,expression));
+        return new Mult(expression1.assign(var, expression), expression2.assign(var, expression));
     }
 
     @Override
@@ -48,22 +48,20 @@ public class Mult extends BinaryExpression {
 
     @Override
     public Expression simplify() {
-        if (this.expression2.simplify().toString().equals(new Num(1).simplify().toString())) {
+        if (this.expression2.simplify().toString().equals(new Num(1).toString())) {
             return this.expression1.simplify();
-        } else if (this.expression1.simplify().toString().equals(new Num(1).simplify().toString())) {
+        } else if (this.expression1.simplify().toString().equals(new Num(1).toString())) {
             return this.expression2.simplify();
-        } else if(this.expression1.simplify().toString().equals(new Num(0).simplify().toString())
-                || this.expression2.simplify().toString().equals(new Num(0).simplify().toString())) {
+        } else if (this.expression1.simplify().toString().equals(new Num(0).toString())
+                || this.expression2.simplify().toString().equals(new Num(0).toString())) {
             return new Num(0);
         } else {
-            if (this.getVariables().isEmpty()) {
-                try {
-                    return new Num(this.evaluate());
-                } catch (Exception IllegalArgumentException) {
-                    throw new IllegalArgumentException();
-                }
+            BinaryExpression b = new Mult(this.expression1.simplify(), this.expression2.simplify());
+            if (b.getVariables().isEmpty()) {
+                return b.noVariablesSimplify();
+            } else {
+                return b;
             }
-            return new Mult(this.expression1.simplify(), this.expression2.simplify());
         }
     }
 }

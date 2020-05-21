@@ -38,18 +38,16 @@ public class Cos extends UnaryExpression {
 
     @Override
     public Expression differentiate(String var) {
-        return new Mult(new Neg(new Sin(this.expression)), this.expression.differentiate(var));
+        return new Neg(new Mult(new Sin(this.expression), this.expression.differentiate(var)));
     }
 
     @Override
     public Expression simplify() {
-        if (this.getVariables().isEmpty()) {
-            try {
-                return new Num(this.evaluate());
-            } catch (Exception IllegalArgumentException) {
-                throw new IllegalArgumentException();
-            }
+        UnaryExpression u = new Cos(this.expression.simplify());
+        if (u.getVariables().isEmpty()) {
+            return u.noVariablesSimplify();
+        } else {
+            return u;
         }
-        return new Cos(this.expression.simplify());
     }
 }

@@ -40,13 +40,11 @@ public class Neg extends UnaryExpression {
 
     @Override
     public Expression simplify() {
-        if (this.getVariables().isEmpty()) {
-            try {
-                return new Num(this.evaluate());
-            } catch (Exception IllegalArgumentException) {
-                throw new IllegalArgumentException();
-            }
+        UnaryExpression u = new Neg(this.expression.simplify());
+        if (u.getVariables().isEmpty()) {
+            return u.noVariablesSimplify();
+        } else {
+            return u;
         }
-        return new Neg(this.expression.simplify());
     }
 }
