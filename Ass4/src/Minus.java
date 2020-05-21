@@ -57,11 +57,11 @@ public class Minus extends BinaryExpression {
     @Override
     public Expression simplify() {
         if (this.ex1.simplify().toString().equals(this.ex2.simplify().toString())) {
-            return new Num(0);
+            return new Num(0); // x-x=0
         } else if (this.ex2.simplify().toString().equals(new Num(0).toString())) {
-            return this.ex1.simplify();
+            return this.ex1.simplify(); // x-0=x
         } else if (this.ex1.simplify().toString().equals(new Num(0).toString())) {
-            return new Neg(this.ex2.simplify());
+            return new Neg(this.ex2.simplify()); // 0-x = -x
         } else {
             BinaryExpression b = new Minus(this.ex1.simplify(), this.ex2.simplify());
             if (b.getVariables().isEmpty()) {

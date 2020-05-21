@@ -35,7 +35,7 @@ public class Div extends BinaryExpression {
                 throw new IllegalArgumentException();
             }
         }
-        if (this.ex2.evaluate(assignment) == 0) {
+        if (this.ex2.evaluate(assignment) == 0) { // we can't divide by 0
             throw new IllegalArgumentException();
         }
         return this.ex1.evaluate(assignment) / this.ex2.evaluate(assignment);
@@ -62,9 +62,9 @@ public class Div extends BinaryExpression {
     @Override
     public Expression simplify() {
         if (this.ex1.simplify().toString().equals(this.ex2.simplify().toString())) {
-            return new Num(1);
+            return new Num(1); // x/x = 1
         } else if (this.ex2.simplify().toString().equals(new Num(1).toString())) {
-            return this.ex1.simplify();
+            return this.ex1.simplify(); // x/1 = x
         } else {
             BinaryExpression b = new Div(this.ex1.simplify(), this.ex2.simplify());
             if (b.getVariables().isEmpty()) {

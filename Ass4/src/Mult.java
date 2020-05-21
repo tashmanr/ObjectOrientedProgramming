@@ -58,12 +58,12 @@ public class Mult extends BinaryExpression {
     @Override
     public Expression simplify() {
         if (this.ex2.simplify().toString().equals(new Num(1).toString())) {
-            return this.ex1.simplify();
+            return this.ex1.simplify();// x*1=x
         } else if (this.ex1.simplify().toString().equals(new Num(1).toString())) {
-            return this.ex2.simplify();
+            return this.ex2.simplify();// 1*x=x
         } else if (this.ex1.simplify().toString().equals(new Num(0).toString())
                 || this.ex2.simplify().toString().equals(new Num(0).toString())) {
-            return new Num(0);
+            return new Num(0); // x*0=0
         } else {
             BinaryExpression b = new Mult(this.ex1.simplify(), this.ex2.simplify());
             if (b.getVariables().isEmpty()) {

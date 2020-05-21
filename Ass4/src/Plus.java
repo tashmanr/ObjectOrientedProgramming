@@ -57,9 +57,9 @@ public class Plus extends BinaryExpression {
     @Override
     public Expression simplify() {
         if (this.ex2.simplify().toString().equals(new Num(0).toString())) {
-            return this.ex1.simplify();
+            return this.ex1.simplify(); // x+0=x
         } else if (this.ex1.simplify().toString().equals(new Num(0).toString())) {
-            return this.ex2.simplify();
+            return this.ex2.simplify(); // 0+x=x
         } else {
             BinaryExpression b = new Plus(this.ex1.simplify(), this.ex2.simplify());
             if (b.getVariables().isEmpty()) {

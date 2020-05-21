@@ -61,9 +61,9 @@ public class Pow extends BinaryExpression {
     @Override
     public Expression simplify() {
         if (this.ex2.simplify().toString().equals(new Num(1).toString())) {
-            return this.ex1;
+            return this.ex1; // x^1 = x
         } else if (this.ex2.simplify().toString().equals(new Num(0).toString())) {
-            return new Num(1);
+            return new Num(1); // x^0=1
         } else {
             BinaryExpression b = new Pow(this.ex1.simplify(), this.ex2.simplify());
             if (b.getVariables().isEmpty()) {

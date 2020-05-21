@@ -37,13 +37,13 @@ public class Log extends BinaryExpression {
                 throw new IllegalArgumentException();
             }
         }
-        if (this.ex1.simplify().toString().equals(new Num(0).toString())
-                || this.ex1.simplify().toString().equals(new Num(1).toString())
-                || this.ex1.simplify().evaluate() < 0
-                || this.ex2.simplify().toString().equals(new Num(0).toString())) {
+        if (this.ex1.simplify().toString().equals(new Num(0).toString()) // base of log can't be 0
+                || this.ex1.simplify().toString().equals(new Num(1).toString()) // base of log can't be 1
+                || this.ex1.simplify().evaluate() < 0 // base of log can't be negative
+                || this.ex2.simplify().toString().equals(new Num(0).toString())) { // result can't be 0
             throw new IllegalArgumentException();
         }
-        return log(this.ex2.evaluate(assignment)) / log(this.ex1.evaluate(assignment));
+        return log(this.ex2.evaluate(assignment)) / log(this.ex1.evaluate(assignment)); // loga b = lnb/lna
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Log extends BinaryExpression {
     @Override
     public Expression simplify() {
         if (this.ex2.simplify().toString().equals(this.ex1.simplify().toString())) {
-            return new Num(1);
+            return new Num(1); // logx x = 1
         } else {
             BinaryExpression b = new Log(this.ex1.simplify(), this.ex2.simplify());
             if (b.getVariables().isEmpty()) {
