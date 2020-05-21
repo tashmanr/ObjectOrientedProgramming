@@ -10,6 +10,11 @@ import java.util.Map;
 public abstract class BaseExpression implements Expression {
     protected static Var e = new Var("e");
 
+    /**
+     * This function is called on an expression that contains no variables.
+     * It calculates the functions, and returns the result. If the calculation returns an error we throw the exxception
+     * @return new expression that is a calculation (contains no variables)
+     */
     public Expression noVariablesSimplify() {
         try {
             return new Num(this.evaluate());

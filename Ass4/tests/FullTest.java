@@ -295,8 +295,8 @@ public class FullTest {
         if (!ex.differentiate(("x")).toString().equals("(((0.0 * x) - (1.0 * 10.0)) / (x^2.0))"))
             System.out.println("#77:Error in Differentitation of:" + ex + " get :" + ex.differentiate("x"));
         ex = new Log(new Num(10), new Var("x"));
-        if (!ex.differentiate(("x")).toString().equals("(1.0 / (log(e, 10.0) * x))"))
-            System.out.println("#78:Error in Differentitation of:" + ex + " get :" + ex.differentiate("x"));
+        if (!ex.differentiate(("x")).simplify().toString().equals("(1.0 / (log(e, 10.0) * x))"))
+            System.out.println("#78:Error in Differentitation of:" + ex + " get :" + ex.differentiate("x").simplify());
         ex = new Minus(new Num(10), new Var("x"));
         if (!ex.differentiate(("x")).toString().equals("(0.0 - 1.0)"))
             System.out.println("#79:Error in Differentitation of:" + ex + " get :" + ex.differentiate("x"));
@@ -390,7 +390,7 @@ public class FullTest {
             System.out.println("#102:Error in diff of:" + ex.differentiate("x"));
         }
         // bonus checking
-        /*ex = new Pow(new Pow(new Var("x"), new Var("y")), new Var("z"));
+        ex = new Pow(new Pow(new Var("x"), new Var("y")), new Var("z"));
         if (!ex.simplify().toString().equals("((x^y)^z)")) {
             System.out.println("#103:Error in bonus simplify of:" + ex.simplify());
         }
@@ -408,7 +408,7 @@ public class FullTest {
         if (!ex.simplify().toString().equals("(10.0 / 0.0)")) {
             System.out.println("#109 Error in:" + ex.simplify());
         }
-*/
+
         System.out.println("...End of checking!");
     }
 }

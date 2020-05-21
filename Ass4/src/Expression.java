@@ -7,31 +7,54 @@ import java.util.Map;
 import java.util.List;
 
 public interface Expression {
-    // Evaluate the expression using the variable values provided
-    // in the assignment, and return the result.  If the expression
-    // contains a variable which is not in the assignment, an exception
-    // is thrown.
+
+    /**
+     * This function evaluates the expression using the variable values provided in the assignment and returns
+     * the result. If the expression contains a variable which is not in the assignment, an exception is thrown.
+     * @param assignment a map of variables and their double values
+     * @return double - result of the calculation
+     * @throws Exception if variable is missing from assignment
+     */
     double evaluate(Map<String, Double> assignment) throws Exception;
 
-    // A convenience method. Like the `evaluate(assignment)` method above,
-    // but uses an empty assignment.
+    /**
+     * This function calls to the evaluate method from above using an empty assignment.
+     * @return double - result of the calculation
+     * @throws Exception if variable is missing from assignment
+     */
     double evaluate() throws Exception;
 
-    // Returns a list of the variables in the expression.
+    /**
+     * This method returns a list of the variables in the expression.
+     * @return list of variables
+     */
     List<String> getVariables();
 
-    // Returns a nice string representation of the expression.
+    /**
+     * This function returns a string representation of the expression.
+     * @return string
+     */
     String toString();
 
-    // Returns a new expression in which all occurrences of the variable
-    // var are replaced with the provided expression (Does not modify the
-    // current expression).
+    /**
+     * This function returns a new expression in which all occurrences of the variable var are replaced.
+     * with the provided expression (does not modify the current expression).
+     * @param var variable to be replaced
+     * @param expression expression to replace the variable
+     * @return new expression with the replacement if it happened
+     */
     Expression assign(String var, Expression expression);
 
-    // Returns the expression tree resulting from differentiating
-    // the current expression relative to variable `var`.
+    /**
+     * This function returns the expression tree resulting from differentiating the current expression relative to var.
+     * @param var variable to differentiate in relation to
+     * @return new expression (the derivative)
+     */
     Expression differentiate(String var);
 
-    // Returned a simplified version of the current expression.
+    /**
+     * This function returns a simplified version of the current expression.
+     * @return new expression simplified as much as possible
+     */
     Expression simplify();
 }
