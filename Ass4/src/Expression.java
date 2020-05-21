@@ -6,6 +6,9 @@
 import java.util.Map;
 import java.util.List;
 
+/**
+ * This is Expression interface, all of the classes implement it.
+ */
 public interface Expression {
 
     /**

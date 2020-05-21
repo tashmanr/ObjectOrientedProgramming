@@ -7,10 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Var class which implements Expression.
+ */
 public class Var implements Expression {
     private String variable;
 
-    //constructor
+    /**
+     * Constructor which receives a string.
+     * @param var String to save in the expression
+     */
     public Var(String var) {
         this.variable = var;
     }

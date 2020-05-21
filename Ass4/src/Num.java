@@ -7,10 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Num class which implements Expression.
+ */
 public class Num implements Expression {
     private double number;
 
-    //constructor
+    /**
+     * Constructor which receives a double.
+      * @param num double to save in the expression
+     */
     public Num(double num) {
         this.number = num;
     }

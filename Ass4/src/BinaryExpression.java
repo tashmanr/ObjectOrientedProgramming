@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * This is the BinaryExpression class, which extends the BaseExpression class and parent to binary function classes.
+ */
 public abstract class BinaryExpression extends BaseExpression {
     private Expression expression1;
     private Expression expression2;
