@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class BaseExpression implements Expression {
+    protected static Var e = new Var("e");
 
     public abstract double evaluate(Map<String, Double> assignment) throws Exception;
 
