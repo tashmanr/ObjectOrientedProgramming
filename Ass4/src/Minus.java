@@ -50,6 +50,7 @@ public class Minus extends BinaryExpression {
 
     @Override
     public Expression differentiate(String var) {
+        // the derivative for f(x)-g(x) is f'(x) - g'(x)
         return new Minus(this.ex1.differentiate(var), this.ex2.differentiate(var));
     }
 

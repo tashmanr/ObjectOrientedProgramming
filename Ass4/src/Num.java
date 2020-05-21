@@ -48,7 +48,7 @@ public class Num implements Expression {
 
     @Override
     public Expression differentiate(String var) {
-        return new Num(0);
+        return new Num(0); // numbers will never be the variable we are deriving in relation to
     }
 
     @Override

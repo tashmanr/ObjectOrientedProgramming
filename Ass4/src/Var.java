@@ -58,7 +58,7 @@ public class Var implements Expression {
 
     @Override
     public Expression differentiate(String var) {
-        if (this.variable.equals(var)) {
+        if (this.variable.equals(var)) { // if this is the variable we're deriving in relation to, return 1, else 0
             return new Num(1);
         } else {
             return new Num(0);

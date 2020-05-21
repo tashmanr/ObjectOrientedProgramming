@@ -42,6 +42,7 @@ public class Neg extends UnaryExpression {
 
     @Override
     public Expression differentiate(String var) {
+        // the derivative for -f(x) is the same as -1 * f'(x)
         return new Neg(this.ex.differentiate(var));
     }
 

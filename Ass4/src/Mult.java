@@ -50,6 +50,7 @@ public class Mult extends BinaryExpression {
 
     @Override
     public Expression differentiate(String var) {
+        // the derivative for f(x)*g(x) is f'(x)*g(x) + f(x)*g'(x)
         return new Plus(new Mult(this.ex1.differentiate(var), this.ex2), new Mult(this.ex1,
                 this.ex2.differentiate(var)));
     }

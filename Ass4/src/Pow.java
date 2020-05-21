@@ -52,6 +52,7 @@ public class Pow extends BinaryExpression {
 
     @Override
     public Expression differentiate(String var) {
+        // the derivative for f(x)^g(x) is (f(x)^g(x))*(f'(x)*(g(x)/f(x)) + (g'(x)*lnf(x))
         return new Mult(this, new Plus(new Mult(this.ex1.differentiate(var),
                 new Div(this.ex2, this.ex1)), new Mult(this.ex2.differentiate(var),
                 new Log(e, this.ex1))));

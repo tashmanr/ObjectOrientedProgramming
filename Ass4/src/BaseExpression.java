@@ -19,7 +19,7 @@ public abstract class BaseExpression implements Expression {
     public Expression noVariablesSimplify() {
         try {
             return new Num(this.evaluate());
-        } catch (Exception IllegalArgumentException) {
+        } catch (Exception illegalArgumentException) {
             throw new IllegalArgumentException();
         }
     }

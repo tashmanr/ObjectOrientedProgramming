@@ -58,9 +58,10 @@ public class Log extends BinaryExpression {
 
     @Override
     public Expression differentiate(String var) {
+        // the derivative for logf(x) g(x) is (((lnf(x)*g'(x)) / g(x)) - (f'(x)*lng(x) / f(x))) / (lnf(x)^2)
         return new Div(new Minus(new Div(new Mult(new Log(e, this.ex1), this.ex2.differentiate(var)),
-                this.ex2), new Div(new Mult(this.ex1.differentiate(var), new Log(e,
-                this.ex2)), this.ex1)), new Pow(new Log(e, this.ex1), new Num(2)));
+                this.ex2), new Div(new Mult(this.ex1.differentiate(var), new Log(e, this.ex2)), this.ex1)),
+                new Pow(new Log(e, this.ex1), new Num(2)));
     }
 
     @Override

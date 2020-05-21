@@ -44,6 +44,7 @@ public class Sin extends UnaryExpression {
 
     @Override
     public Expression differentiate(String var) {
+        // the derivative for sin(x) is cos(f(x))*f'(x)
         return new Mult(new Cos(this.ex), this.ex.differentiate(var));
     }
 
