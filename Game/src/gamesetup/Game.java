@@ -3,6 +3,8 @@
  * 336423124
  */
 package gamesetup;
+
+import hitlisteners.BallRemover;
 import hitlisteners.BlockRemover;
 import sprites.Ball;
 import sprites.Block;
@@ -15,6 +17,7 @@ import interfaces.Collidable;
 import geometryprimatives.Point;
 import geometryprimatives.Rectangle;
 import interfaces.Sprite;
+
 import java.awt.Color;
 import java.util.Random;
 
@@ -25,7 +28,9 @@ public class Game {
     private SpriteCollection sprites;
     private GameEnvironment environment;
     private GUI gui;
-    private Counter counter;
+    private Counter blocks;
+    private Counter balls;
+    private Counter score;
 
     /**
      * Constructor - creates new gamesetup.SpriteCollection, new gamesetup.GameEnvironment and new GUI.
@@ -33,12 +38,15 @@ public class Game {
     public Game() {
         sprites = new SpriteCollection();
         environment = new GameEnvironment();
-        gui = new biuoop.GUI("gamesetup.Game", 800, 600);
-        counter = new Counter();
+        gui = new biuoop.GUI("Game", 800, 600);
+        blocks = new Counter();
+        balls = new Counter();
+        score = new Counter();
     }
 
     /**
      * Function to add collidable to the environment.
+     *
      * @param c collidable to add
      */
     public void addCollidable(Collidable c) {
@@ -47,6 +55,7 @@ public class Game {
 
     /**
      * Function to add sprite to the environment.
+     *
      * @param s sprite to add
      */
     public void addSprite(Sprite s) {
@@ -59,7 +68,8 @@ public class Game {
     public void initialize() {
         Paddle paddle = new Paddle(gui);
         paddle.addToGame(this);
-        BlockRemover blockRemover = new BlockRemover(this, counter);
+        BlockRemover blockRemover = new BlockRemover(this, blocks);
+        BallRemover ballRemover = new BallRemover(this, balls);
         //Creating the border blocks of the game
         int borderDepth = 25;
         Rectangle top = new Rectangle((new Point(0, 0)), 800, borderDepth); // top
@@ -70,6 +80,10 @@ public class Game {
             Block b = new Block(r, Color.gray);
             b.addToGame(this);
         }
+        Rectangle bottom = new Rectangle(new Point(0, 610),800 - borderDepth, 0); // bottom
+        Block bottomBlock = new Block(bottom, Color.blue);
+        bottomBlock.addHitListener(ballRemover);
+        bottomBlock.addToGame(this);
         //loop to make blocks
         int max = 12; // number of blocks in top row
         int blockWidth = 55;
@@ -89,7 +103,7 @@ public class Game {
                         blockWidth, blockHeight);
                 Block block = new Block(rectangle, firstBlock.getColor());
                 block.addToGame(this);
-                counter.increase(1);
+                blocks.increase(1);
                 block.addHitListener(blockRemover);
                 firstBlock = block;
             }
@@ -106,6 +120,7 @@ public class Game {
             b.setVelocity(v);
             b.setGameEnvironment(environment);
             b.addToGame(this);
+            balls.increase(1);
         }
     }
 
@@ -116,7 +131,7 @@ public class Game {
         Sleeper sleeper = new biuoop.Sleeper();
         int framesPerSecond = 60;
         int millisecondsPerFrame = 1000 / framesPerSecond;
-        while (counter.getValue() > 0) {
+        while (blocks.getValue() > 0 && balls.getValue() > 0) {
             long startTime = System.currentTimeMillis(); // timing
             DrawSurface d = gui.getDrawSurface();
             d.setColor(Color.blue); // filling the background
@@ -136,6 +151,7 @@ public class Game {
 
     /**
      * Function to remove collidable from the environment.
+     *
      * @param c collidable to remove
      */
     public void removeCollidable(Collidable c) {
@@ -144,6 +160,7 @@ public class Game {
 
     /**
      * Function to remove sprite from the environment.
+     *
      * @param s sprite to remove
      */
     public void removeSprite(Sprite s) {
