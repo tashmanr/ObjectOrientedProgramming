@@ -33,7 +33,6 @@ public class Game {
     private Counter blocks;
     private Counter balls;
     private Counter score;
-    static int scorePanelHeight = 20;
 
     /**
      * Constructor.
@@ -74,6 +73,7 @@ public class Game {
         BlockRemover blockRemover = new BlockRemover(this, blocks);
         BallRemover ballRemover = new BallRemover(this, balls);
         ScoreTrackingListener scoreTrackingListener = new ScoreTrackingListener(score);
+        int scorePanelHeight = 20;
         ScoreIndicator scoreIndicator = new ScoreIndicator(scorePanelHeight, score);
         sprites.addSprite(scoreIndicator);
         //Creating the border blocks of the game

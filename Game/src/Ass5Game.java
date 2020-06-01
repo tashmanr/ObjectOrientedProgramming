@@ -9,7 +9,7 @@ import gamesetup.Game;
  * this class has a main function to start and run the game.
  */
 
-public class Ass3Game {
+public class Ass5Game {
     /**
      * main function to start and run the game.
      * @param args not used

@@ -1,20 +1,44 @@
+/**
+ * 336423124
+ * Rebecca Tashman
+ */
+
 package gamesetup;
 
+/**
+ * Counter class.
+ */
 public class Counter {
-    private int number;
-    public Counter(){
-        number = 0;
+    private int value;
+
+    /**
+     * Constructor - initializes at zero.
+     */
+    public Counter() {
+        value = 0;
     }
-    // add number to current count.
-    public void increase(int number){
-        this.number+=number;
+
+    /**
+     * Function to add number to current count.
+     * @param number to add
+     */
+    public void increase(int number) {
+        value += number;
     }
-    // subtract number from current count.
-    public void decrease(int number){
-        this.number-=number;
+
+    /**
+     * Function to subtract number from current count.
+     * @param number to subtract
+     */
+    public void decrease(int number) {
+        value -= number;
     }
-    // get current count.
-    public int getValue(){
-        return number;
+
+    /**
+     * Getter function for the current count.
+     * @return value of counter
+     */
+    public int getValue() {
+        return value;
     }
 }

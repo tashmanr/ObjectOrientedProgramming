@@ -25,7 +25,7 @@ public class Block implements Collidable, Sprite, HitNotifier {
     private Rectangle rectangle;
     private java.awt.Color color;
     private static double epsilon = Math.pow(10, -15);
-    List<HitListener> hitListeners;
+    private List<HitListener> hitListeners;
 
     /**
      * Constructor for block.
@@ -92,12 +92,6 @@ public class Block implements Collidable, Sprite, HitNotifier {
         }
     }
 
-    /**
-     * Function to calculate the collision's impact on the ball's velocity.
-     * @param collisionPoint point of collision between the block and the ball
-     * @param currentVelocity ball's current velocity
-     * @return new velocity after hit
-     */
     @Override
     public Velocity hit(Ball hitter, Point collisionPoint, Velocity currentVelocity) {
         Velocity v = currentVelocity;

@@ -9,6 +9,9 @@ import geometryprimatives.Rectangle;
 import ballinfo.Velocity;
 import sprites.Ball;
 
+/**
+ * Collidable interface, used by block and paddle classes.
+ */
 public interface Collidable {
     /**
      * Return the "collision shape" of the object.

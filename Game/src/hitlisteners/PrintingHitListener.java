@@ -1,15 +1,25 @@
-package gamesetup;
+/**
+ * 336423124
+ * Rebecca Tashman
+ */
+package hitlisteners;
 
 import interfaces.HitListener;
 import sprites.Ball;
 import sprites.Block;
 
+/**
+ * Printing hit listener class, for testing the hit event.
+ */
 public class PrintingHitListener implements HitListener {
-    private int becca;
 
+    /**
+     * Constructor - empty.
+     */
     public PrintingHitListener() {
-        becca = 1;
     }
+
+    @Override
     public void hitEvent(Block beingHit, Ball hitter) {
         System.out.println("A Block was hit.");
     }

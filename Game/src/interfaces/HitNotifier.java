@@ -3,12 +3,21 @@
  * Rebecca Tashman
  */
 package interfaces;
-import sprites.Ball;
-import sprites.Block;
 
+/**
+ * Interface for hit notifier, used by block.
+ */
 public interface HitNotifier {
-    // Add hl as a listener to hit events.
+
+    /**
+     * Function to add hl to the list of listeners to hit events.
+     * @param hl hit listener to add
+     */
     void addHitListener(HitListener hl);
-    // Remove hl from the list of listeners to hit events.
+
+    /**
+     * Function to remove hl from the list of listeners to hit events.
+     * @param hl hit listener to remove
+     */
     void removeHitListener(HitListener hl);
 }
