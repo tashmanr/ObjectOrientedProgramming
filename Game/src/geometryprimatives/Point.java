@@ -2,6 +2,7 @@
  * 336423124
  * Rebecca Tashman
  */
+package geometryprimatives;
 
 /**
  * This class generates point, and has functions to access the x and y fields.

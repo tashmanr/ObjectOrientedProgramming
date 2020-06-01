@@ -3,9 +3,11 @@
  * Rebecca Tashman
  */
 
+import sprites.Ball;
 import biuoop.GUI;
 import biuoop.DrawSurface;
 import biuoop.Sleeper;
+import geometryprimatives.Point;
 
 /**
  * This class generates an animation of one ball bouncing.

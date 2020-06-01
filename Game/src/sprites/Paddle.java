@@ -2,15 +2,21 @@
  * Rebecca Tashman
  * 336423124
  */
+package sprites;
 
+import ballinfo.Velocity;
 import biuoop.GUI;
 import biuoop.DrawSurface;
 import biuoop.KeyboardSensor;
-
+import gamesetup.Game;
+import interfaces.Collidable;
+import geometryprimatives.Point;
+import geometryprimatives.Rectangle;
+import interfaces.Sprite;
 import java.awt.Color;
 
 /**
- * Class for paddle, which implements Sprite and Collidable interfaces.
+ * Class for paddle, which implements interfaces.Sprite and collisiondetection.Collidable interfaces.
  */
 public class Paddle implements Sprite, Collidable {
     private KeyboardSensor keyboard;
@@ -78,9 +84,6 @@ public class Paddle implements Sprite, Collidable {
         }
     }
 
-    /**
-     * Function from Sprite interface, to animate and "move" the paddle based on key presses.
-     */
     @Override
     public void timePassed() {
         if (keyboard.isPressed(KeyboardSensor.LEFT_KEY)) {
@@ -91,11 +94,6 @@ public class Paddle implements Sprite, Collidable {
         }
     }
 
-    /**
-     * Function to draw the paddle onto the DrawSurface.
-     *
-     * @param d DrawSurface
-     */
     @Override
     public void drawOn(DrawSurface d) {
         d.setColor(Color.yellow);
@@ -106,25 +104,13 @@ public class Paddle implements Sprite, Collidable {
                 (int) this.paddleVisual.getWidth(), (int) this.paddleVisual.getHeight());
     }
 
-    /**
-     * Function from collidable interface, to return the collision rectangle.
-     *
-     * @return rectangle
-     */
     @Override
     public Rectangle getCollisionRectangle() {
         return this.paddleForHit;
     }
 
-    /**
-     * Function from Collidable interface to return the new velocity after collision.
-     *
-     * @param collisionPoint  location of collision
-     * @param currentVelocity velocity of the object hitting the collidable
-     * @return velocity
-     */
     @Override
-    public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
+    public Velocity hit(Ball hitter, Point collisionPoint, Velocity currentVelocity) {
         double locationOnPaddle = collisionPoint.getX() - paddleForHit.getUpperLeft().getX();
         double fifthOfPaddle = paddleForHit.getWidth() / 5; //divide the paddle to five sections
         if (currentVelocity.getDy() <= 0) {
@@ -149,7 +135,6 @@ public class Paddle implements Sprite, Collidable {
 
     /**
      * Function to add the paddle to the game.
-     *
      * @param g game
      */
     public void addToGame(Game g) {

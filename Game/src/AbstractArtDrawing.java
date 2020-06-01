@@ -5,6 +5,9 @@
 
 import biuoop.GUI;
 import biuoop.DrawSurface;
+import geometryprimatives.Line;
+import geometryprimatives.Point;
+
 import java.util.Random;
 import java.awt.Color;
 

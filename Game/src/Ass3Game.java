@@ -3,6 +3,8 @@
  * 336423124
  */
 
+import gamesetup.Game;
+
 /**
  * this class has a main function to start and run the game.
  */

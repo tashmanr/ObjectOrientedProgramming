@@ -1,5 +1,8 @@
 import biuoop.DrawSurface;
 import biuoop.GUI;
+import geometryprimatives.Line;
+import geometryprimatives.Point;
+import geometryprimatives.Rectangle;
 
 import java.util.LinkedList;
 import java.util.List;

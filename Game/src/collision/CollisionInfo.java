@@ -1,7 +1,11 @@
 /**
- * 336423124
+ * 336423124.
  * Rebecca Tashman
  */
+package collision;
+
+import geometryprimatives.Point;
+import interfaces.Collidable;
 
 /**
  * This class holds info about the collision.

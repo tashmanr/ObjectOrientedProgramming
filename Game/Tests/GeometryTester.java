@@ -1,10 +1,13 @@
+import geometryprimatives.Line;
+import geometryprimatives.Point;
+
 /**
- * This class does some simple tessting of the Point and Line classes.
+ * This class does some simple tessting of the geometryprimatives.Point and geometryprimatives.Line classes.
  */
 public class GeometryTester {
 
     /**
-     * The method is in charge of testing the Point class.
+     * The method is in charge of testing the geometryprimatives.Point class.
      *
      * @return true if not mistakes were found, false otherwise.
      */
@@ -50,7 +53,7 @@ public class GeometryTester {
     }
 
     /**
-     * The method is in charge of testing the Line class.
+     * The method is in charge of testing the geometryprimatives.Line class.
      *
      * @return true if not mistakes were found, false otherwise.
      */

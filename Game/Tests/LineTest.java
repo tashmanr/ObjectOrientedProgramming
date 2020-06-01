@@ -1,4 +1,7 @@
 
+import geometryprimatives.Line;
+import geometryprimatives.Point;
+
 import java.awt.geom.Line2D;
 import java.util.Random;
 
@@ -46,14 +49,14 @@ public class LineTest {
 
     /**
      * Finds the point of intersection (POI) of the given two segments, according to the
-     * Line class in this project, and the java.awt.geom library. If verifyAnswer is true,
-     * then this method will return true if and only if the Line class and the Java geom
+     * geometryprimatives.Line class in this project, and the java.awt.geom library. If verifyAnswer is true,
+     * then this method will return true if and only if the geometryprimatives.Line class and the Java geom
      * library both agree that there does/does not exist a point of intersection. If
      * verifyAnswer is false, this method will return true if there exists a point of
-     * intersection (according to the Line class) or false if there does not.
+     * intersection (according to the geometryprimatives.Line class) or false if there does not.
      * @param line1 the first line
      * @param line2 the second line
-     * @param verifyAnswer whether or not to compare the result from the Line class
+     * @param verifyAnswer whether or not to compare the result from the geometryprimatives.Line class
      *                     with the java.awt.geom library
      * @return see description
      */
@@ -70,12 +73,12 @@ public class LineTest {
         // Test my line class
         Point poi = line1.intersectionWith(line2);
         if (poi != null) {
-            System.out.println("Intersection Point: " + pointToString(poi));
+            System.out.println("Intersection geometryprimatives.Point: " + pointToString(poi));
         } else {
             System.out.println("No single point of intersection");
         }
 
-        // If verifyAnswer, success = my Line class says there is a POI + Java says there is POI
+        // If verifyAnswer, success = my geometryprimatives.Line class says there is a POI + Java says there is POI
         if (verifyAnswer) {
             System.out.println("Lines Intersect (verified): " + linesIntersect);
             boolean success = linesIntersect && poi != null || !linesIntersect && poi == null;

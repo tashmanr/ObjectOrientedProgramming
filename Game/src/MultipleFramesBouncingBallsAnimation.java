@@ -3,6 +3,7 @@
  * Rebecca Tashman
  */
 
+import sprites.Ball;
 import biuoop.GUI;
 import biuoop.DrawSurface;
 import biuoop.Sleeper;

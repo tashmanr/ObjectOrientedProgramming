@@ -2,18 +2,30 @@
  * 336423124
  * Rebecca Tashman
  */
+package sprites;
 
+import ballinfo.Velocity;
 import biuoop.DrawSurface;
+import gamesetup.Game;
+import interfaces.Collidable;
+import geometryprimatives.Point;
+import geometryprimatives.Rectangle;
+import interfaces.HitListener;
+import interfaces.HitNotifier;
+import interfaces.Sprite;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
  * This class generates a new block, and has functions for the collidable interface.
  */
-public class Block implements Collidable, Sprite {
+public class Block implements Collidable, Sprite, HitNotifier {
     private Rectangle rectangle;
     private java.awt.Color color;
     private static double epsilon = Math.pow(10, -15);
+    List<HitListener> hitListeners;
 
     /**
      * Constructor for block.
@@ -23,6 +35,7 @@ public class Block implements Collidable, Sprite {
     public Block(Rectangle rectangle1, java.awt.Color color) {
         this.rectangle = rectangle1;
         this.color = color;
+        this.hitListeners = new ArrayList<>();
     }
 
     /**
@@ -32,6 +45,7 @@ public class Block implements Collidable, Sprite {
     public Block(Rectangle rectangle1) {
         this.rectangle = rectangle1;
         this.color = randomColorGenerator();
+        this.hitListeners = new ArrayList<>();
     }
 
     /**
@@ -66,13 +80,26 @@ public class Block implements Collidable, Sprite {
     }
 
     /**
+     * Function to notify the Hitlisteners that the block was hit.
+     * @param hitter the ball that hits the block
+     */
+    private void notifyHit(Ball hitter) {
+        // Make a copy of the hitListeners before iterating over them.
+        List<HitListener> listeners = new ArrayList<HitListener>(this.hitListeners);
+        // Notify all listeners about a hit event:
+        for (HitListener hl : listeners) {
+            hl.hitEvent(this, hitter);
+        }
+    }
+
+    /**
      * Function to calculate the collision's impact on the ball's velocity.
      * @param collisionPoint point of collision between the block and the ball
      * @param currentVelocity ball's current velocity
      * @return new velocity after hit
      */
     @Override
-    public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
+    public Velocity hit(Ball hitter, Point collisionPoint, Velocity currentVelocity) {
         Velocity v = currentVelocity;
         /**
          * the next ifs check which side of the block is hit during the collision in order to change the dx & dy.
@@ -87,14 +114,10 @@ public class Block implements Collidable, Sprite {
                 - (this.rectangle.getUpperLeft().getY() + this.rectangle.getHeight())) < epsilon) {
             v = new Velocity(v.getDx(), -v.getDy());
         }
+        this.notifyHit(hitter);
         return v;
     }
 
-    /**
-     * Function to draw the block on the given DrawSurface.
-     *
-     * @param surface to be drawn on
-     */
     @Override
     public void drawOn(DrawSurface surface) {
         surface.setColor(this.color);
@@ -105,9 +128,6 @@ public class Block implements Collidable, Sprite {
                 (int) this.rectangle.getWidth(), (int) this.rectangle.getHeight());
     }
 
-    /**
-     * Function from sprite, for now does nothing.
-     */
     @Override
     public void timePassed() {
         return;
@@ -120,5 +140,24 @@ public class Block implements Collidable, Sprite {
     public void addToGame(Game g) {
         g.addCollidable(this);
         g.addSprite(this);
+    }
+
+    /**
+     * Function that removes the block from the game received.
+     * @param game to remove it from
+     */
+    public void removeFromGame(Game game) {
+        game.removeCollidable(this);
+        game.removeSprite(this);
+    }
+
+    @Override
+    public void addHitListener(HitListener hl) {
+        this.hitListeners.add(hl);
+    }
+
+    @Override
+    public void removeHitListener(HitListener hl) {
+        this.hitListeners.remove(hl);
     }
 }

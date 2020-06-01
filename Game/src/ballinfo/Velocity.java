@@ -2,6 +2,9 @@
  * 336423124
  * Rebecca Tashman
  */
+package ballinfo;
+
+import geometryprimatives.Point;
 
 /**
  * This class generates velocity, and has functions to access the x and y fields.

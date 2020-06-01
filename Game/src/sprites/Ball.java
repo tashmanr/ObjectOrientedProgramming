@@ -2,9 +2,17 @@
  * 336423124
  * Rebecca Tashman
  */
+package sprites;
 
+import ballinfo.Velocity;
 import biuoop.DrawSurface;
-
+import collision.CollisionInfo;
+import gamesetup.Game;
+import gamesetup.GameEnvironment;
+import geometryprimatives.Line;
+import geometryprimatives.Point;
+import geometryprimatives.Rectangle;
+import interfaces.Sprite;
 import java.awt.Color;
 import java.util.Random;
 
@@ -216,7 +224,7 @@ public class Ball implements Sprite {
                     && v.getDx() > 0) { //hits the block's left side from the left
                 tmpX--;
             }
-            v = (tmpCollisionInfo.collisionObject().hit(tmpCollisionInfo.collisionPoint(), v));
+            v = (tmpCollisionInfo.collisionObject().hit(this, tmpCollisionInfo.collisionPoint(), v));
             center = new Point(tmpX, tmpY);
             trajectory = new Line(center, v.applyToPoint(center));
             tmpCollisionInfo = gameEnvironment.getClosestCollision(trajectory);

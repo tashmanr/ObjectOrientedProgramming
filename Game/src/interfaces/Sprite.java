@@ -2,11 +2,12 @@
  * 336423124
  * Rebecca Tashman
  */
+package interfaces;
 
 import biuoop.DrawSurface;
 
 /**
- * Interface for Sprite.
+ * Interface for interfaces.Sprite.
  */
 public interface Sprite {
     /**

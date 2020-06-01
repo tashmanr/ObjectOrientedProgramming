@@ -2,10 +2,19 @@
  * Rebecca Tashman
  * 336423124
  */
-
+package gamesetup;
+import hitlisteners.BlockRemover;
+import sprites.Ball;
+import sprites.Block;
+import sprites.Paddle;
+import ballinfo.Velocity;
 import biuoop.GUI;
 import biuoop.DrawSurface;
 import biuoop.Sleeper;
+import interfaces.Collidable;
+import geometryprimatives.Point;
+import geometryprimatives.Rectangle;
+import interfaces.Sprite;
 import java.awt.Color;
 import java.util.Random;
 
@@ -16,14 +25,16 @@ public class Game {
     private SpriteCollection sprites;
     private GameEnvironment environment;
     private GUI gui;
+    private Counter counter;
 
     /**
-     * Constructor - creates new SpriteCollection, new GameEnvironment and new GUI.
+     * Constructor - creates new gamesetup.SpriteCollection, new gamesetup.GameEnvironment and new GUI.
      */
     public Game() {
         sprites = new SpriteCollection();
         environment = new GameEnvironment();
-        gui = new biuoop.GUI("Game", 800, 600);
+        gui = new biuoop.GUI("gamesetup.Game", 800, 600);
+        counter = new Counter();
     }
 
     /**
@@ -43,18 +54,18 @@ public class Game {
     }
 
     /**
-     * Function to initialize a new game: create the Blocks and Ball (and Paddle) and add them to the game.
+     * Function to initialize a new game: create the Blocks and Sprites.Ball (and Sprites.Paddle) and add them to the game.
      */
     public void initialize() {
         Paddle paddle = new Paddle(gui);
         paddle.addToGame(this);
+        BlockRemover blockRemover = new BlockRemover(this, counter);
         //Creating the border blocks of the game
         int borderDepth = 25;
         Rectangle top = new Rectangle((new Point(0, 0)), 800, borderDepth); // top
         Rectangle left = new Rectangle(new Point(0, 0), borderDepth, 600); // left
         Rectangle right = new Rectangle(new Point(800 - borderDepth, 0), borderDepth, 600); // right
-        Rectangle bottom = new Rectangle(new Point(0, 600 - borderDepth), 800, borderDepth); // bottom
-        Rectangle[] borders = new Rectangle[]{top, left, right, bottom};
+        Rectangle[] borders = new Rectangle[]{top, left, right};
         for (Rectangle r : borders) {
             Block b = new Block(r, Color.gray);
             b.addToGame(this);
@@ -78,6 +89,8 @@ public class Game {
                         blockWidth, blockHeight);
                 Block block = new Block(rectangle, firstBlock.getColor());
                 block.addToGame(this);
+                counter.increase(1);
+                block.addHitListener(blockRemover);
                 firstBlock = block;
             }
             max--;
@@ -103,7 +116,7 @@ public class Game {
         Sleeper sleeper = new biuoop.Sleeper();
         int framesPerSecond = 60;
         int millisecondsPerFrame = 1000 / framesPerSecond;
-        while (true) {
+        while (counter.getValue() > 0) {
             long startTime = System.currentTimeMillis(); // timing
             DrawSurface d = gui.getDrawSurface();
             d.setColor(Color.blue); // filling the background
@@ -118,5 +131,22 @@ public class Game {
                 sleeper.sleepFor(milliSecondLeftToSleep);
             }
         }
+        gui.close();
+    }
+
+    /**
+     * Function to remove collidable from the environment.
+     * @param c collidable to remove
+     */
+    public void removeCollidable(Collidable c) {
+        this.environment.removeCollidable(c);
+    }
+
+    /**
+     * Function to remove sprite from the environment.
+     * @param s sprite to remove
+     */
+    public void removeSprite(Sprite s) {
+        this.sprites.removeSprite(s);
     }
 }

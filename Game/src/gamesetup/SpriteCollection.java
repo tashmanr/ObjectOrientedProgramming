@@ -2,10 +2,12 @@
  * 336423124
  * Rebecca Tashman
  */
+package gamesetup;
 
 import java.util.ArrayList;
 import java.util.List;
 import biuoop.DrawSurface;
+import interfaces.Sprite;
 
 /**
  * Class for spriteCollection - holds list of sprites.
@@ -29,10 +31,18 @@ public class SpriteCollection {
     }
 
     /**
+     * Function that removes the sprite from the list.
+     * @param s sprite to be removed
+     */
+    public void removeSprite(Sprite s) {
+        sprites.remove(s);
+    }
+    /**
      * Function that calls timePassed() on all sprites.
      */
     public void notifyAllTimePassed() {
-        for (Sprite s : sprites) {
+        List<Sprite> tmpSprites = new ArrayList<Sprite>(this.sprites);
+        for (Sprite s : tmpSprites) {
             s.timePassed();
         }
     }
@@ -42,7 +52,8 @@ public class SpriteCollection {
      * @param d drawSurface
      */
     public void drawAllOn(DrawSurface d) {
-        for (Sprite s : sprites) {
+        List<Sprite> tmpSprites = new ArrayList<Sprite>(this.sprites);
+        for (Sprite s : tmpSprites) {
             s.drawOn(d);
         }
     }

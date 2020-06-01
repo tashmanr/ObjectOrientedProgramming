@@ -1,3 +1,6 @@
+import geometryprimatives.Line;
+import geometryprimatives.Point;
+
 public class LineCheck {
     public static void main(String[] args) {
         boolean problem = false;

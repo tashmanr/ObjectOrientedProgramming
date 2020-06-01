@@ -1,7 +1,13 @@
-/**
+package gamesetup; /**
  * 336423124
  * Rebecca Tashman
  */
+
+import interfaces.Collidable;
+import collision.CollisionInfo;
+import geometryprimatives.Line;
+import geometryprimatives.Point;
+import geometryprimatives.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +27,18 @@ public class GameEnvironment {
 
     /**
      * Function to add the given collidable to the environment.
-     *
      * @param c collidable to be added
      */
     public void addCollidable(Collidable c) {
         collidables.add(c);
+    }
+
+    /**
+     * Function to remove the given collidable from the environment.
+     * @param c collidable to be removed
+     */
+    public void removeCollidable(Collidable c) {
+        collidables.remove(c);
     }
 
     /**
@@ -40,7 +53,8 @@ public class GameEnvironment {
         Point closest = null;
         double distance = 0;
         Collidable c2 = null;
-        for (Collidable c : collidables) { // loop to check all of the collidables
+        List<Collidable> tempCollidables = new ArrayList<Collidable>(this.collidables);
+        for (Collidable c : tempCollidables) { // loop to check all of the collidables
             Rectangle r = c.getCollisionRectangle();
             if (r.intersectionPoints(trajectory).size() == 0) { // if the object won't collide check the next one
                 continue;

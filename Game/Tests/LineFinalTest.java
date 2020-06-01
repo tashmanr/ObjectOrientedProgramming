@@ -1,3 +1,5 @@
+import geometryprimatives.Line;
+
 public class LineFinalTest {
     public static void main(String[] args) {
 

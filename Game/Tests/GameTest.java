@@ -1,3 +1,5 @@
+import gamesetup.Game;
+
 /**
  * Rebecca Tashman
  * 336423124
