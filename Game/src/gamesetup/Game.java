@@ -6,6 +6,7 @@ package gamesetup;
 
 import hitlisteners.BallRemover;
 import hitlisteners.BlockRemover;
+import hitlisteners.ScoreTrackingListener;
 import sprites.Ball;
 import sprites.Block;
 import sprites.Paddle;
@@ -17,6 +18,7 @@ import interfaces.Collidable;
 import geometryprimatives.Point;
 import geometryprimatives.Rectangle;
 import interfaces.Sprite;
+import sprites.ScoreIndicator;
 
 import java.awt.Color;
 import java.util.Random;
@@ -31,9 +33,10 @@ public class Game {
     private Counter blocks;
     private Counter balls;
     private Counter score;
+    static int scorePanelHeight = 20;
 
     /**
-     * Constructor - creates new gamesetup.SpriteCollection, new gamesetup.GameEnvironment and new GUI.
+     * Constructor.
      */
     public Game() {
         sprites = new SpriteCollection();
@@ -63,24 +66,29 @@ public class Game {
     }
 
     /**
-     * Function to initialize a new game: create the Blocks and Sprites.Ball (and Sprites.Paddle) and add them to the game.
+     * Function to initialize a new game: create the Blocks and Ball (and Paddle) and add them to the game.
      */
     public void initialize() {
         Paddle paddle = new Paddle(gui);
         paddle.addToGame(this);
         BlockRemover blockRemover = new BlockRemover(this, blocks);
         BallRemover ballRemover = new BallRemover(this, balls);
+        ScoreTrackingListener scoreTrackingListener = new ScoreTrackingListener(score);
+        ScoreIndicator scoreIndicator = new ScoreIndicator(scorePanelHeight, score);
+        sprites.addSprite(scoreIndicator);
         //Creating the border blocks of the game
         int borderDepth = 25;
-        Rectangle top = new Rectangle((new Point(0, 0)), 800, borderDepth); // top
-        Rectangle left = new Rectangle(new Point(0, 0), borderDepth, 600); // left
-        Rectangle right = new Rectangle(new Point(800 - borderDepth, 0), borderDepth, 600); // right
+        Rectangle top = new Rectangle((new Point(0, 0 + scorePanelHeight)), 800, borderDepth); // top
+        Rectangle left = new Rectangle(new Point(0, 0 + scorePanelHeight),
+                borderDepth, 600 - scorePanelHeight); // left
+        Rectangle right = new Rectangle(new Point(800 - borderDepth, 0 + scorePanelHeight),
+                borderDepth, 600 - scorePanelHeight); // right
         Rectangle[] borders = new Rectangle[]{top, left, right};
         for (Rectangle r : borders) {
             Block b = new Block(r, Color.gray);
             b.addToGame(this);
         }
-        Rectangle bottom = new Rectangle(new Point(0, 610),800 - borderDepth, 0); // bottom
+        Rectangle bottom = new Rectangle(new Point(0, 610), 800 - borderDepth, 0); // bottom
         Block bottomBlock = new Block(bottom, Color.blue);
         bottomBlock.addHitListener(ballRemover);
         bottomBlock.addToGame(this);
@@ -98,21 +106,25 @@ public class Game {
                         blockWidth, blockHeight));
             }
             for (int j = 1; j < max; j++) { // inner loop is for the number of blocks per row
-                Rectangle rectangle = new Rectangle(new Point(firstBlock.getCollisionRectangle().getUpperLeft().getX()
+                Rectangle rect = new Rectangle(new Point(firstBlock.getCollisionRectangle().getUpperLeft().getX()
                         - blockWidth, firstBlock.getCollisionRectangle().getUpperLeft().getY()),
                         blockWidth, blockHeight);
-                Block block = new Block(rectangle, firstBlock.getColor());
+                Block block = new Block(rect, firstBlock.getColor());
                 block.addToGame(this);
                 blocks.increase(1);
                 block.addHitListener(blockRemover);
+                block.addHitListener(scoreTrackingListener);
                 firstBlock = block;
             }
             max--;
         }
         Random random = new Random();
-        for (int i = 0; i < 2; i++) { // loop to create two balls
-            int x = random.nextInt(100) + borderDepth; // start the ball within the game screen, not on blocks
-            int y = random.nextInt(100) + borderDepth; // start the ball within the game screen, not on blocks
+        for (int i = 0; i < 3; i++) { // loop to create two balls
+            /**
+             * start the ball within the game screen, not on blocks.
+             */
+            int x = random.nextInt(100) + borderDepth;
+            int y = random.nextInt(100) + borderDepth + scorePanelHeight;
             Ball b = new Ball(x, y, 5, Color.black);
             double speed = 6;
             double angle = random.nextInt(360);
@@ -146,6 +158,7 @@ public class Game {
                 sleeper.sleepFor(milliSecondLeftToSleep);
             }
         }
+        score.increase(100);
         gui.close();
     }
 
