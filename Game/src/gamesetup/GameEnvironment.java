@@ -1,14 +1,14 @@
-package gamesetup; /**
+/**
  * 336423124
  * Rebecca Tashman
  */
+package gamesetup;
 
 import interfaces.Collidable;
 import collision.CollisionInfo;
 import geometryprimatives.Line;
 import geometryprimatives.Point;
 import geometryprimatives.Rectangle;
-
 import java.util.ArrayList;
 import java.util.List;
 

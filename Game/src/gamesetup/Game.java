@@ -73,23 +73,23 @@ public class Game {
         BlockRemover blockRemover = new BlockRemover(this, blocks);
         BallRemover ballRemover = new BallRemover(this, balls);
         ScoreTrackingListener scoreTrackingListener = new ScoreTrackingListener(score);
-        int scorePanelHeight = 20;
+        int scorePanelHeight = 20; // to ensure that there is no overlap between the border blocks and the score panel
         ScoreIndicator scoreIndicator = new ScoreIndicator(scorePanelHeight, score);
         sprites.addSprite(scoreIndicator);
         //Creating the border blocks of the game
         int borderDepth = 25;
-        Rectangle top = new Rectangle((new Point(0, 0 + scorePanelHeight)), 800, borderDepth); // top
-        Rectangle left = new Rectangle(new Point(0, 0 + scorePanelHeight),
-                borderDepth, 600 - scorePanelHeight); // left
-        Rectangle right = new Rectangle(new Point(800 - borderDepth, 0 + scorePanelHeight),
-                borderDepth, 600 - scorePanelHeight); // right
+        Rectangle top = new Rectangle((new Point(0, scorePanelHeight)), 800, borderDepth); // top border
+        Rectangle left = new Rectangle(new Point(0, scorePanelHeight),
+                borderDepth, 600 - scorePanelHeight); // left border
+        Rectangle right = new Rectangle(new Point(800 - borderDepth, scorePanelHeight),
+                borderDepth, 600 - scorePanelHeight); // right border
         Rectangle[] borders = new Rectangle[]{top, left, right};
         for (Rectangle r : borders) {
             Block b = new Block(r, Color.gray);
             b.addToGame(this);
         }
-        Rectangle bottom = new Rectangle(new Point(0, 610), 800 - borderDepth, 0); // bottom
-        Block bottomBlock = new Block(bottom, Color.blue);
+        Rectangle bottom = new Rectangle(new Point(0, 600), 800 - borderDepth, 0); // death region
+        Block bottomBlock = new Block(bottom);
         bottomBlock.addHitListener(ballRemover);
         bottomBlock.addToGame(this);
         //loop to make blocks
@@ -119,12 +119,12 @@ public class Game {
             max--;
         }
         Random random = new Random();
-        for (int i = 0; i < 3; i++) { // loop to create two balls
+        for (int i = 0; i < 3; i++) { // loop to create three balls
             /**
              * start the ball within the game screen, not on blocks.
              */
             int x = random.nextInt(100) + borderDepth;
-            int y = random.nextInt(100) + borderDepth + scorePanelHeight;
+            int y = random.nextInt(300) + borderDepth + scorePanelHeight;
             Ball b = new Ball(x, y, 5, Color.black);
             double speed = 6;
             double angle = random.nextInt(360);
@@ -143,7 +143,12 @@ public class Game {
         Sleeper sleeper = new biuoop.Sleeper();
         int framesPerSecond = 60;
         int millisecondsPerFrame = 1000 / framesPerSecond;
-        while (blocks.getValue() > 0 && balls.getValue() > 0) {
+        boolean blocksEliminated = false;
+        while (balls.getValue() > 0 && !blocksEliminated) {
+            if (blocks.getValue() == 0) { // we will have one loop to see the high score when all blocks are gone
+                score.increase(100);
+                blocksEliminated = true;
+            }
             long startTime = System.currentTimeMillis(); // timing
             DrawSurface d = gui.getDrawSurface();
             d.setColor(Color.blue); // filling the background
@@ -158,7 +163,6 @@ public class Game {
                 sleeper.sleepFor(milliSecondLeftToSleep);
             }
         }
-        score.increase(100);
         gui.close();
     }
 

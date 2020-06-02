@@ -11,8 +11,7 @@ import sprites.Ball;
 import sprites.Block;
 
 /**
- * BlockRemover class is in charge of removing blocks from the game, as well as keeping count
- * of the number of blocks that remain.
+ * BlockRemover class removes blocks from the game,and keeps count of the number of blocks that remain.
  */
 public class BlockRemover implements HitListener {
     private Game game;
