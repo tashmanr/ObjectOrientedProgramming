@@ -40,7 +40,7 @@ public class Game {
     public Game() {
         sprites = new SpriteCollection();
         environment = new GameEnvironment();
-        gui = new biuoop.GUI("Game", 800, 600);
+        gui = new biuoop.GUI("Arkanoid", 800, 600);
         blocks = new Counter();
         balls = new Counter();
         score = new Counter();
