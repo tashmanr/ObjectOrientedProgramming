@@ -18,11 +18,6 @@
         <java classname="Ass5Game" classpath="${classpath}" fork="true"/>
     </target>
 
-    <target name="check">
-        <java jar="checkstyle-5.7-all.jar" fork="true">
-            <arg line="-c biuoop.xml" />
-            <arg line="-r src\" />
-        </java>
-    </target>
+
 
 </project>

@@ -292,4 +292,12 @@ public class Ball implements Sprite {
     public void addToGame(Game g) {
         g.addSprite(this);
     }
+
+    /**
+     * Function that removes the ball from the game received.
+     * @param game to remove it from
+     */
+    public void removeFromGame(Game game) {
+        game.removeSprite(this);
+    }
 }

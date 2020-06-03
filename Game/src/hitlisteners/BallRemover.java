@@ -29,7 +29,7 @@ public class BallRemover implements HitListener {
 
     @Override
     public void hitEvent(Block beingHit, Ball hitter) {
-        game.removeSprite(hitter);
+        hitter.removeFromGame(this.game);
         balls.decrease(1);
     }
 }
