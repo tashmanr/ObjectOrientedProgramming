@@ -4,6 +4,9 @@
  */
 package gamesetup;
 
+import animations.CountdownAnimation;
+import animations.PauseScreen;
+import biuoop.KeyboardSensor;
 import hitlisteners.BallRemover;
 import hitlisteners.BlockRemover;
 import hitlisteners.ScoreTrackingListener;
@@ -14,7 +17,6 @@ import sprites.Paddle;
 import ballinfo.Velocity;
 import biuoop.GUI;
 import biuoop.DrawSurface;
-import biuoop.Sleeper;
 import interfaces.Collidable;
 import geometryprimatives.Point;
 import geometryprimatives.Rectangle;
@@ -36,6 +38,7 @@ public class Game implements Animation {
     private Counter score;
     private AnimationRunner runner;
     private boolean running;
+    private KeyboardSensor keyboard;
 
     /**
      * Constructor.
@@ -48,6 +51,7 @@ public class Game implements Animation {
         balls = new Counter();
         score = new Counter();
         runner = new AnimationRunner(gui);
+        keyboard = gui.getKeyboardSensor();
     }
 
     /**
@@ -144,8 +148,8 @@ public class Game implements Animation {
      * Function to run the game -- start the animation loop.
      */
     public void run() {
-       // this.createBallsOnTopOfPaddle();
-        this.running=true;
+        //this.runner.run(new CountdownAnimation(2, 3, sprites)); // countdown before turn starts
+        this.running = true;
         this.runner.run(this);
     }
 
@@ -177,11 +181,14 @@ public class Game implements Animation {
 
         // stopping condition
         if (this.balls.getValue() == 0) {
-            this.running=false;
+            this.running = false;
         }
         if (this.blocks.getValue() == 0) {
             score.increase(100);
-            this.running=false;
+            this.running = false;
+        }
+        if (this.keyboard.isPressed("p")) {
+            this.runner.run(new PauseScreen(this.keyboard));
         }
     }
 
