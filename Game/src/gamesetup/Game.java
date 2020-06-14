@@ -7,6 +7,7 @@ package gamesetup;
 import hitlisteners.BallRemover;
 import hitlisteners.BlockRemover;
 import hitlisteners.ScoreTrackingListener;
+import interfaces.Animation;
 import sprites.Ball;
 import sprites.Block;
 import sprites.Paddle;
@@ -26,13 +27,15 @@ import java.util.Random;
 /**
  * Class for setting up and running the game.
  */
-public class Game {
+public class Game implements Animation {
     private SpriteCollection sprites;
     private GameEnvironment environment;
     private GUI gui;
     private Counter blocks;
     private Counter balls;
     private Counter score;
+    private AnimationRunner runner;
+    private boolean running;
 
     /**
      * Constructor.
@@ -44,6 +47,7 @@ public class Game {
         blocks = new Counter();
         balls = new Counter();
         score = new Counter();
+        runner = new AnimationRunner(gui);
     }
 
     /**
@@ -140,30 +144,9 @@ public class Game {
      * Function to run the game -- start the animation loop.
      */
     public void run() {
-        Sleeper sleeper = new biuoop.Sleeper();
-        int framesPerSecond = 60;
-        int millisecondsPerFrame = 1000 / framesPerSecond;
-        boolean blocksEliminated = false;
-        while (balls.getValue() > 0 && !blocksEliminated) {
-            if (blocks.getValue() == 0) { // we will have one loop to see the high score when all blocks are gone
-                score.increase(100);
-                blocksEliminated = true;
-            }
-            long startTime = System.currentTimeMillis(); // timing
-            DrawSurface d = gui.getDrawSurface();
-            d.setColor(Color.blue); // filling the background
-            d.fillRectangle(0, 0, gui.getDrawSurface().getWidth(), gui.getDrawSurface().getHeight());
-            this.sprites.drawAllOn(d);
-            gui.show(d);
-            this.sprites.notifyAllTimePassed();
-            // timing
-            long usedTime = System.currentTimeMillis() - startTime;
-            long milliSecondLeftToSleep = millisecondsPerFrame - usedTime;
-            if (milliSecondLeftToSleep > 0) {
-                sleeper.sleepFor(milliSecondLeftToSleep);
-            }
-        }
-        gui.close();
+       // this.createBallsOnTopOfPaddle();
+        this.running=true;
+        this.runner.run(this);
     }
 
     /**
@@ -182,5 +165,28 @@ public class Game {
      */
     public void removeSprite(Sprite s) {
         this.sprites.removeSprite(s);
+    }
+
+    @Override
+    public void doOneFrame(DrawSurface d) {
+        // game-specific logic
+        d.setColor(Color.blue); // filling the background
+        d.fillRectangle(0, 0, gui.getDrawSurface().getWidth(), gui.getDrawSurface().getHeight());
+        this.sprites.drawAllOn(d);
+        this.sprites.notifyAllTimePassed();
+
+        // stopping condition
+        if (this.balls.getValue() == 0) {
+            this.running=false;
+        }
+        if (this.blocks.getValue() == 0) {
+            score.increase(100);
+            this.running=false;
+        }
+    }
+
+    @Override
+    public boolean shouldStop() {
+        return !this.running;
     }
 }
