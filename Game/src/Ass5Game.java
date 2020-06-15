@@ -3,7 +3,8 @@
  * 336423124
  */
 
-import gamesetup.Game;
+import gamesetup.GameLevel;
+import levels.LevelOne;
 
 /**
  * this class has a main function to start and run the game.
@@ -15,8 +16,8 @@ public class Ass5Game {
      * @param args not used
      */
     public static void main(String[] args) {
-        Game game = new Game();
-        game.initialize();
-        game.run();
+        GameLevel gameLevel = new GameLevel(new LevelOne());
+        gameLevel.initialize();
+        gameLevel.run();
     }
 }

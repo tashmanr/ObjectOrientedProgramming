@@ -8,7 +8,7 @@ import ballinfo.Velocity;
 import biuoop.GUI;
 import biuoop.DrawSurface;
 import biuoop.KeyboardSensor;
-import gamesetup.Game;
+import gamesetup.GameLevel;
 import interfaces.Collidable;
 import geometryprimatives.Point;
 import geometryprimatives.Rectangle;
@@ -28,8 +28,8 @@ public class Paddle implements Sprite, Collidable {
     private double startX;
     private static double y;
     private static int paddleHeight = 10;
-    private static int paddleWidth = 70;
-    private static int paddleMovement = 10;
+    private int paddleWidth;
+    private int paddleSpeed;
 
     /**
      * Constructor to create a new paddle.
@@ -37,36 +37,38 @@ public class Paddle implements Sprite, Collidable {
      *
      * @param gui from the game
      */
-    public Paddle(GUI gui) {
+    public Paddle(GUI gui, int paddleWidth, int paddleSpeed) {
         double guiHeight = gui.getDrawSurface().getHeight();
         guiWidth = gui.getDrawSurface().getWidth();
         y = guiHeight - gameBorderWidth - paddleHeight;
         startX = gameBorderWidth;
+        this.paddleSpeed = paddleSpeed;
+        this.paddleWidth = paddleWidth;
         this.paddleVisual = new Rectangle(new Point(startX, y), paddleWidth, paddleHeight);
         this.paddleForHit = new Rectangle(new Point(startX, y), paddleWidth, 0);
         this.keyboard = gui.getKeyboardSensor();
     }
 
     /**
-     * Function to move the paddle left for paddleMovement pixels.
+     * Function to move the paddle left for paddleSpeed pixels.
      * In the function, we check if the movement would go into the border, if it does then place paddle as far left as
      * possible before the border.
      */
     public void moveLeft() {
-        if (this.paddleForHit.getUpperLeft().getX() <= paddleMovement + startX) {
+        if (this.paddleForHit.getUpperLeft().getX() <= paddleSpeed + startX) {
             this.paddleForHit = new Rectangle(new Point(startX, y), paddleWidth, 0);
             this.paddleVisual = new Rectangle(new Point(startX, y), paddleWidth, paddleHeight);
 
         } else {
-            this.paddleForHit = new Rectangle(new Point(this.paddleForHit.getUpperLeft().getX() - paddleMovement, y),
+            this.paddleForHit = new Rectangle(new Point(this.paddleForHit.getUpperLeft().getX() - paddleSpeed, y),
                     paddleWidth, 0);
-            this.paddleVisual = new Rectangle(new Point(this.paddleVisual.getUpperLeft().getX() - paddleMovement, y),
+            this.paddleVisual = new Rectangle(new Point(this.paddleVisual.getUpperLeft().getX() - paddleSpeed, y),
                     paddleWidth, paddleHeight);
         }
     }
 
     /**
-     * Function to move the paddle right for paddleMovement pixels.
+     * Function to move the paddle right for paddleSpeed pixels.
      * In the function, we check if the movement would go into the border, if it does then place paddle as far right as
      * possible before the border.
      */
@@ -77,9 +79,9 @@ public class Paddle implements Sprite, Collidable {
             this.paddleVisual = new Rectangle(new Point((guiWidth - gameBorderWidth) - paddleWidth, y),
                     paddleWidth, paddleHeight);
         } else {
-            this.paddleForHit = new Rectangle(new Point(this.paddleForHit.getUpperLeft().getX() + paddleMovement, y),
+            this.paddleForHit = new Rectangle(new Point(this.paddleForHit.getUpperLeft().getX() + paddleSpeed, y),
                     paddleWidth, 0);
-            this.paddleVisual = new Rectangle(new Point(this.paddleVisual.getUpperLeft().getX() + paddleMovement, y),
+            this.paddleVisual = new Rectangle(new Point(this.paddleVisual.getUpperLeft().getX() + paddleSpeed, y),
                     paddleWidth, paddleHeight);
         }
     }
@@ -137,7 +139,7 @@ public class Paddle implements Sprite, Collidable {
      * Function to add the paddle to the game.
      * @param g game
      */
-    public void addToGame(Game g) {
+    public void addToGame(GameLevel g) {
         g.addSprite(this);
         g.addCollidable(this);
     }

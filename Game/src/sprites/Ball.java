@@ -7,7 +7,7 @@ package sprites;
 import ballinfo.Velocity;
 import biuoop.DrawSurface;
 import collision.CollisionInfo;
-import gamesetup.Game;
+import gamesetup.GameLevel;
 import gamesetup.GameEnvironment;
 import geometryprimatives.Line;
 import geometryprimatives.Point;
@@ -289,15 +289,15 @@ public class Ball implements Sprite {
      * Function to add the ball to an existing game.
      * @param g game to add it to
      */
-    public void addToGame(Game g) {
+    public void addToGame(GameLevel g) {
         g.addSprite(this);
     }
 
     /**
      * Function that removes the ball from the game received.
-     * @param game to remove it from
+     * @param gameLevel to remove it from
      */
-    public void removeFromGame(Game game) {
-        game.removeSprite(this);
+    public void removeFromGame(GameLevel gameLevel) {
+        gameLevel.removeSprite(this);
     }
 }

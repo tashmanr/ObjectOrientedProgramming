@@ -1,4 +1,5 @@
-import gamesetup.Game;
+import gamesetup.GameLevel;
+import levels.LevelOne;
 
 /**
  * Rebecca Tashman
@@ -7,8 +8,8 @@ import gamesetup.Game;
 
 public class GameTest {
     public static void main(String[] args) {
-        Game game = new Game();
-        game.initialize();
-        game.run();
+        GameLevel gameLevel = new GameLevel(new LevelOne());
+        gameLevel.initialize();
+        gameLevel.run();
     }
 }

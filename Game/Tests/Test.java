@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
-import gamesetup.Game;
+import gamesetup.GameLevel;
 import gamesetup.GameEnvironment;
 import sprites.Ball;
 import sprites.Block;
@@ -11,7 +11,7 @@ import ballinfo.Velocity;
 import biuoop.*;
 import geometryprimatives.Line;
 import geometryprimatives.Rectangle;
-
+/*
 public class Test {
     public static void main(String[] args) {
         Test.lineTest();
@@ -180,7 +180,7 @@ public class Test {
         geometryprimatives.Point p3 = coll3.collisionPoint();
         System.out.println(p3);
     }*/
-    public static void paddleTest(){
+   /* public static void paddleTest(){
         GUI gui = new GUI("Test", 800, 600);
         Paddle pd = new Paddle(gui);
         //checking borders
@@ -201,7 +201,7 @@ public class Test {
             pd.hit(new geometryprimatives.Point(465, 570), new Velocity(-10,3));
             pd.hit(new geometryprimatives.Point(490, 570), new Velocity(4,4));*/
             // timing
-            long usedTime = System.currentTimeMillis() - startTime;
+    /*        long usedTime = System.currentTimeMillis() - startTime;
             long milliSecondLeftToSleep = millisecondsPerFrame - usedTime;
             if (milliSecondLeftToSleep > 0) {
                 sleeper.sleepFor(milliSecondLeftToSleep);
@@ -209,9 +209,9 @@ public class Test {
         }
     }
     public static void GameTest(){
-        Game game = new Game();
-        game.initialize();
-        game.run();
+        GameLevel gameLevel = new GameLevel();
+        gameLevel.initialize();
+        gameLevel.run();
     }
 }
-
+*/

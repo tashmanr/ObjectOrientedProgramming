@@ -6,7 +6,7 @@ package sprites;
 
 import ballinfo.Velocity;
 import biuoop.DrawSurface;
-import gamesetup.Game;
+import gamesetup.GameLevel;
 import interfaces.Collidable;
 import geometryprimatives.Point;
 import geometryprimatives.Rectangle;
@@ -130,18 +130,18 @@ public class Block implements Collidable, Sprite, HitNotifier {
      * Function from sprite, adds the block to the game received.
      * @param g game
      */
-    public void addToGame(Game g) {
+    public void addToGame(GameLevel g) {
         g.addCollidable(this);
         g.addSprite(this);
     }
 
     /**
      * Function that removes the block from the game received.
-     * @param game to remove it from
+     * @param gameLevel to remove it from
      */
-    public void removeFromGame(Game game) {
-        game.removeCollidable(this);
-        game.removeSprite(this);
+    public void removeFromGame(GameLevel gameLevel) {
+        gameLevel.removeCollidable(this);
+        gameLevel.removeSprite(this);
     }
 
     @Override
