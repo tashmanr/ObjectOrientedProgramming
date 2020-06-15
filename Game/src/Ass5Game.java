@@ -5,6 +5,7 @@
 
 import gamesetup.GameLevel;
 import levels.LevelOne;
+import levels.LevelTwo;
 
 /**
  * this class has a main function to start and run the game.
@@ -16,7 +17,7 @@ public class Ass5Game {
      * @param args not used
      */
     public static void main(String[] args) {
-        GameLevel gameLevel = new GameLevel(new LevelOne());
+        GameLevel gameLevel = new GameLevel(new LevelTwo());
         gameLevel.initialize();
         gameLevel.run();
     }

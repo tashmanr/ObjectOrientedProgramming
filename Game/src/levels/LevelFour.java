@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class LevelOne implements LevelInformation {
-
+public class LevelFour implements LevelInformation {
     @Override
     public int getBorderDepth() {
         return 20;

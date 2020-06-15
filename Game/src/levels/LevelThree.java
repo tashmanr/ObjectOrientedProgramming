@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class LevelOne implements LevelInformation {
-
+public class LevelThree implements LevelInformation {
     @Override
     public int getBorderDepth() {
         return 20;
@@ -60,6 +59,30 @@ public class LevelOne implements LevelInformation {
         List<Block> blocks = new ArrayList<>();
         int blockWidth = 30;
         int blockHeight = 30;
+
+     /*   Rectangle firstRectangle = new Rectangle(new Point(right.getUpperLeft().getX(),
+                right.getUpperLeft().getY() + 150), blockWidth, blockHeight);
+        Block firstBlock = new Block(firstRectangle);
+        for (int i = 0; i < 6; i++) { // outer loop is for the number of rows
+            if (i != 0) {
+                firstBlock = new Block(new Rectangle(new Point(right.getUpperLeft().getX(),
+                        firstBlock.getCollisionRectangle().getUpperLeft().getY() + blockHeight),
+                        blockWidth, blockHeight));
+            }
+            for (int j = 1; j < max; j++) { // inner loop is for the number of blocks per row
+                Rectangle rect = new Rectangle(new Point(firstBlock.getCollisionRectangle().getUpperLeft().getX()
+                        - blockWidth, firstBlock.getCollisionRectangle().getUpperLeft().getY()),
+                        blockWidth, blockHeight);
+                Block block = new Block(rect, firstBlock.getColor());
+                block.addToGame(this);
+                blocks.increase(1);
+                block.addHitListener(blockRemover);
+                block.addHitListener(scoreTrackingListener);
+                firstBlock = block;
+            }
+            max--;
+        }
+*/
         blocks.add(new Block(new Rectangle(new Point(385, 175), blockWidth, blockHeight), Color.red));
         return blocks;
     }

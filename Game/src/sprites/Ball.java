@@ -13,6 +13,7 @@ import geometryprimatives.Line;
 import geometryprimatives.Point;
 import geometryprimatives.Rectangle;
 import interfaces.Sprite;
+
 import java.awt.Color;
 import java.util.Random;
 
@@ -152,6 +153,8 @@ public class Ball implements Sprite {
      */
     @Override
     public void drawOn(DrawSurface surface) {
+        surface.setColor(Color.black);
+        surface.drawCircle(this.getX(), this.getY(), this.r);
         surface.setColor(this.color);
         surface.fillCircle(this.getX(), this.getY(), this.r);
     }
@@ -287,6 +290,7 @@ public class Ball implements Sprite {
 
     /**
      * Function to add the ball to an existing game.
+     *
      * @param g game to add it to
      */
     public void addToGame(GameLevel g) {
@@ -295,6 +299,7 @@ public class Ball implements Sprite {
 
     /**
      * Function that removes the ball from the game received.
+     *
      * @param gameLevel to remove it from
      */
     public void removeFromGame(GameLevel gameLevel) {

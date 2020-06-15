@@ -41,7 +41,7 @@ public class Paddle implements Sprite, Collidable {
         double guiHeight = gui.getDrawSurface().getHeight();
         guiWidth = gui.getDrawSurface().getWidth();
         y = guiHeight - gameBorderWidth - paddleHeight;
-        startX = gameBorderWidth;
+        startX = (double) gui.getDrawSurface().getWidth()/2 - (double) paddleWidth/2;
         this.paddleSpeed = paddleSpeed;
         this.paddleWidth = paddleWidth;
         this.paddleVisual = new Rectangle(new Point(startX, y), paddleWidth, paddleHeight);
@@ -55,9 +55,9 @@ public class Paddle implements Sprite, Collidable {
      * possible before the border.
      */
     public void moveLeft() {
-        if (this.paddleForHit.getUpperLeft().getX() <= paddleSpeed + startX) {
-            this.paddleForHit = new Rectangle(new Point(startX, y), paddleWidth, 0);
-            this.paddleVisual = new Rectangle(new Point(startX, y), paddleWidth, paddleHeight);
+        if (this.paddleForHit.getUpperLeft().getX() <= paddleSpeed + gameBorderWidth) {
+            this.paddleForHit = new Rectangle(new Point(gameBorderWidth, y), paddleWidth, 0);
+            this.paddleVisual = new Rectangle(new Point(gameBorderWidth, y), paddleWidth, paddleHeight);
 
         } else {
             this.paddleForHit = new Rectangle(new Point(this.paddleForHit.getUpperLeft().getX() - paddleSpeed, y),

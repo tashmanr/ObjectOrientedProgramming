@@ -10,6 +10,12 @@ import java.util.List;
 
 public interface LevelInformation {
     /**
+     * Function to access the borderDepth.
+     * @return int border depth
+     */
+    int getBorderDepth();
+
+    /**
      * Function that returns the number of balls.
      * @return int balls
      */
