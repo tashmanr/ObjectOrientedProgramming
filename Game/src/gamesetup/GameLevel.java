@@ -5,6 +5,7 @@
 package gamesetup;
 
 import animations.CountdownAnimation;
+import animations.EndScreen;
 import animations.PauseScreen;
 import biuoop.KeyboardSensor;
 import hitlisteners.BallRemover;
@@ -42,7 +43,6 @@ public class GameLevel implements Animation {
     private KeyboardSensor keyboard;
     private LevelInformation levelInformation;
     private int borderDepth;
-
 
     /**
      * Constructor.
@@ -118,9 +118,6 @@ public class GameLevel implements Animation {
         blocksMaxAmount = blocks.getValue();
         Random random = new Random();
         for (int i = 0; i < levelInformation.numberOfBalls(); i++) { // loop to create balls
-            /**
-             * start the ball on top of the paddle
-             */
             double x = (double) (gui.getDrawSurface().getWidth()) / 2;
             int y = 600 - (borderDepth + paddle.getPaddleHeight() + 10); // start right above the paddle
             Ball b = new Ball(x, y, 4, Color.white);
@@ -142,6 +139,7 @@ public class GameLevel implements Animation {
 
     /**
      * Function to access the running boolean.
+     *
      * @return boolean if running
      */
     public boolean getRunning() {
@@ -175,6 +173,8 @@ public class GameLevel implements Animation {
 
         // stopping condition
         if (this.balls.getValue() == 0) {
+            this.runner.run(new EndScreen(this.keyboard, score, true));
+            gui.close();
             this.running = false;
         }
         if (blocksMaxAmount - this.blocks.getValue() >= levelInformation.numberOfBlocksToRemove()) {
