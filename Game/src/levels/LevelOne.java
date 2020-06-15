@@ -1,3 +1,7 @@
+/**
+ * 336423124
+ * Rebecca Tashman
+ */
 package levels;
 
 import ballinfo.Velocity;
@@ -7,7 +11,6 @@ import interfaces.LevelInformation;
 import interfaces.Sprite;
 import sprites.Block;
 import sprites.backgrounds.BackgroundLevelOne;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +45,7 @@ public class LevelOne implements LevelInformation {
 
     @Override
     public int paddleWidth() {
-        return 70;
+        return 100;
     }
 
     @Override

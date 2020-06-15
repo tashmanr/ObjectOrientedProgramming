@@ -7,9 +7,6 @@ import java.awt.*;
 
 public class BackgroundLevelOne implements Sprite {
 
-    public BackgroundLevelOne() {
-    }
-
     @Override
     public void drawOn(DrawSurface d) {
         d.setColor(Color.black);

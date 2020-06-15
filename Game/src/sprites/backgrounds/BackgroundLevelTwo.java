@@ -11,9 +11,6 @@ import java.awt.*;
 
 public class BackgroundLevelTwo implements Sprite {
 
-    public BackgroundLevelTwo() {
-    }
-
     @Override
     public void drawOn(DrawSurface d) {
         d.setColor(Color.white);

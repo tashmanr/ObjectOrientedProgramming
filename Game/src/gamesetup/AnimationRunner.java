@@ -17,10 +17,14 @@ public class AnimationRunner {
     private int framesPerSecond;
     Sleeper sleeper;
 
-    public AnimationRunner(GUI gui) {
-        this.gui = gui;
+    public AnimationRunner() {
+        gui = new biuoop.GUI("Arkanoid", 800, 600);
         framesPerSecond = 60;
         sleeper = new biuoop.Sleeper();
+    }
+
+    public GUI getGui() {
+        return gui;
     }
 
     public void run(Animation animation) {

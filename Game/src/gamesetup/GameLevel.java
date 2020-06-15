@@ -22,6 +22,7 @@ import geometryprimatives.Point;
 import geometryprimatives.Rectangle;
 import interfaces.Sprite;
 import sprites.ScoreIndicator;
+
 import java.awt.Color;
 import java.util.Random;
 
@@ -40,26 +41,26 @@ public class GameLevel implements Animation {
     private boolean running;
     private KeyboardSensor keyboard;
     private LevelInformation levelInformation;
-    private int scorePanelHeight;
     private int borderDepth;
 
 
     /**
      * Constructor.
      */
-    public GameLevel(LevelInformation levelInformation) {
+    public GameLevel(LevelInformation levelInformation, KeyboardSensor ks, AnimationRunner ar, Counter score) {
         this.levelInformation = levelInformation;
         borderDepth = levelInformation.getBorderDepth();
         sprites = new SpriteCollection();
         sprites.addSprite(levelInformation.getBackground());
         environment = new GameEnvironment();
-        gui = new biuoop.GUI("Arkanoid", 800, 600);
+        gui = ar.getGui();
         blocks = new Counter();
         blocksMaxAmount = 0;
         balls = new Counter();
-        score = new Counter();
-        runner = new AnimationRunner(gui);
-        keyboard = gui.getKeyboardSensor();
+        this.score = score;
+        runner = ar;
+        keyboard = ks;
+        running = true;
     }
 
     /**
@@ -89,21 +90,21 @@ public class GameLevel implements Animation {
         BlockRemover blockRemover = new BlockRemover(this, blocks);
         BallRemover ballRemover = new BallRemover(this, balls);
         ScoreTrackingListener scoreTrackingListener = new ScoreTrackingListener(score);
-        scorePanelHeight = 20; // to ensure that there is no overlap between the border blocks and the score panel
-        ScoreIndicator scoreIndicator = new ScoreIndicator(scorePanelHeight, score);
+        int scorePanelHeight = 20; // to ensure that there is no overlap between the border blocks and the score panel
+        ScoreIndicator scoreIndicator = new ScoreIndicator(scorePanelHeight, score, levelInformation.levelName());
         sprites.addSprite(scoreIndicator);
         //Creating the border blocks of the game
-        Rectangle top = new Rectangle((new Point(0, scorePanelHeight)), 800, borderDepth); // top border
+        Rectangle top = new Rectangle((new Point(0, scorePanelHeight)), gui.getDrawSurface().getWidth(), borderDepth); // top border
         Rectangle left = new Rectangle(new Point(0, scorePanelHeight),
-                borderDepth, 600 - scorePanelHeight); // left border
-        Rectangle right = new Rectangle(new Point(800 - borderDepth, scorePanelHeight),
-                borderDepth, 600 - scorePanelHeight); // right border
+                borderDepth, gui.getDrawSurface().getHeight() - scorePanelHeight); // left border
+        Rectangle right = new Rectangle(new Point(gui.getDrawSurface().getWidth() - borderDepth, scorePanelHeight),
+                borderDepth, gui.getDrawSurface().getHeight() - scorePanelHeight); // right border
         Rectangle[] borders = new Rectangle[]{top, left, right};
         for (Rectangle r : borders) {
-            Block b = new Block(r, Color.gray);
+            Block b = new Block(r, Color.darkGray);
             b.addToGame(this);
         }
-        Rectangle bottom = new Rectangle(new Point(0, 600), 800 - borderDepth, 0); // death region
+        Rectangle bottom = new Rectangle(new Point(0, gui.getDrawSurface().getHeight()), gui.getDrawSurface().getWidth() - borderDepth, 0); // death region
         Block bottomBlock = new Block(bottom);
         bottomBlock.addHitListener(ballRemover);
         bottomBlock.addToGame(this);
@@ -120,8 +121,8 @@ public class GameLevel implements Animation {
             /**
              * start the ball on top of the paddle
              */
-            double x = (double) (gui.getDrawSurface().getWidth())/2;;
-            int y = 600 - borderDepth - 15;
+            double x = (double) (gui.getDrawSurface().getWidth()) / 2;
+            int y = 600 - (borderDepth + paddle.getPaddleHeight() + 10); // start right above the paddle
             Ball b = new Ball(x, y, 4, Color.white);
             b.setVelocity(levelInformation.initialBallVelocities().get(i));
             b.setGameEnvironment(environment);
@@ -137,7 +138,14 @@ public class GameLevel implements Animation {
         //this.runner.run(new CountdownAnimation(2, 3, sprites)); // countdown before turn starts
         this.running = true;
         this.runner.run(this);
-        gui.close();
+    }
+
+    /**
+     * Function to access the running boolean.
+     * @return boolean if running
+     */
+    public boolean getRunning() {
+        return running;
     }
 
     /**
@@ -163,9 +171,6 @@ public class GameLevel implements Animation {
         // game-specific logic
         this.levelInformation.getBackground().drawOn(d);
         this.sprites.drawAllOn(d);
-        //draw the level name
-        d.setColor(Color.black);
-        d.drawText(500, scorePanelHeight - 5, "Level Name: " + levelInformation.levelName(), 15);
         this.sprites.notifyAllTimePassed();
 
         // stopping condition

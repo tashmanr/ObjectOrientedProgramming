@@ -15,15 +15,17 @@ import java.awt.Color;
 public class ScoreIndicator implements Sprite {
     private Counter score;
     private int scorePanelHeight;
+    private String levelName;
 
     /**
      * Constructor.
      * @param height of the score indicator block to be drawn
      * @param c score
      */
-    public ScoreIndicator(int height, Counter c) {
+    public ScoreIndicator(int height, Counter c, String levelName) {
         score = c;
         scorePanelHeight = height;
+        this.levelName = levelName;
     }
 
     @Override
@@ -31,7 +33,8 @@ public class ScoreIndicator implements Sprite {
         d.setColor(Color.lightGray);
         d.fillRectangle(0, 0, 800, scorePanelHeight);
         d.setColor(Color.black);
-        d.drawText(390, scorePanelHeight - 5, "Score: " + Integer.toString(score.getValue()), 15);
+        d.drawText(350, scorePanelHeight - 5, "Score: " + Integer.toString(score.getValue()), 15);
+        d.drawText(550, scorePanelHeight - 5, "Level Name: " + levelName, 15);
     }
 
     @Override

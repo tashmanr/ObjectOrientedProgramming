@@ -1,3 +1,7 @@
+/**
+ * 336423124
+ * Rebecca Tashman
+ */
 package levels;
 
 import ballinfo.Velocity;
@@ -6,8 +10,7 @@ import geometryprimatives.Rectangle;
 import interfaces.LevelInformation;
 import interfaces.Sprite;
 import sprites.Block;
-import sprites.backgrounds.BackgroundLevelOne;
-
+import sprites.backgrounds.BackgroundLevelThree;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +24,18 @@ public class LevelThree implements LevelInformation {
 
     @Override
     public int numberOfBalls() {
-        return 1;
+        return 2;
     }
 
     @Override
     public List<Velocity> initialBallVelocities() {
         List<Velocity> v = new ArrayList<>();
         Random random = new Random();
-        double speed = 6;
-        double angle = random.nextInt(360);
-        v.add(Velocity.fromAngleAndSpeed(angle, speed));
+        for (int i = 0; i < this.numberOfBalls(); i++) {
+            double speed = 6;
+            double angle = random.nextInt(360);
+            v.add(Velocity.fromAngleAndSpeed(angle, speed));
+        }
         return v;
     }
 
@@ -41,49 +46,49 @@ public class LevelThree implements LevelInformation {
 
     @Override
     public int paddleWidth() {
-        return 70;
+        return 100;
     }
 
     @Override
     public String levelName() {
-        return "Direct Hit";
+        return "Green 3";
     }
 
     @Override
     public Sprite getBackground() {
-        return new BackgroundLevelOne();
+        return new BackgroundLevelThree();
     }
 
     @Override
     public List<Block> blocks() {
         List<Block> blocks = new ArrayList<>();
-        int blockWidth = 30;
-        int blockHeight = 30;
-
-     /*   Rectangle firstRectangle = new Rectangle(new Point(right.getUpperLeft().getX(),
-                right.getUpperLeft().getY() + 150), blockWidth, blockHeight);
-        Block firstBlock = new Block(firstRectangle);
-        for (int i = 0; i < 6; i++) { // outer loop is for the number of rows
-            if (i != 0) {
-                firstBlock = new Block(new Rectangle(new Point(right.getUpperLeft().getX(),
-                        firstBlock.getCollisionRectangle().getUpperLeft().getY() + blockHeight),
-                        blockWidth, blockHeight));
+        double blockWidth = (double) (800 - (2 * getBorderDepth())) / 15;
+        int blockHeight = 20;
+        int max = 10;
+        Rectangle rect = new Rectangle(new Point(800 - getBorderDepth() - blockWidth, 200), blockWidth,
+                blockHeight);
+        for (int i = 0; i < 5; i++) { // 5 rows of blocks
+            Color color;
+            if (i < 1) {
+                color = Color.darkGray;
+            } else if (i < 2) {
+                color = Color.red;
+            } else if (i < 3) {
+                color = Color.yellow;
+            } else if (i < 4) {
+                color = Color.blue;
+            } else {
+                color = Color.lightGray;
             }
-            for (int j = 1; j < max; j++) { // inner loop is for the number of blocks per row
-                Rectangle rect = new Rectangle(new Point(firstBlock.getCollisionRectangle().getUpperLeft().getX()
-                        - blockWidth, firstBlock.getCollisionRectangle().getUpperLeft().getY()),
-                        blockWidth, blockHeight);
-                Block block = new Block(rect, firstBlock.getColor());
-                block.addToGame(this);
-                blocks.increase(1);
-                block.addHitListener(blockRemover);
-                block.addHitListener(scoreTrackingListener);
-                firstBlock = block;
+            for (int j = 0; j < max; j++) { // inner loop is for the number of blocks per row
+                blocks.add(new Block(rect, color));
+                rect = new Rectangle(new Point(rect.getUpperLeft().getX() - blockWidth,
+                        rect.getUpperLeft().getY()), blockWidth, blockHeight);
             }
+            rect = new Rectangle(new Point(800 - getBorderDepth() - blockWidth,
+                    rect.getUpperLeft().getY() + blockHeight), blockWidth, blockHeight);
             max--;
         }
-*/
-        blocks.add(new Block(new Rectangle(new Point(385, 175), blockWidth, blockHeight), Color.red));
         return blocks;
     }
 

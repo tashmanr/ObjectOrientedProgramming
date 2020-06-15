@@ -25,9 +25,8 @@ public class Paddle implements Sprite, Collidable {
     private static double epsilon = Math.pow(10, -15);
     private static int gameBorderWidth = 25;
     private static double guiWidth;
-    private double startX;
     private static double y;
-    private static int paddleHeight = 10;
+    private static int paddleHeight = 20;
     private int paddleWidth;
     private int paddleSpeed;
 
@@ -41,7 +40,7 @@ public class Paddle implements Sprite, Collidable {
         double guiHeight = gui.getDrawSurface().getHeight();
         guiWidth = gui.getDrawSurface().getWidth();
         y = guiHeight - gameBorderWidth - paddleHeight;
-        startX = (double) gui.getDrawSurface().getWidth()/2 - (double) paddleWidth/2;
+        double startX = (double) gui.getDrawSurface().getWidth()/2 - (double) paddleWidth/2;
         this.paddleSpeed = paddleSpeed;
         this.paddleWidth = paddleWidth;
         this.paddleVisual = new Rectangle(new Point(startX, y), paddleWidth, paddleHeight);
@@ -84,6 +83,14 @@ public class Paddle implements Sprite, Collidable {
             this.paddleVisual = new Rectangle(new Point(this.paddleVisual.getUpperLeft().getX() + paddleSpeed, y),
                     paddleWidth, paddleHeight);
         }
+    }
+
+    /**
+     * Function to access the paddle height.
+     * @return int paddle height
+     */
+    public int getPaddleHeight() {
+        return paddleHeight;
     }
 
     @Override

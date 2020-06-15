@@ -46,7 +46,7 @@ public class LevelTwo implements LevelInformation {
 
     @Override
     public int paddleWidth() {
-        return 500;
+        return 600;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class LevelTwo implements LevelInformation {
     public List<Block> blocks() {
         List<Block> blocks = new ArrayList<>();
         double blockWidth = (double)(800-(2*getBorderDepth()))/15;
-        int blockHeight = 30;
+        int blockHeight = 20;
         Rectangle rectangle = new Rectangle(new Point(getBorderDepth(), 250), blockWidth, blockHeight);
         for (int i = 0; i < 15; i++) {
             Color color;

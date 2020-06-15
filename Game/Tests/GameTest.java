@@ -5,7 +5,7 @@ import levels.LevelOne;
  * Rebecca Tashman
  * 336423124
  */
-
+/*
 public class GameTest {
     public static void main(String[] args) {
         GameLevel gameLevel = new GameLevel(new LevelOne());
@@ -13,3 +13,4 @@ public class GameTest {
         gameLevel.run();
     }
 }
+*/
