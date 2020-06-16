@@ -23,7 +23,7 @@ public class Paddle implements Sprite, Collidable {
     private Rectangle paddleVisual;
     private Rectangle paddleForHit;
     private static double epsilon = Math.pow(10, -15);
-    private static int gameBorderWidth = 25;
+    private static int gameBorderWidth;
     private static double guiWidth;
     private static double y;
     private static int paddleHeight = 20;
@@ -36,7 +36,8 @@ public class Paddle implements Sprite, Collidable {
      *
      * @param gui from the game
      */
-    public Paddle(GUI gui, int paddleWidth, int paddleSpeed) {
+    public Paddle(GUI gui, int paddleWidth, int paddleSpeed, int borderdepth) {
+        gameBorderWidth = borderdepth;
         double guiHeight = gui.getDrawSurface().getHeight();
         guiWidth = gui.getDrawSurface().getWidth();
         y = guiHeight - gameBorderWidth - paddleHeight;

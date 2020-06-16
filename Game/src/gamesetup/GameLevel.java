@@ -86,7 +86,7 @@ public class GameLevel implements Animation {
      * Function to initialize a new game: create the Blocks and Ball (and Paddle) and add them to the game.
      */
     public void initialize() {
-        Paddle paddle = new Paddle(gui, levelInformation.paddleWidth(), levelInformation.paddleSpeed());
+        Paddle paddle = new Paddle(gui, levelInformation.paddleWidth(), levelInformation.paddleSpeed(), levelInformation.getBorderDepth());
         paddle.addToGame(this);
         BlockRemover blockRemover = new BlockRemover(this, blocks);
         BallRemover ballRemover = new BallRemover(this, balls);
