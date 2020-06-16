@@ -41,7 +41,7 @@ public class CountdownAnimation implements Animation {
         }
         game.drawAllOn(d);
         d.setColor(new Color(170, 119, 221));
-        d.drawText(300, d.getHeight() / 2, countdownString, 50);
+        d.drawText(300, d.getHeight() * 2 / 3, countdownString, 50);
         countdown--;
         sleeper.sleepFor((long) (1000 * seconds / max));
     }

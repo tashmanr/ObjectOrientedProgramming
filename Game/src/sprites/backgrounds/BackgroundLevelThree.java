@@ -15,10 +15,15 @@ public class BackgroundLevelThree implements Sprite {
     public void drawOn(DrawSurface d) {
         d.setColor(new Color(0, 102, 0));
         d.fillRectangle(0, 0, 800, 600);
-        d.setColor(Color.lightGray);
-        Point corner = new Point(100, 450);
-        int width = 110;
+        d.setColor(Color.black);
+        Point corner = new Point(95, 450);
+        int width = 120;
         int height = 150;
+        d.fillRectangle((int) corner.getX(), (int) corner.getY(), width, height);
+        d.setColor(Color.lightGray);
+        corner = new Point(100, 455);
+        width = 110;
+        height = 140;
         d.fillRectangle((int) corner.getX(), (int) corner.getY(), width, height);
         d.setColor(Color.black);
         d.drawRectangle((int) corner.getX(), (int) corner.getY(), width, height);

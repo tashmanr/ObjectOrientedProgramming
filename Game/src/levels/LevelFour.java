@@ -33,7 +33,7 @@ public class LevelFour implements LevelInformation {
         Random random = new Random();
         for (int i = 0; i < this.numberOfBalls(); i++) {
             double speed = 6;
-            double angle = random.nextInt(360);
+            double angle = random.nextInt(180) - 90;
             v.add(Velocity.fromAngleAndSpeed(angle, speed));
         }
         return v;

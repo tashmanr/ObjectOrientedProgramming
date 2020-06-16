@@ -15,22 +15,12 @@ public class BackgroundLevelFour implements Sprite {
         d.setColor(new Color(29, 78, 255));
         d.fillRectangle(0, 0, 800, 600);
         d.setColor(new Color(173, 173, 173));
-        d.drawLine(110, 390, 80, 642);
-        d.drawLine(120, 390, 80, 726);
-        d.drawLine(130, 390, 80, 810);
-        d.drawLine(140, 390, 80, 894);
-        d.drawLine(150, 390, 80, 978);
-        d.drawLine(160, 390, 80, 1062);
-        d.drawLine(170, 390, 80, 1146);
-        d.drawLine(180, 390, 80, 1230);
-        d.drawLine(610, 490, 580, 742);
-        d.drawLine(620, 490, 580, 826);
-        d.drawLine(630, 490, 580, 910);
-        d.drawLine(640, 490, 580, 994);
-        d.drawLine(650, 490, 580, 1078);
-        d.drawLine(660, 490, 580, 1162);
-        d.drawLine(670, 490, 580, 1246);
-        d.drawLine(680, 490, 580, 1330);
+        for (int i = 100; i < 200; i+=10){
+            d.drawLine(i, 390, i-30, 600);
+        }
+        for (int i = 600; i < 700; i+=10){
+            d.drawLine(i, 490, i-30, 700);
+        }
         d.fillCircle(605, 490, 20);
         d.fillCircle(105, 390, 20);
         d.setColor(new Color(174, 174, 174));

@@ -31,9 +31,8 @@ public class LevelOne implements LevelInformation {
     @Override
     public List<Velocity> initialBallVelocities() {
         List<Velocity> v = new ArrayList<>();
-        Random random = new Random();
         double speed = 6;
-        double angle = random.nextInt(360);
+        double angle = 0; // ball should start going straight up
         v.add(Velocity.fromAngleAndSpeed(angle, speed));
         return v;
     }
