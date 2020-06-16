@@ -6,6 +6,7 @@ package gamesetup;
 
 import animations.CountdownAnimation;
 import animations.EndScreen;
+import animations.KeyPressStoppableAnimation;
 import animations.PauseScreen;
 import biuoop.KeyboardSensor;
 import hitlisteners.BallRemover;
@@ -23,12 +24,11 @@ import geometryprimatives.Point;
 import geometryprimatives.Rectangle;
 import interfaces.Sprite;
 import sprites.ScoreIndicator;
-
 import java.awt.Color;
 import java.util.Random;
 
 /**
- * Class for setting up and running the game.
+ * Class for setting up and running each gme level.
  */
 public class GameLevel implements Animation {
     private SpriteCollection sprites;
@@ -43,6 +43,7 @@ public class GameLevel implements Animation {
     private KeyboardSensor keyboard;
     private LevelInformation levelInformation;
     private int borderDepth;
+    private boolean blocksGone = false;
 
     /**
      * Constructor.
@@ -132,7 +133,7 @@ public class GameLevel implements Animation {
      * Function to run the game -- start the animation loop.
      */
     public void run() {
-        //this.runner.run(new CountdownAnimation(2, 3, sprites)); // countdown before turn starts
+        this.runner.run(new CountdownAnimation(2, 3, sprites)); // countdown before turn starts
         this.running = true;
         this.runner.run(this);
     }
@@ -173,16 +174,21 @@ public class GameLevel implements Animation {
 
         // stopping condition
         if (this.balls.getValue() == 0) {
-            this.runner.run(new EndScreen(this.keyboard, score, true));
+            this.runner.run(new KeyPressStoppableAnimation(this.keyboard, KeyboardSensor.SPACE_KEY,
+                    new EndScreen(score, true)));
             gui.close();
+            this.running = false;
+        }
+        if (blocksGone) {
             this.running = false;
         }
         if (blocksMaxAmount - this.blocks.getValue() >= levelInformation.numberOfBlocksToRemove()) {
             score.increase(100);
-            this.running = false;
+            blocksGone = true;
+           // this.running = false;
         }
         if (this.keyboard.isPressed("p")) {
-            this.runner.run(new PauseScreen(this.keyboard));
+            this.runner.run(new KeyPressStoppableAnimation(this.keyboard, KeyboardSensor.SPACE_KEY, new PauseScreen()));
         }
     }
 
