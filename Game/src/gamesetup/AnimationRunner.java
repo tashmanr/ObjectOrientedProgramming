@@ -15,18 +15,30 @@ import interfaces.Animation;
 public class AnimationRunner {
     private GUI gui;
     private int framesPerSecond;
-    Sleeper sleeper;
+    private Sleeper sleeper;
 
+    /**
+     * Constructor.
+     * Generates new gui and other private fields.
+     */
     public AnimationRunner() {
         gui = new biuoop.GUI("Arkanoid", 800, 600);
         framesPerSecond = 60;
         sleeper = new biuoop.Sleeper();
     }
 
+    /**
+     * Accessor for gui.
+     * @return gui
+     */
     public GUI getGui() {
         return gui;
     }
 
+    /**
+     * Function to run the given animation.
+     * @param animation animation to run
+     */
     public void run(Animation animation) {
         int millisecondsPerFrame = 1000 / framesPerSecond;
         while (!animation.shouldStop()) {

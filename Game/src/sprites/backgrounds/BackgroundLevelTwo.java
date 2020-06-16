@@ -6,18 +6,20 @@ package sprites.backgrounds;
 
 import biuoop.DrawSurface;
 import interfaces.Sprite;
+import java.awt.Color;
 
-import java.awt.*;
-
+/**
+ * Background level two - to be called on from within levelTwo class.
+ */
 public class BackgroundLevelTwo implements Sprite {
 
     @Override
     public void drawOn(DrawSurface d) {
         d.setColor(Color.white);
-        d.fillRectangle(0,0, 800, 600);
+        d.fillRectangle(0, 0, 800, 600);
         d.setColor(new Color(237, 237, 129)); // outer circle light yellow
         d.fillCircle(150, 150, 60);
-        for (int i = 0; i < 700; i+= 5) {
+        for (int i = 0; i < 700; i += 5) {
             d.drawLine(150, 150, i, 250);
         }
         d.setColor(new Color(221, 219, 81)); // mid circle dark yellow

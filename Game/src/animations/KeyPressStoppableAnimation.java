@@ -18,6 +18,13 @@ public class KeyPressStoppableAnimation implements Animation {
     private boolean stop;
     private boolean isAlreadyPressed;
 
+    /**
+     * Constructor.
+     *
+     * @param sensor    keyboard sensor
+     * @param key       to see if was pressed
+     * @param animation animation to stop if key was pressed
+     */
     public KeyPressStoppableAnimation(KeyboardSensor sensor, String key, Animation animation) {
         keyboardSensor = sensor;
         this.key = key;
@@ -32,7 +39,7 @@ public class KeyPressStoppableAnimation implements Animation {
         if (!keyboardSensor.isPressed(key)) {
             isAlreadyPressed = false;
         } else {
-            if (!isAlreadyPressed){
+            if (!isAlreadyPressed) {
                 stop = true;
             }
         }

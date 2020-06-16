@@ -8,6 +8,9 @@ import ballinfo.Velocity;
 import sprites.Block;
 import java.util.List;
 
+/**
+ * Interface for level information, implemented by levels 1-4.
+ */
 public interface LevelInformation {
     /**
      * Function to access the borderDepth.

@@ -47,6 +47,10 @@ public class GameLevel implements Animation {
 
     /**
      * Constructor.
+     * @param levelInformation the level to create
+     * @param ks keyboard sensor to control the paddle, pause/end screens, etc
+     * @param ar animation runner to animate the game
+     * @param score score that is passed on through all the levels
      */
     public GameLevel(LevelInformation levelInformation, KeyboardSensor ks, AnimationRunner ar, Counter score) {
         this.levelInformation = levelInformation;
@@ -86,7 +90,8 @@ public class GameLevel implements Animation {
      * Function to initialize a new game: create the Blocks and Ball (and Paddle) and add them to the game.
      */
     public void initialize() {
-        Paddle paddle = new Paddle(gui, levelInformation.paddleWidth(), levelInformation.paddleSpeed(), levelInformation.getBorderDepth());
+        Paddle paddle = new Paddle(gui, levelInformation.paddleWidth(), levelInformation.paddleSpeed(),
+                levelInformation.getBorderDepth());
         paddle.addToGame(this);
         BlockRemover blockRemover = new BlockRemover(this, blocks);
         BallRemover ballRemover = new BallRemover(this, balls);
@@ -95,7 +100,8 @@ public class GameLevel implements Animation {
         ScoreIndicator scoreIndicator = new ScoreIndicator(scorePanelHeight, score, levelInformation.levelName());
         sprites.addSprite(scoreIndicator);
         //Creating the border blocks of the game
-        Rectangle top = new Rectangle((new Point(0, scorePanelHeight)), gui.getDrawSurface().getWidth(), borderDepth); // top border
+        Rectangle top = new Rectangle((new Point(0, scorePanelHeight)), gui.getDrawSurface().getWidth(),
+                borderDepth); // top border
         Rectangle left = new Rectangle(new Point(0, scorePanelHeight),
                 borderDepth, gui.getDrawSurface().getHeight() - scorePanelHeight); // left border
         Rectangle right = new Rectangle(new Point(gui.getDrawSurface().getWidth() - borderDepth, scorePanelHeight),
@@ -105,7 +111,8 @@ public class GameLevel implements Animation {
             Block b = new Block(r, Color.darkGray);
             b.addToGame(this);
         }
-        Rectangle bottom = new Rectangle(new Point(0, gui.getDrawSurface().getHeight()), gui.getDrawSurface().getWidth() - borderDepth, 0); // death region
+        Rectangle bottom = new Rectangle(new Point(0, gui.getDrawSurface().getHeight()),
+                gui.getDrawSurface().getWidth() - borderDepth, 0); // death region
         Block bottomBlock = new Block(bottom);
         bottomBlock.addHitListener(ballRemover);
         bottomBlock.addToGame(this);
@@ -185,7 +192,6 @@ public class GameLevel implements Animation {
         if (blocksMaxAmount - this.blocks.getValue() >= levelInformation.numberOfBlocksToRemove()) {
             score.increase(100);
             blocksGone = true;
-           // this.running = false;
         }
         if (this.keyboard.isPressed("p")) {
             this.runner.run(new KeyPressStoppableAnimation(this.keyboard, KeyboardSensor.SPACE_KEY, new PauseScreen()));

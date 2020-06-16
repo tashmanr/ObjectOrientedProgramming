@@ -35,13 +35,16 @@ public class Paddle implements Sprite, Collidable {
      * We have two rectangles, one for the drawsurface (is thicker) and one that has height of 0, for hits.
      *
      * @param gui from the game
+     * @param borderdepth depth of the border blocks
+     * @param paddleSpeed speed at which the paddle moves
+     * @param paddleWidth width of the paddle
      */
     public Paddle(GUI gui, int paddleWidth, int paddleSpeed, int borderdepth) {
         gameBorderWidth = borderdepth;
         double guiHeight = gui.getDrawSurface().getHeight();
         guiWidth = gui.getDrawSurface().getWidth();
         y = guiHeight - gameBorderWidth - paddleHeight;
-        double startX = (double) gui.getDrawSurface().getWidth()/2 - (double) paddleWidth/2;
+        double startX = (double) gui.getDrawSurface().getWidth() / 2 - (double) paddleWidth / 2;
         this.paddleSpeed = paddleSpeed;
         this.paddleWidth = paddleWidth;
         this.paddleVisual = new Rectangle(new Point(startX, y), paddleWidth, paddleHeight);

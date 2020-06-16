@@ -2,15 +2,17 @@ package sprites.backgrounds;
 
 import biuoop.DrawSurface;
 import interfaces.Sprite;
+import java.awt.Color;
 
-import java.awt.*;
-
+/**
+ * Background level one - to be called on from within levelOne class.
+ */
 public class BackgroundLevelOne implements Sprite {
 
     @Override
     public void drawOn(DrawSurface d) {
         d.setColor(Color.black);
-        d.fillRectangle(0,0, 800, 600);
+        d.fillRectangle(0, 0, 800, 600);
         d.setColor(Color.blue);
         d.drawCircle(400, 190, 50);
         d.drawCircle(400, 190, 100);

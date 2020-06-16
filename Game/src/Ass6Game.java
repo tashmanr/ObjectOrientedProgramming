@@ -3,16 +3,13 @@
  * 336423124
  */
 
-import biuoop.KeyboardSensor;
 import gamesetup.AnimationRunner;
 import gamesetup.GameFlow;
-import gamesetup.GameLevel;
 import interfaces.LevelInformation;
 import levels.LevelFour;
 import levels.LevelOne;
 import levels.LevelThree;
 import levels.LevelTwo;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +40,8 @@ public class Ass6Game {
                     break;
                 case "4":
                     levels.add(new LevelFour());
+                    break;
+                default:
                     break;
             }
         }

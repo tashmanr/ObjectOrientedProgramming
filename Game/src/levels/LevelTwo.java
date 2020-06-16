@@ -11,11 +11,14 @@ import interfaces.LevelInformation;
 import interfaces.Sprite;
 import sprites.Block;
 import sprites.backgrounds.BackgroundLevelTwo;
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Class for level two of game levels.
+ */
 public class LevelTwo implements LevelInformation {
     @Override
     public int getBorderDepth() {
@@ -62,7 +65,7 @@ public class LevelTwo implements LevelInformation {
     @Override
     public List<Block> blocks() {
         List<Block> blocks = new ArrayList<>();
-        double blockWidth = (double)(800-(2*getBorderDepth()))/15;
+        double blockWidth = (double) (800 - (2 * getBorderDepth())) / 15;
         int blockHeight = 20;
         Rectangle rectangle = new Rectangle(new Point(getBorderDepth(), 250), blockWidth, blockHeight);
         for (int i = 0; i < 15; i++) {

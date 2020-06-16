@@ -21,6 +21,7 @@ public class ScoreIndicator implements Sprite {
      * Constructor.
      * @param height of the score indicator block to be drawn
      * @param c score
+     * @param levelName string to display in the top bar
      */
     public ScoreIndicator(int height, Counter c, String levelName) {
         score = c;

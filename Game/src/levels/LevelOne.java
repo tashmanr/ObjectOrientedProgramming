@@ -11,11 +11,13 @@ import interfaces.LevelInformation;
 import interfaces.Sprite;
 import sprites.Block;
 import sprites.backgrounds.BackgroundLevelOne;
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
+/**
+ * Class for level one of game levels.
+ */
 public class LevelOne implements LevelInformation {
 
     @Override

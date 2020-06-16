@@ -11,11 +11,14 @@ import interfaces.LevelInformation;
 import interfaces.Sprite;
 import sprites.Block;
 import sprites.backgrounds.BackgroundLevelFour;
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Class for level four of game levels.
+ */
 public class LevelFour implements LevelInformation {
     @Override
     public int getBorderDepth() {

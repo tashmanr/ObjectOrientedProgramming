@@ -21,6 +21,11 @@
         </java>
     </target>
 
-
+    <target name="check">
+        <java jar="checkstyle-5.7-all.jar" fork="true">
+            <arg line="-c biuoop.xml" />
+            <arg line="-r src\" />
+        </java>
+    </target>
 
 </project>

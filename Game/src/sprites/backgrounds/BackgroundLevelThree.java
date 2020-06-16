@@ -5,10 +5,12 @@
 package sprites.backgrounds;
 
 import biuoop.DrawSurface;
+import geometryprimatives.Point;
 import interfaces.Sprite;
-
-import java.awt.*;
-
+import java.awt.Color;
+/**
+ * Background level three - to be called on from within levelThree class.
+ */
 public class BackgroundLevelThree implements Sprite {
 
     @Override
