@@ -36,7 +36,7 @@ public class LevelTwo implements LevelInformation {
         Random random = new Random();
         for (int i = 0; i < this.numberOfBalls(); i++) {
             double speed = 6;
-            double angle = random.nextInt(180) - 90;
+            double angle = random.nextInt(90) - 45;
             v.add(Velocity.fromAngleAndSpeed(angle, speed));
         }
         return v;

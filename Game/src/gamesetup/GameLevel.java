@@ -24,6 +24,7 @@ import geometryprimatives.Point;
 import geometryprimatives.Rectangle;
 import interfaces.Sprite;
 import sprites.ScoreIndicator;
+
 import java.awt.Color;
 import java.util.Random;
 
@@ -47,10 +48,11 @@ public class GameLevel implements Animation {
 
     /**
      * Constructor.
+     *
      * @param levelInformation the level to create
-     * @param ks keyboard sensor to control the paddle, pause/end screens, etc
-     * @param ar animation runner to animate the game
-     * @param score score that is passed on through all the levels
+     * @param ks               keyboard sensor to control the paddle, pause/end screens, etc
+     * @param ar               animation runner to animate the game
+     * @param score            score that is passed on through all the levels
      */
     public GameLevel(LevelInformation levelInformation, KeyboardSensor ks, AnimationRunner ar, Counter score) {
         this.levelInformation = levelInformation;
@@ -125,10 +127,20 @@ public class GameLevel implements Animation {
         }
         blocksMaxAmount = blocks.getValue();
         Random random = new Random();
-        for (int i = 0; i < levelInformation.numberOfBalls(); i++) { // loop to create balls
-            double x = (double) (gui.getDrawSurface().getWidth()) / 2;
+        int numberOfBalls = levelInformation.numberOfBalls();
+        int locationOnPaddle = levelInformation.paddleWidth() / numberOfBalls;
+        double startingX = (((double) gui.getDrawSurface().getWidth() / 2)
+                - ((double) (levelInformation.paddleWidth()) / 2));
+        for (int i = 0; i < numberOfBalls; i++) { // loop to create balls
+            if (numberOfBalls == 1) {
+                startingX = (double) gui.getDrawSurface().getWidth() / 2;
+            } else if (i == 0) {
+                startingX += (double) locationOnPaddle / 2;
+            } else {
+                startingX += locationOnPaddle;
+            }
             int y = 600 - (borderDepth + paddle.getPaddleHeight() + 10); // start right above the paddle
-            Ball b = new Ball(x, y, 4, Color.white);
+            Ball b = new Ball(startingX, y, 4, Color.white);
             b.setVelocity(levelInformation.initialBallVelocities().get(i));
             b.setGameEnvironment(environment);
             b.addToGame(this);

@@ -40,17 +40,12 @@ public class CountdownAnimation implements Animation {
     @Override
     public void doOneFrame(DrawSurface d) {
         Sleeper sleeper = new biuoop.Sleeper();
-        if (countdown == -1) {
-            stop = true;
-        }
         if (countdown == 0) {
-            countdownString += "Go!";
-        } else {
-            countdownString += Integer.toString(countdown) + ", ";
+            stop = true;
         }
         game.drawAllOn(d);
         d.setColor(new Color(170, 119, 221));
-        d.drawText(300, d.getHeight() * 2 / 3, countdownString, 50);
+        d.drawText(d.getWidth() / 2, d.getHeight() / 2, Integer.toString(countdown), 100);
         countdown--;
         sleeper.sleepFor((long) (1000 * seconds / max));
     }

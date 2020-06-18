@@ -1,3 +1,7 @@
+/**
+ * 336423124
+ * Rebecca Tashman
+ */
 package sprites.backgrounds;
 
 import biuoop.DrawSurface;
